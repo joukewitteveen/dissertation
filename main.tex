@@ -3,9 +3,13 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{microtype}
-\usepackage[hidelinks]{hyperref}
 \usepackage[english]{babel}
+\usepackage[backend=biber,style=numeric]{biblatex}
 \usepackage{makeidx}
+\usepackage[hidelinks]{hyperref}
+
+\addbibresource{refs}
+\input{notation}
 
 \makeindex
 
@@ -25,7 +29,9 @@
 
 \include{front}
 
+\microtypesetup{protrusion=false}
 \tableofcontents
+\microtypesetup{protrusion=true}
 
 %\acknowledgements
 
@@ -34,15 +40,14 @@
 \pagestyle{headings}
 \pagenumbering{arabic}
 
-%\input{one}
-%\input{two}
-%\input{three}
+\include{introduction}
+%\include{two}
+%\include{three}
 
 
 \appendix
 
-\bibliographystyle{plain}
-\bibliography{refs}
+\printbibliography
 
 \printindex
 
