@@ -4,17 +4,27 @@
 \usepackage[T1]{fontenc}
 \usepackage{microtype}
 \usepackage[english]{babel}
+\usepackage{csquotes}
 \usepackage[backend=biber,style=numeric]{biblatex}
 \usepackage{makeidx}
 \usepackage[hidelinks]{hyperref}
+%\usepackage[section]{algorithm}
+\usepackage{amsmath,mathtools}
+\usepackage{enumitem}
 
-\addbibresource{refs}
+\usepackage{todonotes} %TODO: get rid of all TODO items
+
+\addbibresource{refs.bib}
 \input{notation}
+
+
+\newcommand{\defkeyat}[2]{\index{#1}\emph{#2}}
+\newcommand{\defkey}[1]{\defkeyat{#1}{#1}}
 
 \makeindex
 
 
-\title{Parameterized Analysis of Complexity and Information}
+\title{Parameterized Analysis of Complexity} %and Information}
 \author{Jouke Witteveen}
 
 \makeatletter
@@ -30,10 +40,11 @@
 \include{front}
 
 \microtypesetup{protrusion=false}
+%\setcounter{tocdepth}{1}
 \tableofcontents
 \microtypesetup{protrusion=true}
 
-%\acknowledgements
+%\acknowledgements (k2 mates, office mates)
 
 
 \cleardoublepage
@@ -41,8 +52,8 @@
 \pagenumbering{arabic}
 
 \include{introduction}
-%\include{two}
-%\include{three}
+\include{parameterizations}
+%\include{conclusion}
 
 
 \appendix
