@@ -8,6 +8,9 @@
 
 \section{Historical Encounters}
 
+%It has been recognized that parameters need not be restricted to one dimensional numerical values.
+%Yet, to our knowledge the true limits of parameters have not been investigated before.
+
 
 \section{Measuring Convergence}
 \todo[inline]{This section is not ready for critique.}
@@ -18,40 +21,74 @@
   $\bits{0}, \bits{1}, \bits{00}, \bits{01}, \bits{10}, \bits{11}, \bits{000}, \ldots$
   leading to the commutative diagram
   $\bbN \text{rightleftarrows}^{\asStr}_{\asNat} \binary^+$. %tikz in equation
+  %TODO: Pairing using the Cantor polynomial: $(a, b) \mapsto \frac{1}{2}((a + b)^2 -3a - b) + 1$
+  %      The pairing for \bbN induces a pairing for \binary^+
+  %NOTE: we do not have |<a, b>| = |a| + f(b) or vice versa
+  %      alternatively, define a pairing such that |<a, b>| = max(|a|, |b|) + 2 min(|a|, |b|) + 1
+  %TODO: All sets are countable, in particular when we speak of polynomials, all coefficients and powers are assumed to be in $\bbN$.
+  %TODO: for a function f and constant c, c + f is the function x \mapsto c + f(x) and c · f is the function x \mapsto c · f(x).
+  %TODO: Remark than we deviate from the \bigO convention of using functions as arguments in \cltime and use n as a free variable there.
+
+  %References:
+  %Logic: Kleene
+  %Computability theory: Odifreddi, Rogers
+  %Complexity theory: Goldreich, Arora&Barak
+  %Algorithmic complexity theory: Li&Vitányi, Downey&Hirschfeldt
+  %Order theory: Davey&Priestley, Abramsky&Jung
 }
 
 We take a 21st century approach to complexity theory, where we do not consider physical computers to be approximations of Turing machines, but Turing machines to be asymptotically correct mathematical models of physical computers.
 Our machine model hence takes the form of `reasonable' pseudocode.
-That is, a dialect of pseudocode that is more or less obviously Turing complete, yet not stronger than that.
+That is, a programming language that is more or less obviously Turing complete, yet not stronger than that.
 %TODO: Check that we actually use pseudocode in this dissertation
+%  --> We do, but maybe warn that for each statements can have else clauses!
+%TODO: Refer to the sequential computation thesis [emdeboas2014machine], also known as the extended Church--Turing thesis [parberry1986parallel].
+%      We use that simulation is possible with polynomial overhead.
 A \emph{procedure} is the functional behavior of any particular Turing machine and can be represented by a pseudocode \emph{algorithm}.
 We strife for a strongly, yet sometimes implicitly, typed treatment, with the exception that we freely use sets in place of their characteristic functions.
 
-%TODO: Define \defkey{parial decision procedure}s as total computable functions with codomain {0, 1, ?}
-%      These will be important in nonuniform constructions (resource bounded partial decision procedures are \defkey{approximations}).
-%      For uniform constructions we use:
 \begin{definition}
-  A \defkey{parameterized procedure} is a procedure that takes two strings as input and produces an output in the set $\{\bits{1}, \bits{0}, \bits{?}\}$, representing the judgements `yes', `no', and `unknown'.
+  A \defkey{partial decision procedure} is a procedure that takes a string as input and produces an output in the set $\{\bits{1}, \bits{0}, \bits{?}\}$, representing the judgements `yes', `no', and `unknown'.
+
+  Likewise, a \defkey{parameterized procedure} is a procedure that takes \emph{two} strings as input and produces an output in the set $\{\bits{1}, \bits{0}, \bits{?}\}$.
 \end{definition}
 
 We distinguish procedures from the functions they compute and shall use $\phi$ and $\psi$ for procedures, whereas we shall use $f$, $g$, and $h$ for functions. %TODO: verify
-Note that, as a function, a parameterized procedure is \emph{total}.
-It is halting on every input.
+Note that, as a function, partial decision procedures and parameterized procedures are \emph{total}.
+They are halting on every input.
+
+\begin{definition}
+  Given a function $t$, a partial decision procedure $\phi$ is a \defkeyat{approximation@$t$-approximation}{$t$-approximation} for a set $A$ if it satisfies, for every string $x$,
+  \begin{itemize}
+  \item $\phi$ terminates on input $x$ within $t(\length{x})$ steps, and
+  \item if $\phi(x)$ is not \bits{?}, it is equal to $A(x)$.
+  \end{itemize}
+  The $t$-approximation is said to \emph{decide} the elements of its \emph{domain}
+  \begin{equation*}
+    \dom(\phi) \deq \{x \st \phi(x) \neq \bits{?}\}.
+  \end{equation*}
+\end{definition}
+The \defkeyat{approximation@$t$-approximation!polynomial}{polynomial approximations} \parencite{ko1981completeness,balcazar1985bi-immune} are $t$-approximations where $t$ is a polynomial.
+Likewise, a partial decision procedure is an \defkeyat{approximation@$t$-approximation!O(f)@$\bigO(f)$}{$\bigO(f)$-approximation} if it is a $t$-approximation for some $t \in \bigO(f)$.
+For time-constructible functions $t$, the domain of a $t$-approximation is decidable in time $t$.
+In particular, the domain of a polynomial approximation is in \cl{P}, without an increase in the exponent of the polynomial.
+The domain of a polynomial approximation is also known as the \emph{definite part} of the approximation.
 
 %convergence everywhere and uniquely
 \begin{definition}
   A \defkey{quasiparameterization} is a directed cover of $\binary^+$, indexed by $\binary^+$.
+  The elements of a quasiparameterization are called its \defkeyat{slice}{slices}.
 \end{definition}
 %Does it have a supremum? If so, it is a dcpo from domain theory!
 
-Note that a parameterization is necessarily countable, while there are uncountably many subsets of $\binary^+$.
+Note that a quasiparameterization is necessarily countable, while there are uncountably many subsets of $\binary^+$.
 
 %uniqueness of the limit set for a given parameterized procedure
 \begin{definition}
   A \defkey{parameterization} is a point-cofinite quasiparameterization, meaning each $x \in \binary^+$ is excluded from only finitely many elements of the cover.
 \end{definition}
 
-A noteworthy example of a parameterization is the \emph{length parameterization},
+A noteworthy example of a parameterization is the \defkey{length parameterization},
 \begin{equation*}
   (\{x \st \length{x} \le \asNat(k)\})_{k \in \binary^+}.
 \end{equation*}
@@ -70,14 +107,22 @@ In that sense, the length parameterization is not philosophically pure.
 \end{figure}
 
 Parameterizations are intended to measure structures other than the length of an instance.
-We therefore choose to use a symbol orthographically similar to $n$, which is commonly used to indicate a length, for parameterizations: $\eta$.
+We therefore prefer to use a symbol orthographically similar to $n$, which is commonly used to indicate a length, for parameterizations: $\eta$.
 By convention from parameterized complexity theory, we use $k$ for indices in parameterizations, and call $k$ a \emph{parameter value}.
-The $k$th element of a parameterization $\eta$ is denoted by $\eta_k$.
+The $k$th slice of a parameterization $\eta$ is denoted by $\eta_k$.
 For instances, we shall mostly use $x$.
 
-%TODO: introduce \mu_\eta(x) and note that we do not (necessarily) minimize with respect to the order on the parameterization
-
-%TODO: introduce \emph{slice} and replace `element' by `slice' where appropriate in \ref{sec:limit_computability}
+In this framework, a parameterization $\eta$ associates to an instance $x$ the set of parameter values $\{k \st x \in \eta_k\}$.
+Conversely, other frameworks have parameterizations associate specific parameter values to instances.
+This is the case for the two dominant schools, that of \textcite{downey1999parameterized}, and that of \textcite{flum2006parameterized}.
+To facilitate a comparison between parameterizations \parencite{komusiewicz2012new}, we numerically capture the point of convergence for some input given a parameterization.
+\begin{definition}
+  Given a parameterization $\eta$, the \defkeyat{m@$\mu_\eta$}{minimization function} of $\eta$ is defined as
+  \begin{equation*}
+    \mu_\eta(x) = \min\{\length{k} \st x \in \eta_k\}.
+  \end{equation*}
+\end{definition}
+Note that $\mu_\eta$ minimizes with respect to the length of parameter values and not with respect to the inclusion order on the parameterization.
 
 Given a parameterized procedure $\phi$ we say that $\phi$ converges to a set $A$ if there is a parameterization $\eta$ such that for all $(x, k) \in \binary^+ \times \binary^+$ we have
 \begin{equation*}
@@ -91,4 +136,6 @@ Of particular importance are the parameterized procedures $\phi$ for which
 \end{equation*}
 is a parameterization and, for some set $A$ and all $x$ and $k$, $\phi(x, k)$ is either \bits{?} or $A(x)$.
 We call such parameterized procedures \defkeyat{parameterized procedure!direct}{direct}.
-The parameterizations corresponding to direct parameterized procedures are decidable and the parameterized procedure doubles as a decision procedure for the parameterization. %TODO: mention decidability as a criterion with [Flum&Grohe]
+A parameterization $\eta$ corresponding to a direct parameterized procedure is decidable and the parameterized procedure doubles as a decision procedure for $\eta$.
+The minimization function $\mu_\eta$ of such a parameterization is a measure of complexity insofar as it satisfies the axioms of \textcite{blum1967machine}.
+Direct parameterized procedures have the epistemic interpretation that they know when they are right.

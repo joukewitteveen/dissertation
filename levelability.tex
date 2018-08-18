@@ -1,9 +1,906 @@
-\section{as Uniform Levelability}
+\section{as Polynomial Levelability}
+
+The computational complexity of a set is focussed on the complexity of its hardest instances, or on that of the majority of its instances.
+This has been the case since the identification of efficient computability by Cobham and Edmonds around 1965 \parencite[see][]{goldreich2008computational}.
+Intractability results \parencite{cook1971complexity,garey1979computers} generally consider the hardest instances, while average case complexity looks at complexity of the bulk.
+Yet, even very hard sets can have simple instances and often lots of them.
+
+The indiscriminate judgement of the computational complexity of sets was addressed by \textcite{lynch1975reducibility} in \citeyear{lynch1975reducibility}.
+She dealt with the distribution of complexity inside sets by examining intrinsically hard subsets.
+Although fixed-parameter tractability would only be established some two decades later \parencite{downey1992fixed}, a parameterized computational complexity theory was thus started.
+In this section, we shall built a parameterized theory of computational complexity on these early foundations.
+While the traditional parameterized classes are easily recovered, our analysis will be concerned with parameterizations as independent measures of complexity.
+Much of our theory revolves around collections of parameterizations that put a given set in a parameterized complexity class.
+Such collections function as an interface to the complexity of the sets that gave rise to them.
+Moreover, they reveal that no practically fixed-parameter tractable sets have optimal parameterizations.
 
 \subsection{Stratified Computational Complexity}
-%slices, cores, etc.
+The intrinsically hard parts of a set examined by \citeauthor{lynch1975reducibility} are those on which no decision procedure can run in polynomial time infinitely often.
+\begin{definition}
+  A decidable set $C$ is a \defkeyat{core!polynomial}{polynomial core} of a set $A$ if for every polynomial approximation $\phi$ for $A$ the intersection $C \cap \dom(\phi)$ is finite.
+\end{definition}
+
+We shall give a name to the dual as well.
+\begin{definition}
+  A set $C$ is a \defkeyat{segment@$t$-segment!polynomial}{polynomial segment} of a set $A$ if there is a polynomial approximation $\phi$ for $A$ such that $C = \dom(\phi)$.
+
+  Replacing the polynomial designator by a function $t$ or class of functions $\bigO(f)$, we obtain the definitions of a \defkeyat{segment@$t$-segment}{$t$-segment} and an \defkeyat{segment@$t$-segment!O(f)@$\bigO(f)$}{$\bigO(f)$-segment}.
+\end{definition}
+Thus, a set is a polynomial core if it has a finite intersection with every polynomial segment.
+
+Subsets of polynomial cores are polynomial cores for the same set, as are finite variations.
+This complicates thinking of the members of a core as inherently hard instances of a set.
+Any specific instance can arbitrarily be made part of, or excluded from a polynomial core.
+However, for some sets the collection of polynomial cores contains a maximal element with respect to inclusion up to finite variation.
+If this is the case, the set is split into an easy part and a hard part.
+\begin{theorem}
+\label{thm:maximal}
+  A set has a maximal (up to finite variations) polynomial core if and only if it has a maximal polynomial segment.
+\end{theorem}
+\begin{proof}
+  $\Longleftarrow$.
+  The complement of a maximal polynomial segment of a set is a polynomial core of that set that cannot be infinitely extended.
+  Hence, it is a maximal polynomial core.
+
+  $\Longrightarrow$.
+  We claim that the complement of a maximal polynomial core of a set $A$ is a polynomial segment of $A$.
+  Let $S_1, S_2, S_3, \ldots$ be an enumeration of the, at most countably many, polynomial segments of $A$.
+  Assume now that the complement of some maximal polynomial core of $A$ is not a polynomial segment of $A$.
+  Then, for all $j$, there are infinitely many elements in this complement outside the polynomial segment $\bigcup_{i \le j} S_i$.
+  Consequently, we would be able to extend the maximal polynomial core with infinitely many elements, one for each $j$, contradicting its maximality.
+  Hence, the complement of a maximal polynomial core of $A$ must be a polynomial segment of $A$.
+\end{proof}
+
+It follows that the complement of a maximal polynomial segment is a maximal polynomial core.
+Because polynomial segments are necessarily in \cl{P}, we get the following.
+\begin{corollary}
+  A maximal polynomial core, if it exists, is in \cl{P}.
+\end{corollary}
+
+Of course, within a maximal polynomial core $C$ of a set $A$, membership of $A$ is hard to decide.
+While $C$ is in \cl{P}, no polynomial approximation for $A$ decides membership of $A$ for infinitely many elements of $C$.
+
+A set is outside \cl{P} precisely when it has an infinite polynomial core \parencite{lynch1975reducibility}.
+Some sets are so far removed from \cl{P} that they have no infinite polynomial segments.
+This is a form of immunity against \cl{P}.
+By Theorem~\ref{thm:maximal}, we obtain an elegant definition in terms of polynomial cores.
+This definition is nonstandard, but its equivalence to the common definition based on infinite subsets was already observed by \textcite{balcazar1985bi-immune} \parencite[see also][]{book1988polynomial}.
+\begin{definition}
+  A set $A$ is \defkeyat{bi-immune!for P@for \cl{P}}{\cl{P}-bi-immune} if $\binary^+$ is a polynomial core for $A$.
+\end{definition}
+
+Thus a set is \cl{P}-bi-immune if it has the largest polynomial core possible.
+This definition is easily generalized to sets that have a maximal polynomial core.
+In this case the equivalence of our definition to the more common definition of the same term as a disjoint union was observed by \textcite{orponen1986classification}.
+\begin{definition}
+  A set is \defkeyat{almost bi-immune!for P@for \cl{P}}{\immune{\cl{P}}} if it has a maximal polynomial core.
+\end{definition}
+Note that, by our definitions, sets in \cl{P}, and finite sets in particular, have maximal polynomial cores and are therefore \immune{\cl{P}}.
+This may seem somewhat peculiar, but is in agreement with the definitions used by \textcite{orponen1986classification} and of no objection in the sequel.
+
+With polynomial segments and polynomial cores we make no distinction between the members and the nonmembers of a set.
+Segments as well as cores of a set are maximal if they cannot be extended by infinitely many members or nonmembers of the set.
+In \parencite{orponen1985polynomial,orponen1986optimal}, sets of which every polynomial segment can be extended by infinitely many \emph{members} into a larger polynomial segment are called \emph{\cl{P}-levelable}.
+For our analysis, we need a more general definition that covers sets of which every polynomial segment can be extended by infinitely many arbitrary instances.
+While tempting, such sets should not be called \cl{P}-bi-levelable.
+That name would more naturally describe sets of which every polynomial segment can be extended by both infinitely many members \emph{and} infinitely many nonmembers.
+\begin{definition}
+  A set is \defkeyat{omni-levelable!for P@for \cl{P}}{\levelable{\cl{P}}} if it has no maximal polynomial segment.
+\end{definition}
+By Theorem~\ref{thm:maximal} and in line with the work of \textcite{orponen1985polynomial}, a set is \levelable{\cl{P}} precisely when it is not \immune{\cl{P}}.
+Furthermore, every \cl{P}-levelable set is \levelable{\cl{P}}.
+It was observed by \textcite{orponen1986optimal} that very many (natural) intractable sets are \cl{P}-levelable.
+As a consequence, we find that there are many \levelable{\cl{P}} sets.
+
+Especially when a set is \levelable{\cl{P}}, it makes sense to look at the collection of its polynomial segments.
+In order to uncover connections between segments, we may turn to collections of sets and ask whether they are collections of polynomial segments.
+Thus sets are related to collections of their polynomial segments.
+We can think of this relation as the definition of a complexity class that lifts \cl{P} to the realm of parameterized analysis.
+One way to formalize this lifting is by means of the nonuniform operator $\clXnu{}$.
+\begin{definition}
+  A set $A$ is in \defkeyat{XPnu@\clXnu{P}}{\clXnu{P}} with parameterization $\eta$ if for every parameter value $k$ the set $\eta_k$ is a polynomial segment of $A$.
+\end{definition}
+
+Lifting \cl{P} to different fields of analysis is not new and several ways of doing so have been studied previously.
+Using $\exists$ as an operator, the nondeterministic counterpart, \cl{NP}, of \cl{P} has been obtained as \cl{$\exists$P}.
+In probabilistic complexity theory, the \cl{\textit{BP}}~operator was derived from the complexity class \cl{\textit{BP}P} by \textcite{schoning1989probabilistic}.
+This operator was then used to define various probabilistic complexity classes based on their deterministic counterparts.
+
+The class \clXnu{P} is nonuniform in two ways.
+Firstly, a set may be in \clXnu{P} without there being a procedure to instantiate polynomial approximations from their corresponding parameter values.
+Secondly, even if there was, the parameter dependence of the polynomial time bounds of the approximations may not be of a computational nature.
+These considerations spur a fully uniform alternative to the nonuniform \clXnu{} operator.
+Corresponding parameterized complexity classes are called \emph{strongly uniform} by \textcite{downey1999parameterized}.
+\begin{definition}
+\label{def:xp}
+  A set $A$ is in \defkeyat{XP@\clX{P}}{\clX{P}} with parameterization $\eta$ if there is a direct parameterized procedure $\phi$ and a computable function $f$ satisfying
+  \begin{itemize}
+  \item $\eta$ is the parameterization corresponding to $\phi$, and
+  \item for every parameter value $k$, with $t_k$ mapping $n$ to $f(k) \cdot n^{f(k)}$, the partial application of $\phi$ to $k$ yields a $t_k$-approximation for $A$.
+  \end{itemize}
+\end{definition}
+
+Note that we indicate nonuniformity with the \clnu{}-subscript, but use no modifier for the fully uniform case.
+In other places, e.g.~\url{https://complexityzoo.uwaterloo.ca/Complexity_Zoo:X}, special notation is used instead to denote uniform classes.
+
+In the current century, the class \clX{P} has been called \emph{slicewise~\cl{P}}, giving a name to the \clX{}~operator \parencite{flum2003describing}.
+However, in earlier work, \textcite{downey1999parameterized} used ``slicewise \cl{P}'' to denote a different complexity class, namely \cl{FPT}.
+The definition of \clX{P} is very permissive in that the exponent in the running time of the polynomial approximations may be unbounded.
+In \cl{FPT}, this freedom is restricted.
+\begin{definition}
+  A set $A$ is in \defkeyat{FPTnu@\clnu{FPT}}{\clnu{FPT}} with parameterization $\eta$ if there is a polynomial $p$ such that for every parameter value $k$ the set $\eta_k$ is an $\bigO(p)$-segment of $A$.
+\end{definition}
+
+Sets in \cl{FPT} are said to be \emph{fixed-parameter tractable}.
+The slices of a parameterization with which a set is in \clnu{FPT} are polynomial segments where the degree of the polynomial is bounded.
+Observe that this amounts to a reversal of quantifiers when compared to \clnu{XP}.
+With \clnu{FPT} there is a single polynomial that is used for all parameter values.
+On the other hand, with \clXnu{P} every parameter value may have a different polynomial associated to it.
+Since we have $\cl{P} = \bigcup_c \cltime{$n^c$}$, we can express this reversal of quantifiers symbolically as
+\label{eq:xpfpt}
+\begin{align*}
+  \clXnu{P}	&= \clXnu{$\Big(\bigcup_c \cltime{$n^c$}\Big)$}
+\shortintertext{and}
+  \clnu{FPT}	&= \bigcup_c \Big(\clXnu{\cltime{$n^c$}}\Big).
+\end{align*}
+
+The fully uniform version of these equalities directs us to the definition of fixed-parameter tractability.
+\begin{definition}
+\label{def:fpt}
+  A set $A$ is in \defkeyat{FPT@\cl{FPT}}{\cl{FPT}} with parameterization $\eta$ if there is a direct parameterized procedure $\phi$, a computable function $f$, and a polynomial $p$ satisfying
+  \begin{itemize}
+  \item $\eta$ is the parameterization corresponding to $\phi$, and
+  \item for every parameter value $k$, the partial application of $\phi$ to $k$ yields a $(f(k) \cdot p)$-approximation for $A$.
+  \end{itemize}
+\end{definition}
+
+When a set $A$ is in a parameterized complexity class, for example \cl{FPT}, with a parameterization $\eta$, we write $(A, \eta) \in \cl{FPT}$.
+We remark that members of (nonuniform) \clX{P} need not be in (nonuniform) \cl{FPT} \parencite{downey1999parameterized,flum2006parameterized}.
+Likewise, the classes \clX{P} and \cl{FPT} are strictly smaller than their nonuniform counterparts, \clXnu{P} and \clnu{FPT} \parencite{downey1993fixed}.
+Many sets have been found to be fixed-parameter tractable \parencite{downey1995fixed,niedermeier2006invitation,cygan2015parameterized}.
+Moreover, parameter values associated with typical instances are small in practice \parencite{downey1999framework,downey1999parameterized}.
+In that way, fixed-parameter tractability is a successful notion of efficient computability.
 
 \subsection{Order Theory for Parameterizations}
-%minimization, gap, orders
-%imix (preserved)
-%lattices: bounded, distributive
+We are now in a position to study the distribution of complexity inside a set in terms of the parameterizations that put the set in one of our classes.
+To this end, two collections of parameterizations that put a given set in some parameterized complexity class are of central importance.
+\begin{definition}
+  Given a set $A$ and a parameterized complexity class \cl{C}, we denote the collection of parameterizations with which $A$ is in \cl{C}\index{F@$\calF_{(A, \cl{C})}$} by
+  \begin{align*}
+    \calF_{(A, \cl{C})} &\deq \{\eta \st (A, \eta) \in \cl{C}\}.
+    \intertext{More generally, we consider the parameterizations in light of a parameterized complexity class irrespective of a particular set\index{L@$\calL_\cl{C}$},}
+    \calL_\cl{C} &\deq \{\eta \st \exists A\colon (A, \eta) \in \cl{C}\}.
+  \end{align*}
+\end{definition}
+
+As with polynomial cores, we are not so much interested in finite variations on the slices of a parameterization.
+Instead, we are mostly interested in parameterizations of which the slices grow in infinitely large steps.
+\begin{definition}
+  A parameterization $\eta$ has \defkey{imix} (infinitely many infinite extensions) if for every parameter value $k$ there is a parameter value $k'$ such that the set $\eta_{k'} \backslash \eta_k$ is infinite.
+\end{definition}
+
+Recall that a parameterization is a directed cover.
+Because of that, the existence of a slice that has infinitely many members not in $\eta_k$ implies the existence of an infinite superset of $\eta_k$.
+
+Parameterizations can be compared using the minimization function.
+Thinking of a parameterization $\eta$ as embodying a rate of convergence, a lower value of $\mu_\eta$ is indicative of a faster convergence.
+Informally, we may compare two parameterizations by looking at bounds on the convergence rate of one in terms of the convergence rate of the other.
+Thus, consider the required minimum length of a parameter value in one parameterization for instances of a bounded parameter length in another parameterization.
+\begin{definition}
+  Given parameterizations $\eta$ and $\zeta$, the \defkeyat{gap@$\gap_{\eta, \zeta}$}{gap} function $\bbN \to \bbN \cup \{\infty\}$, is defined as
+  \begin{equation*}
+    \gap_{\eta, \zeta}(n) \deq \max\{\mu_{\eta}(x) \st x \in \binary^+ \reland \mu_{\zeta}(x) \le n\},
+  \end{equation*}
+  where we take the maximum of the empty set to be $0$.
+\end{definition}
+
+Comparing parameterizations using this gap function enables us to define a nonuniform and a uniform order on parameterizations.
+A parameterization $\eta$ is below another, when a bound on the point of convergence for the other parameterization can be turned into such a bound for $\eta$.
+Similar orders have been considered by \textcite{komusiewicz2012new} and \textcite{fellows2013towards}.
+
+\begin{definition}
+  A parameterization $\eta$ is below a parameterization $\zeta$ in the \emph{nonuniform} order \defkeyat{<nu@$\quasilenu$}{$\quasilenu$} if for all $n$ we have $\gap_{\eta, \zeta}(n) < \infty$.
+\end{definition}
+
+From a computational standpoint, a bound on the gap between two parameterizations is only useful if it is computable.
+By Theorem~\ref{thm:decidable}, the uniform variant of the order on parameterizations is of interest for parameterizations arising from direct parameterized procedures.
+
+\begin{definition}
+  A parameterization $\eta$ is below a parameterization $\zeta$ in the \emph{uniform} order \defkeyat{<@$\quasile$}{$\quasile$} if there is a computable function upper bounding $\gap_{\eta, \zeta}$.
+\end{definition}
+
+We observe the relationship $\quasile \subset \quasilenu$ between these orders.
+The orders provide structure to the class of parameterizations.
+\begin{lemma}
+\label{lem:preorder}
+  Both $\quasilenu$ and $\quasile$ are reflexive and transitive orders on the class of parameterizations.
+\end{lemma}
+\begin{proof}
+  Reflexivity follows from the observation that for every parameterization $\eta$ the gap function $\gap_{\eta, \eta}$ is bounded by the identity function.
+  For transitivity, two remarks suffice.
+  Firstly, the composition of finite bounding functions is again a finite bounding function.
+  Secondly, the composition of computable functions is computable.
+\end{proof}
+
+Neither order is antisymmetric.
+Therefore, it is convenient to work with the associated partially ordered set of \emph{equivalence classes} instead of with parameterizations directly.
+Note that every parameterization with imix is unequal to any parameterization without imix, both using the nonuniform as well as using the uniform order.
+
+\begin{lemma}
+\label{lem:imix}
+  Let $\eta$ and $\zeta$ be parameterizations, where $\eta$ has imix but $\zeta$ does not.
+  One of $\eta \quasilenu \zeta$ and $\zeta \quasilenu \eta$ fails to hold (and similarly for $\quasile$).
+\end{lemma}
+\begin{proof}
+  The statement for the uniform order follows from that for the nonuniform order by the inclusion $\quasile \subset \quasilenu$.
+
+  Let $m$ be so that no parameter value of length at least $m$ is associated with a slice of $\zeta$ that has an infinite extension.
+  Such an $m$ can be found for every parameterization that does not have imix, because parameterizations are directed.
+
+  Suppose we have $\eta \quasilenu \zeta$.
+  There is then a parameter value $k$ such that $\eta_k$ is a superset of all slices $\zeta_j$ for which we have $\length{j} \le m$.
+  Since $\eta$ has imix, there exists a parameter value $k'$ such that $\eta_{k'} \backslash \eta_k$ is infinite.
+  We find that $\zeta \quasilenu \eta$ fails because $\gap_{\zeta, \eta}(\length{k'})$ must be infinite.
+
+  Suppose we have $\zeta \quasilenu \eta$.
+  If $\eta \quasilenu \zeta$ were to hold as well, $\gap_{\eta, \zeta}(m)$ would be finite.
+  However, there would then be a parameter value $k'$ such that $\eta_{k'}$ is infinitely larger than any $\zeta_j$, when we have $\length{j} \le m$.
+  As $\zeta$ does not have imix, this would violate the assumed $\zeta \quasilenu \eta$.
+\end{proof}
+
+In the context of orders on parameterizations, we refer to the equivalence classes of parameterizations when speaking simply of parameterizations.
+As we have seen in Lemma~\ref{lem:imix}, parameterizations with imix will remain distinct from those without when employing this convention.
+
+\subsubsection{Nonuniform Complexity Classes}
+When we look at $\calL_\clXnu{P}$ or $\calL_\clnu{FPT}$ in terms of equivalence classes ordered by $\quasilenu$, we recognize a familiar \parencite{davey2002introduction} structure.
+\begin{theorem}
+\label{thm:nulattice}
+  Ordered by $\quasilenu$, the equivalence classes in $\calL_\clXnu{P}$ and $\calL_\clnu{FPT}$ form bounded distributive lattices.
+\end{theorem}
+\begin{proof}
+  Observe that the slices of a parameterization in $\calL_\clXnu{P}$ are in \cl{P}.
+  Likewise, for the slices of a parameterization in $\calL_\clnu{FPT}$ there is a constant $c$ such that the slices are in \cltime{$n^c$}.
+  The converses of both statements are witnessed by the empty set.
+  The empty set is put in \clXnu{P} and \clnu{FPT} respectively by parameterizations that meet said descriptions.
+
+  For the current proof we shall focus on $\calL_\clnu{FPT}$.
+  The proof for $\calL_\clXnu{P}$ is slightly less involved.
+
+  \paragraph{$\calL_\clnu{FPT}$ is bounded.}
+  A least element of $\calL_\clnu{FPT}$ is present in the form of the parameterization consisting of `full' slices only, $(\binary^+)_{k \in \binary^+}$.
+  Indeed, any constant bounds the gap from this parameterization to another and thus this parameterization is below any other with respect to $\quasilenu$.
+
+  A greatest element can be found in any parameterization of which the slices are all finite.
+  Take, for instance, the length parameterization, $(\{x \st \length{x} \le \asNat(k)\})_{k \in \binary^+}$.
+  Regardless of the bound on the length of parameter values, the gap from any parameterization to this parameterization is the maximum of a finite set.
+  The gap is therefore always finite.
+  Hence, this parameterization is above any other with respect to $\quasilenu$.
+
+  \paragraph{$\calL_\clnu{FPT}$ contains greatest lower bounds.}
+  Given two parameterizations, $\eta \in \calL_\clnu{FPT}$ and $\eta' \in \calL_\clnu{FPT}$, we can construct a new parameterization that acts as a greatest lower bound for the two.
+  Define this new parameterization as
+  \begin{equation*}
+    \zeta \deq (\{x \st x \in \eta_k \lor x \in \eta'_{k'}\})_{\pair{k}{k'} \in \binary^+}.
+  \end{equation*}
+  So, every slice of $\zeta$ is the union of a slice of $\eta$ and a slice of $\eta'$, and we have $\zeta_\pair{k}{k'} = \eta_k \cup \eta'_{k'}$.
+  This construction ensures that $\zeta$ is a point-cofinite directed cover and with that, a parameterization.
+  Moreover, if, for some $c$, all slices of $\eta$ and all slices of $\eta'$ are in \cltime{$n^c$}, then all slices of $\zeta$ are in \cltime{$n^c$}.
+  As $\eta$ and $\eta'$ were picked from $\calL_\clnu{FPT}$, we find that $\zeta$ must also be a member of $\calL_\clnu{FPT}$.
+
+  By construction, every slice of either $\eta$ or $\eta'$ is included in a slice of $\zeta$.
+  It follows that the gap from $\zeta$ to both $\eta$ and $\eta'$ is finite and thus that $\zeta$ is below each of them.
+  It remains to show that $\zeta$ is the greatest among such lower bounds.
+  For this, suppose that some $\zeta'$ too is below both $\eta$ and $\eta'$ and consider $\gap_{\zeta'\!, \zeta}$.
+  Because our pairing function is length increasing in both arguments, we have, for every $n$,
+  \begin{equation*}
+    \gap_{\zeta'\!, \zeta}(n) \le \max\{\gap_{\zeta'\!, \eta}(n),\ \gap_{\zeta'\!, \eta'}(n)\}.
+  \end{equation*}
+  As both elements of the set on the right hand side are finite by assumption, we find that the gap from $\zeta'$ to $\zeta$ is finite for all values of $n$.
+  Thus, $\zeta'$ is below $\zeta$, and $\zeta$ is a greatest lower bound for $\eta$ and $\eta'$ with respect to $\quasilenu$, as desired.
+
+  \paragraph{$\calL_\clnu{FPT}$ contains least upper bounds.}
+  In a similar vein, the existence of least upper bounds can be shown.
+  Taking the slicewise intersection of two given parameterizations, $\eta$ and $\eta'$, we obtain
+  \begin{equation*}
+    \zeta \deq (\{x \st x \in \eta_k \land x \in \eta'_{k'}\})_{\pair{k}{k'} \in \binary^+}.
+  \end{equation*}
+  Like the parameterization constructed previously, this defines a point-cofinite directed cover, thus, indeed, a parameterization.
+  When $\eta$ and $\eta'$ are members of $\calL_\clnu{FPT}$, this parameterization is a member of $\calL_\clnu{FPT}$ too.
+
+  Using that our pairing function is length increasing, we find, for all $n$, that $\gap_{\eta, \zeta}(n)$ and $\gap_{\eta'\!, \zeta}(n)$ are both at most $n$.
+  Thus, $\zeta$ is an upper bound to $\eta$ and $\eta'$.
+  To see that it is a least upper bound, suppose that $\zeta'$ be another upper bound to $\eta$ and $\eta'$.
+  Our pairing function is so that, for all $k$ and $k'$, we have $\length{\pair{k}{k'}} \le 2(\length{k} + \length{k'})$.
+  Because of this, we also have, for all $n$,
+  \begin{equation*}
+    \gap_{\zeta, \zeta'}(n) \le 2(\gap_{\eta, \zeta'}(n) + \gap_{\eta'\!, \zeta'}(n)).
+  \end{equation*}
+  Since the right hand side of this equation is finite, we can conclude that we have $\zeta \quasilenu \zeta'$.
+  Accordingly, $\zeta$ is a least upper bound for $\eta$ and $\eta'$ with respect to $\quasilenu$.
+
+  \paragraph{$\calL_\clnu{FPT}$ is distributive.}
+  Let $\eta$ and $\eta'$ be two parameterizations in $\calL_\clnu{FPT}$.
+  As is customary, we denote their greatest lower bound by $\eta \land \eta'$ and their least upper bound by $\eta \lor \eta'$.
+  Beware that in the above construction, $\eta \land \eta'$ was based on a disjunction $x \in \eta_k \lor x \in \eta'_{k'}$ and vice versa for $\eta \lor \eta'$.
+  Also, recall that in this context, we use parameterizations in place of their equivalence classes according to $\quasilenu$.
+  We shall show that, for any three parameterizations $\eta$, $\eta'$, and $\eta''$ in $\calL_\clnu{FPT}$, the equivalence class of
+  \begin{align*}
+    \zeta &\deq \eta \lor (\eta' \land \eta'')
+    \shortintertext{equals that of}
+    \zeta' &\deq (\eta \lor \eta') \land (\eta \lor \eta'').
+  \end{align*}
+  The dual, where $\land$ and $\lor$ are interchanged, is implied \parencite{davey2002introduction}.
+
+  By our constructions of greatest lower bounds and least upper bounds, we may interpret a parameter value for $\zeta$ as a triplet $\pair{i}{\pair{j}{k}}$.
+  If an instance $x$ is in a slice $\pair{i}{\pair{j}{k}}$ of $\zeta$, it is also in slice $\pair{\pair{i}{j}}{\pair{i}{k}}$ of $\zeta'$.
+  Made explicit, this comes down to the logical implication
+  \begin{equation*}
+    x \in \eta_i \land (x \in \eta'_j \lor x \in \eta''_k) \implies (x \in \eta_i \land x \in \eta'_j) \lor (x \in \eta_i \land x \in \eta''_k).
+  \end{equation*}
+  Our pairing function is so that $\length{\pair{i}{\pair{j}{k}}}$ is at least $\length{i} + \length{j} + \length{k}$ and $\length{\pair{\pair{i}{j}}{\pair{i}{k}}}$ is at most $4(2\length{i} + \length{j} + \length{k}) \le 8(\length{i} + \length{j} + \length{k})$.
+  It follows that, for all $n$, we have $\gap_{\zeta'\!, \zeta}(n) \le 8n$.
+  Hence, it follows that we have $\zeta' \quasilenu \zeta$.
+
+  For the converse, observe that if an instance $x$ is in a slice $\pair{\pair{i_1}{j}}{\pair{i_2}{k}}$ of $\zeta'$, it must also be in slice $\pair{i_1}{\pair{j}{k}}$ or in slice $\pair{i_2}{\pair{j}{k}}$ of $\zeta$.
+  This follows from the logical implication
+  \begin{equation*}
+    (x \in \eta_{i_1} \land x \in \eta'_j) \lor (x \in \eta_{i_2} \land x \in \eta''_k) \implies \begin{cases}
+      x \in \eta_{i_1} \land (x \in \eta'_j \lor x \in \eta''_k)\text{ or} \\
+      x \in \eta_{i_2} \land (x \in \eta'_j \lor x \in \eta''_k).
+    \end{cases}
+  \end{equation*}
+  An argument concerning length bounds of our pairing function similar to the one used before now gets us a bound on the gap from $\zeta$ to $\zeta'$.
+  For all $n$, we have $\gap_{\zeta, \zeta'}(n) \le 4n$.
+  Thus we also have $\zeta \quasilenu \zeta'$ and both parameterizations are in the same equivalence class.
+\end{proof}
+
+For this proof, it is important that the definition of a parameterization makes no strong demands on the inclusion order of slices.
+Most expositions of parameterized computational complexity theory appear to tacitly assume that the inclusion order is a linear order.
+In the most prevalent parameterizations, parameter values are interpreted as numbers.
+The inclusion order on the slices of these parameterizations follows the standard numerical order on the corresponding parameter values.
+However, in the previous proof, a linear inclusion order on slices is not preserved by the constructions of greatest lower bounds and least upper bounds.
+
+The appeal of our nonuniform order on parameterizations is provided by a companion of Theorem~\ref{thm:nulattice}.
+For every set $A$, the collections $\calF_{(A, \clXnu{P})}$ and $\calF_{(A, \clnu{FPT})}$ sit nicely \parencite{davey2002introduction} inside $\calL_\clXnu{P}$ and $\calL_\clnu{FPT}$, respectively.
+\begin{theorem}
+\label{thm:nufilter}
+  Let $A$ be a set.
+  Ordered by $\quasilenu$, the collections $\calF_{(A, \clXnu{P})}$ and $\calF_{(A, \clnu{FPT})}$ are filters in $\calL_\clXnu{P}$ and $\calL_\clnu{FPT}$, respectively.
+\end{theorem}
+\begin{proof}
+  Like with Theorem~\ref{thm:nulattice}, we present a proof for the \clnu{FPT} case only.
+  All ingredients of a proof for the \clXnu{P} case are included in this proof.
+
+  \paragraph{$\calF_{(A, \clnu{FPT})}$ in nonempty.}
+  For every polynomial $p$, every finite set is an $\bigO(p)$-segment of $A$.
+  Therefore, every parameterization of which all slices are finite is in $\calF_{(A, \clnu{FPT})}$.
+  An example of such a parameterization is the length parameterization.
+
+  \paragraph{$\calF_{(A, \clnu{FPT})}$ is upward closed.}
+  Let $\eta$ be a member of $\calF_{(A, \clnu{FPT})}$ and $\zeta$ be any parameterization in $\calL_\clnu{FPT}$ for which we have $\eta \quasilenu \zeta$.
+  Furthermore, let $c$ be so that the slices of $\zeta$ are all in \cltime{$n^c$}.
+  It suffices to prove the existence of a polynomial $p$ such that the slices of $\zeta$ are $\bigO(p)$-segments of $A$.
+
+  Since we have $\eta \quasilenu \zeta$, given a parameter value $j$, there is a parameter value $k$ such that we have $\zeta_j \subseteq \eta_k$.
+  Also, as $\eta$ is in $\calF_{(A, \clnu{FPT})}$, there is a polynomial $q$ such that any slice of $\eta$ is the domain of an $\bigO(q)$-approximation for $A$.
+  An approximation for $A$ that runs the approximation with domain $\eta_k$, but only for members of $\zeta_j$ can be crafted.
+  With $p$ mapping $n$ to $n^c + q(n)$, the running time of such an approximation can be kept in $\bigO(p)$.
+  This $p$ is a polynomial that is independent of the parameter value $j$, so it meets our requirements.
+
+  \paragraph{$\calF_{(A, \clnu{FPT})}$ contains greatest lower bounds.}
+  Given parameterizations $\eta$ and $\eta'$ taken from $\calF_{(A, \clnu{FPT})}$, consider the greatest lower bound $\zeta$ as constructed in the proof of Theorem~\ref{thm:nulattice}.
+  There are polynomials $q$ and $q'$ such that every slice of $\eta$ is an $\bigO(q)$-approximation for $A$ and every slice of $\eta'$ is an $\bigO(q')$-approximation for $A$.
+  By definition, each slice of $\zeta$ is the union of a slice of $\eta$ and a slice of $\eta'$.
+  The corresponding approximations on the constituent slices can be combined into an approximation of which the slice of $\zeta$ at hand is the domain.
+  Now, let $p$ be the polynomial that maps $n$ to $q(n) + q'(n)$.
+  Regarding the running time of the composite approximation, we find that it can be kept in $\bigO(p)$.
+  Because $p$ is independent of the specific slice of $\zeta$, this puts $\zeta$ in $\calF_{(A, \clnu{FPT})}$.
+\end{proof}
+
+The above theorem allows us to think of $\quasilenu$ as an inverse, nonuniform, ranking of how powerful parameterizations are.
+Suppose that a set is in \clXnu{P} or \clnu{FPT} with parameterizations $\eta$ and $\eta'$.
+The \emph{upward closed} property entails that the set is also in the parameterized complexity class with all parameterizations less powerful than $\eta$ or $\eta'$.
+The inclusion of greatest lower bounds means that $\eta$ and $\eta'$ can be combined into a parameterization that is more powerful than either one of them.
+
+\subsubsection{Uniform Complexity Classes}
+While the absence of uniformity constraints may be accommodating to certain proof methods, uniform parameterized complexity is more practically relevant.
+Luckily, we can also characterize the structure of parameterizations relative to uniform parameterized complexity.
+\begin{theorem}
+\label{thm:lattice}
+  Ordered by $\quasile$, the equivalence classes in $\calL_\clX{P}$ and $\calL_\cl{FPT}$ form bounded distributive lattices.
+\end{theorem}
+\begin{proof}
+  Proving the current theorem requires attention to two aspects that did not play a role in proving  Theorem~\ref{thm:nulattice}.
+  First, the criterion for membership in $\calL_\clX{P}$ or $\calL_\cl{FPT}$ is more elaborate than that for membership in their nonuniform counterparts.
+  Second, whenever a bound on the values of a gap function between two parameterizations is employed, that bound must now be computable.
+  Despite these extra elements to consider, a proof of the current theorem may proceed largely along the same lines as the proof of Theorem~\ref{thm:nulattice}.
+  For starters, a proof concerning $\calL_\clX{P}$ is again subsumed in one concerning $\calL_\cl{FPT}$ and we shall therefore present only the latter.
+
+  \paragraph{$\calL_\cl{FPT}$ is bounded.}
+  The parameterization $(\binary^+)_{k \in \binary^+}$ consisting of full slices is also a least element of $\calL_\cl{FPT}$ with respect to $\quasile$.
+  Any constant function acts as a computable upper bound to the gap from this parameterization to any other.
+  As, for instance, the empty set is put in \cl{FPT} by this parameterization, it is indeed a member of $\calL_\cl{FPT}$.
+
+  In order for a parameterization to be a greatest element of $\calL_\cl{FPT}$, it is no longer sufficient for its slices to be finite.
+  Specifically, the construction of a computable upper bound to the gap function requires knowing the number of instances in each slice.
+  With the length parameterization, $(\{x \st \length{x} \le \asNat(k)\})_{k \in \binary^+}$, this extra requirement is satisfied.
+  That it is a member of $\calL_\cl{FPT}$ is, again, witnessed by the empty set, which is put in \cl{FPT} by it.
+  We claim that the gap from any parameterization to the length parameterization is computable.
+  Observe that, for every parameterization $\eta$ that corresponds to a direct parameterized procedure, the minimization function $\mu_\eta$ is computable.
+  This is useful, because all parameterizations in $\calL_\cl{FPT}$ correspond to direct parameterized procedures.
+  As a result, the gap from a parameterization $\eta \in \calL_\cl{FPT}$ to the length parameterization is also computable.
+  For every argument, the gap is simply the maximum of a known finite set of computable values.
+
+  \paragraph{$\calL_\cl{FPT}$ contains greatest lower bounds.}
+  A parameterization is in $\calL_\cl{FPT}$ when it corresponds to a direct parameterized procedure that meets the requirements of Definition~\ref{def:fpt}.
+  A greatest lower bound for two parameterizations $\eta$ and $\eta'$ in $\calL_\cl{FPT}$ can be constructed uniformly via such parameterized procedures.
+  Let $\phi$ and $\phi'$ be procedures associated with $\eta$ and $\eta'$.
+  Although $\phi$ and $\phi'$ need not converge to the same set, we can combine them in a parameterized procedure $\psi$ defined by
+  \begin{equation*}
+    \psi(x, k) \deq \begin{cases}
+      \bits{?}	&\text{if $\phi(x, k) = \bits{?}$ and $\phi'(x, k) = \bits{?}$} \\
+      \bits{0}	&\text{otherwise.}
+    \end{cases}
+  \end{equation*}
+  This parameterized procedure converges to the empty set and witnesses that the empty set is in \cl{FPT}.
+  The parameterization corresponding to $\psi$ is the greatest lower bound $\zeta$ as constructed in the proof of Theorem~\ref{thm:nulattice}.
+
+  What remains is to show that the gap from $\zeta$ to $\eta$ and $\eta'$ can be bounded by a computable function.
+  To this end, observe that, for any $k$, an instance is in $\eta_k$ or $\eta'_k$ only if it is in $\zeta_{\pair{k}{k}}$.
+  Combined with the bound $\length{\pair{k}{k}} \le 4\length{k}$, it follows that, for every $n$, both $\gap_{\zeta, \eta}(n)$ and $\gap_{\zeta, \eta'}(n)$ are bounded by $4n$.
+
+  \paragraph{$\calL_\cl{FPT}$ contains least upper bounds.}
+  For the presence of least upper bounds, the bounds on the gap in the proof of Theorem~\ref{thm:nulattice} are already computable.
+  The only thing required for the proof to carry over to the uniform case is to show that the parameterization $\zeta$ as constructed is a member of $\calL_\cl{FPT}$.
+  Therefore, we turn, like before, to the parameterized procedures $\phi$ and $\phi'$ associated with parameterizations $\eta$ and $\eta'$ in $\calL_\cl{FPT}$.
+  The difference with the case for greatest lower bounds is that our derived  procedure now returns \bits{?} if $\phi$ \emph{or} $\phi'$ produces \bits{?}.
+  Corresponding to this parameterized procedure, we find the parameterization $\zeta$, which is hence a member of $\calL_\cl{FPT}$.
+
+  \paragraph{$\calL_\cl{FPT}$ is distributive.}
+  The proof of distributivity of the nonuniform lattice is concerned only with obtaining bounds on the gap function.
+  As all these bounds in the proof of Theorem~\ref{thm:nulattice} are computable, the proof works equally well for distributivity of the uniform lattice.
+\end{proof}
+
+Also within the uniform lattices, filters are defined by sets.
+Contrary to the nonuniform case, the sets need to be decidable for otherwise the induced collection of parameterizations is empty.
+This is implied by Theorem~\ref{thm:decidable}, which says that direct parameterized procedures can only converge to decidable sets.
+\begin{theorem}
+\label{thm:filter}
+  Let $A$ be a decidable set.
+  Ordered by $\quasile$, the collections $\calF_{(A, \clX{P})}$ and $\calF_{(A, \cl{FPT})}$ are filters in $\calL_\clX{P}$ and $\calL_\cl{FPT}$, respectively.
+\end{theorem}
+\begin{proof}
+  This proof too is presented for \cl{FPT}, but works just as well for \clX{P}.
+
+  \paragraph{$\calF_{(A, \cl{FPT})}$ is nonempty.}
+  The direct parameterized procedure of which the existence is asserted by Theorem~\ref{thm:slow_decidable} witnesses that $\calF_{(A, \cl{FPT})}$ is nonempty.
+
+  \paragraph{$\calF_{(A, \cl{FPT})}$ is upward closed.}
+  Let $\eta$ be a parameterization corresponding to a parameterized procedure $\phi$ that converges to $A$ and meets the requirements of Definition~\ref{def:fpt}.
+  We shall show that all parameterizations in $\calL_\cl{FPT}$ that are above $\eta$ according to $\quasile$ are also in $\calF_{(A, \cl{FPT})}$.
+  Suppose a parameterization $\eta'$ and a computable function $g$ such that, for all $n$, we have $\gap_{\eta, \eta'}(n) \le g(n)$ are given.
+  This parameterization $\eta'$ corresponds to some parameterized procedure $\phi'$ that meets the requirements of Definition~\ref{def:fpt}.
+  Consider a parameterized procedure $\psi$ that does the following on input $(x, k)$.
+  \begin{codelisting}
+  \item
+    \code{If} $\phi'(x, k)$ yields \bits{?}, we conclude that $x$ is not in $\eta'_k$ and \code{return} \bits{?}.
+  \item\label{code:filter:upward:loop}
+    There must be a $k'$ of length at most $g(\length{k})$ such that $x$ is in $\eta_k$.
+    Therefore, we are sure to return $A(x)$ by proceeding as follows \code{for all} $k'$ of length at most $g(\length{k})$.
+    \begin{codelisting}
+    \item \code{If} $\phi(x, k')$ does not yield \bits{?}, \code{return} its output.
+    \end{codelisting}
+  \end{codelisting}
+
+  To prove that $\psi$ meets the requirements of Definition~\ref{def:fpt}, it suffices to show that step~\ref{code:filter:upward:loop} does.
+  Crucially, the parameter dependence of the running time of this loop should be bounded by a computable function.
+  If $f$ is a computable function bounding the parameter dependence of the running time of $\phi$, the parameter dependence of the loop can be bounded by
+  \begin{equation*}
+    \sum_{\mathclap{k'\colon \length{k'} \le g(\length{k})}} f(k').
+  \end{equation*}
+  This bound is computable, and since $\psi$ converges to $A$ by construction, we find that $\eta'$ puts $A$ in \cl{FPT}.
+  As $\eta'$ was an arbitrary parameterization above $\eta$ in the uniform order on parameterizations, we conclude that $\calF_{(A, \cl{FPT})}$ is upward closed.
+
+  \paragraph{$\calF_{(A, \cl{FPT})}$ contains greatest lower bounds.}
+  Every parameterization in $\calF_{(A, \cl{FPT})}$ corresponds to a direct parameterized procedure that converges to $A$ and meets the requirements of Definition~\ref{def:fpt}.
+  Thus, parameterizations $\eta$ and $\eta'$ taken from $\calF_{A, \cl{FPT})}$ are associated to parameterized procedures $\phi$ and $\phi'$, both converging to $A$.
+  These procedures can be combined like in the construction of a greatest lower bound in the proof of Theorem~\ref{thm:lattice}.
+  However, instead of returning \bits{0}, we let the constructed procedure return the output of $\phi$ or $\phi'$ that is not \bits{?}.
+  If both do not output \bits{?}, their outputs are the same, since both parameterized procedures converge to $A$.
+  Thus we obtain a direct parameterized procedure that converges to $A$ on a greatest lower bound of $\eta$ and $\eta'$, and meets the requirements of Definition~\ref{def:fpt}.
+  Because of this, we may conclude that $\calF_{(A, \cl{FPT})}$ contains all greatest lower bounds.
+\end{proof}
+
+By the above theorem, the uniform order $\quasile$ counts as an inverse ranking of how powerful parameterizations are in a very practical and strong sense.
+When a parameterization is strictly below another, it signifies that the convergence behavior of this parameterization is an improvement over that of the other.
+This improvement is of a much stronger kind than the improvements made in typical algorithms races.
+These races seek improvements within a single parameterization \parencite{komusiewicz2012new,fellows2013towards}.
+In this light, the best parameterizations are those that are below most others.
+A set $A$ admits an optimal parameterization with respect to, say, \cl{FPT} if the filter $\calF_{(A, \cl{FPT})}$ is principal.
+
+\subsection{Optimal Nonuniform Parameterizations}
+With respect to \clXnu{P}, all sets admit optimal parameterizations.
+\begin{theorem}
+\label{thm:nuxpprincipal}
+  For any set $A$, the filter $\calF_{(A, \clXnu{P})}$ is principal.
+\end{theorem}
+\begin{proof}
+  Let $S_1, S_2, S_3, \ldots$ be an enumeration of the polynomial segments of $A$.
+  Consider the parameterization $\eta$ given by
+  \begin{equation*}
+    \eta_k \deq \bigcup_{\mathclap{i \le \asNat(k)}} S_i.
+  \end{equation*}
+  By definition, $A$ is in \clXnu{P} with $\eta$ and by construction, $\eta$ is a least element in $\calF_{(A, \clXnu{P})}$.
+\end{proof}
+
+We shall call a least element in the filter corresponding to some set a \defkey{principal parameterization} for that set.
+Theorem~\ref{thm:nuxpprincipal} shows that all sets have principal parameterizations with respect to \clXnu{P}.
+However, this is not a given for arbitrary parameterized complexity classes.
+When they exist, principal parameterizations provide insight into some of the computational complexity of a set.
+For instance, there is a one-to-one correspondence between the imix property of a principal parameterization with respect to \clXnu{P} and the levelability of a set.
+This correspondence arises as a consequence of Theorem~\ref{thm:nuxpprincipal}.
+\begin{corollary}
+  A set is \levelable{\cl{P}} (\immune{\cl{P}}) if and only if a principal parameterization in the induced nonuniform filter with respect to \clXnu{P} has (does not have) imix.
+\end{corollary}
+
+Note that the filter induced by a \cl{P}-bi-immune set consists of a single equivalence class of parameterizations.
+Namely it consists only of the class of parameterizations $\eta$ where for every parameter value $k$ the set $\eta_k$ is finite.
+For filters with respect to \clnu{FPT}, this is no different the filters induced by \immune{\cl{P}} sets are again principal.
+\begin{theorem}
+\label{thm:nufptprincipal}
+  For any set $A$ that is \immune{\cl{P}}, the filter $\calF_{(A, \clnu{FPT})}$ is principal.
+\end{theorem}
+\begin{proof}
+  By definition of being \immune{\cl{P}}, $A$ has a maximal polynomial segment $S$.
+  For some polynomial $p$, this polynomial segment $S$ is also an $\bigO(p)$-segment.
+  Thus there exists a parameterization that has $S$ as one of its slices and with which $A$ is in \clnu{FPT}.
+  This parameterization is equivalent to any parameterization below it in $\calF_{(A, \clnu{FPT})}$, hence it is a principal parameterization for $A$.
+\end{proof}
+
+Certainly, a principal parameterization with respect to \clnu{FPT} for any \immune{\cl{P}} set does not have imix.
+On the other hand, if the filter with respect to \clnu{FPT} were to be principal for any \levelable{\cl{P}} set, a principal parameterization has to have imix.
+The \levelable{\cl{P}} property is, however, indifferent to the degree of the polynomials involved in the polynomial segments of a set.
+This makes an investigation of filters with respect to \clnu{FPT} induced by \levelable{\cl{P}} sets difficult.
+We need a variant that is sensitive to the degree of the polynomials related to polynomial segments of a set.
+\begin{definition}
+  A set is \defkeyat{omni-levelable!for FPT@for \cl{FPT}}{\levelable{\cl{FPT}}} if there is a $c$ such that for all polynomials $p$ of degree at least $c$ the set has no maximal $\bigO(p)$-segment.
+\end{definition}
+
+Likewise, we could define a set being \immune{\cl{FPT}} as it having a maximal $\bigO(p)$-segment for all polynomials $p$ of sufficiently high degree.
+In contrast to the general, degree independent definitions, these two classifications do not exhaust all sets.
+Sets may exist that are neither \levelable{\cl{FPT}}, nor \immune{\cl{FPT}}.
+Such sets would, however, be \levelable{\cl{P}}.
+Optimal parameterizations with respect to \clnu{FPT} do not exist for sets that are \levelable{\cl{P}}, yet not \levelable{\cl{FPT}}.
+\begin{theorem}
+\label{thm:nufptnonprincipal}
+  For any set $A$ that is \levelable{\cl{P}} and not \levelable{\cl{FPT}}, the filter $\calF_{(A, \clnu{FPT})}$ is nonprincipal.
+\end{theorem}
+\begin{proof}
+  In case $A$ is \levelable{\cl{P}} and not \levelable{\clnu{FPT}}, there is an infinite set of polynomials $\{p_1, p_2, p_3, \ldots\}$ such that, for all $i$,
+  \begin{itemize}
+  \item $A$ has a maximal $\bigO(p_i)$ segment, and
+  \item if $S_i$ is a maximal $\bigO(p_i)$-segment of $A$ and $S_{i + 1}$ is a maximal $\bigO(p_{i + 1})$-segment of $A$, then $S_{i + 1} \backslash S_i$ is infinite.
+  \end{itemize}
+  Any parameterization with which $A$ is in \clnu{FPT} can only contain finitely many maximal $\bigO(p_i)$-segments of $A$ as its slices.
+  Hence $\calF_{(A, \clnu{FPT})}$ cannot be principal.
+\end{proof}
+
+Together, Theorem~\ref{thm:nufptprincipal} and Theorem~\ref{thm:nufptnonprincipal} provide an overview of what sets have optimal parameterizations with respect to \clnu{FPT}.
+This overview is depicted in Figure~\ref{fig:nuprincipal}.
+\begin{figure}
+  \centering
+  \begin{tabular}{|cccc|}
+    \multicolumn{2}{|c|}{\immune{\cl{P}}}	& \multicolumn{2}{|c|}{\levelable{\cl{P}}} \\
+    \multicolumn{2}{|c|}{}	&	& \multicolumn{1}{|c|}{\footnotesize{\levelable{\cl{FPT}}}} \\
+    \hline
+    \multicolumn{2}{|c|}{\emph{principal}}	& \multicolumn{1}{|c|}{\emph{nonprincipal}}	& open \\
+  \end{tabular}
+  \caption{
+    The universe of sets, represented by the horizontal line, can be divided according to levelability with respect to \cl{P}.
+    Additionally, a subclass of the \levelable{\cl{P}} sets is \levelable{\cl{FPT}}.
+    Below the horizontal line, principality of the filter with respect to \clnu{FPT} is indicated.
+    For \levelable{\cl{FPT}} sets, no results are available.
+  }
+  \label{fig:nuprincipal}
+\end{figure}
+
+Of course, Theorem~\ref{thm:nufptnonprincipal} is only meaningful if there are \levelable{\cl{P}} sets that are not \levelable{\cl{FPT}}.
+This is the case.
+\begin{theorem}
+  There are \levelable{\cl{P}} sets that are not \levelable{\cl{FPT}}.
+\end{theorem}
+\begin{proof}
+  We shall prove the theorem by constructing a \levelable{\cl{P}} set that has a maximal $\bigO(p)$-segment for infinitely many polynomials $p$ of distinct degrees.
+  For this, let $\phi_1, \phi_2, \phi_3, \ldots$ be an effective enumeration of all partial procedures.
+
+  Consider a recursive procedure for deciding a set $A$ that, on input $\pair{c}{x}$, proceeds as follows.
+  \begin{codelisting}
+  \item
+    We determine a set $I$ of indices of procedures that are consistent with an initial segment of $A$:
+    \begin{codelisting}
+    \item
+      \code{Initialize} $I$ to $\{1, 2, 3, \ldots, \length{\pair{c}{x}}\}$.
+    \item
+      \code{For each} pair $\pair{d}{y}$ that satisfies $d \le c$ and $\length{\pair{d}{y}} \le \log \length{\pair{c}{x}}$ we remove those indices from $I$ that are not consistent with $A(\pair{d}{y})$:
+      \begin{codelisting}
+      \item
+        Recursively \code{compute} $A(\pair{d}{y})$.
+      \item
+        \code{For each} index $i$ in $I$:
+        \begin{codelisting}
+        \item
+          \code{Simulate} up to $\length{\pair{d}{y}}^{3c}$ steps of $\phi_i$ on input $\pair{d}{y}$.
+        \item
+          \code{If} $\phi_i$ was simulated to completion and was inconsistent with $A(\pair{d}{y})$ in the sense that we have $\phi_i(\pair{d}{y}) = \bits{1} - A(\pair{d}{y})$,
+          \\\-\quad \code{remove} $i$ from $I$.
+        \end{codelisting}
+      \end{codelisting}
+    \end{codelisting}
+  \item
+    We try to make an index in $I$ inconsistent with $A$:
+    \begin{codelisting}
+    \item
+      \code{For each} index $i$ in $I$:
+      \begin{codelisting}
+      \item
+        \code{Simulate} up to $\length{\pair{c}{x}}^{3c}$ steps of $\phi_i$ on input $\pair{c}{x}$.
+      \item
+        \code{If} $\phi_i$ was simulated to completion and we have $\phi_i(\pair{c}{x}) \in \{\bits{1}, \bits{0}\}$,
+        \\\-\quad \code{return} $\bits{1} - \phi_i(\pair{c}{x})$.
+      \end{codelisting}
+    \item
+      Else, as no procedure could be made inconsistent, \code{return} \bits{0}.
+    \end{codelisting}
+  \end{codelisting}
+
+  The first stage of this procedure performs at most $\length{\pair{c}{x}}^2$ simulations of computations, each of at most $\log(\length{\pair{c}{x}})^{3c}$ steps.
+  Besides these simulations, this stage computes an initial segment of $A$ to test against.
+  This segment is computed recursively and the recursion depth is bounded by the iterated logarithm of $\length{\pair{c}{x}}$.
+  By using dynamic programming, the time required to compute the segment is insignificant with respect to the total running time of the entire procedure.
+
+  The second stage of the procedure requires the simulation of at most $\length{\pair{c}{x}}$ computations, each of at most $\length{\pair{c}{x}}^{3c}$ steps.
+  Efficient simulation \parencite{arora2009computational} limits the overhead of simulation to a logarithmic factor.
+  As a function of the input $\pair{c}{x}$, the number of steps spent in the second stage is thus in $\bigO(\length{\pair{c}{x}} \cdot \length{\pair{c}{x}}^{3c} \cdot \log(\length{\pair{c}{x}}^{3c}))$.
+  This puts the number of steps taken by the entire procedure in $\bigO(\length{\pair{c}{x}}^{3c + 2})$.
+  Note that the running time of the procedure is not polynomial in the length of the input, $\length{\pair{c}{x}}$, as $c$ appears in the exponent.
+
+  Given a constant $c$, let $p_c$ be the polynomial defined by $p(n) \deq n^{3c + 2}$.
+  For any fixed $c$, the set $\{\pair{d}{x} \st d \le c \reland x \in \binary^+\}$ is an $\bigO(p_c)$-segment of $A$.
+  It is not a maximal polynomial segment, as for larger values of $c$ infinitely many elements are introduced in the corresponding sets.
+  However, we claim that it is a maximal $\bigO(p_c)$-segment of $A$ and thus that $A$ is \levelable{\cl{P}}, yet not \levelable{\cl{FPT}}.
+  Suppose towards a contradiction that there is an infinite $\bigO(p_c)$-segment $S \subseteq \{\pair{w}{x} \st w > c \reland x \in \binary^+\}$ for $A$.
+  Let $i$ be an index of an $\bigO(p_c)$-approximation for $A$ with domain $S$.
+  Allmost all $\pair{w}{x} \in S$ will be so that $\length{\pair{w}{x}} \ge i$.
+  Therefore, for allmost all inputs to our procedure, $i$ will be included in $I$ when the procedure enters its second stage.
+  Because we have $w > c$, we have $3w > 3c + 2$.
+  This means that any function in $\bigO(p_c)$ will eventually be dominated by the polynomial mapping $n$ to $n^{3w}$, for any value of $w$ that occurs in $S$.
+  Indeed, this is the reason for the constant $3$ in the exponent of the time bounds in our decision procedure for $A$.
+  Now, for almost all elements of $S$, the second stage of our procedure does one of two things.
+  Either it invalidates $i$ as the index of an $\bigO(p_c)$-approximation for $A$, or it invalidates an index smaller than $i$.
+  The latter of these possibilities can happen at most $i - 1$ times, so, since $S$ was assumed to be infinite, eventually $i$ must be invalidated.
+  This contradicts our choice of $i$ as the index of an $\bigO(p_c)$-approximation for $A$ with domain $S$.
+  We conclude that there is no infinite $\bigO(p_c)$-segment $S \subseteq \{\pair{w}{x} \st w > c \reland x \in \binary^+\}$ for $A$.
+\end{proof}
+
+For completeness, we shall also show the existence of \levelable{\cl{FPT}} sets.
+Our proof revolves around length increasing reductions.
+Our notion of a \emph{reduction} is that of a membership preserving polynomial time computable function, in other words, that of a Karp reduction.
+\begin{theorem}
+  Every set outside \cl{P} from which there is a linearly length increasing reduction to itself is \levelable{\cl{FPT}}.
+\end{theorem}
+\begin{proof}
+  Let $A$ be a set outside \cl{P} and $f$ a linearly length increasing reduction from $A$ to itself.
+  Suppose that $A$ is not \levelable{\cl{FPT}} and, for some polynomial $p$ of degree $c$, has a maximal $\bigO(p)$-segment $S$.
+  We may assume that, for some polynomial $q$ of degree $c - 1$, it is possible to compute $f$ in time $\bigO(q)$.
+  The sets
+  \begin{align*}
+    S' &\deq \{x \st x \notin S \reland f(x) \in S\}, \\
+    S_x &\deq \{x, f(x), f(f(x)), \ldots\}
+  \end{align*}
+  are, by nature of $f$, also $\bigO(p)$-segments of $A$.
+  For $S'$ this requires the linear bound on the length of the output of $f$, where for $S_x$ this requires that $f$ is length increasing.
+  Furthermore, $S'$ satisfies $S \cap S' = \emptyset$.
+
+  By the assumed maximality of $S$, for every $x$ there are only finitely many elements in the set $S \backslash S_x$.
+  However, since $A$ is not in \cl{P}, there are infinitely many $x$ outside $S$ and for each of these the set $S_x$ intersects $S'$.
+  Hence $S'$ is infinite, contradicting the maximality of $S$.
+\end{proof}
+
+The existence of \levelable{\cl{FPT}} sets now follows from the existence of sets outside \cl{P} that have a linearly length increasing reduction to itself.
+\begin{lemma}
+  There are sets outside \cl{P} that have a linearly length increasing reduction to itself.
+\end{lemma}
+\begin{proof}
+  Let $X$ be a set outside \cl{P} and consider its cylindrification
+  \begin{equation*}
+    A \deq \{\pair{x}{y} \st x \in X \reland y \in \binary^+\}.
+  \end{equation*}
+  Note that $A$ too is not in \cl{P}.
+  Our pairing function is such that the function $f$ defined by
+  \begin{equation*}
+    f(\pair{x}{y}) \deq \pair{x}{\bits{0}y}
+  \end{equation*}
+  is a linearly length increasing reduction from $A$ to itself.
+\end{proof}
+
+It should be noted that certain padding functions give rise to linearly length increasing reductions.
+There are padding functions, $\pad$, for which there exists a constant $c$ such that for all $x, y$ we have
+\begin{equation*}
+  \frac{1}{c} \cdot (\length{x} + \length{y}) \le \length{\pad(x, y)} \le c \cdot (\length{x} + \length{y}).
+\end{equation*}
+Padding functions that meet this enhanced honesty criterion can be turned into linearly length increasing reductions by mapping $x$ to $\pad(x, \bits{0}^{c \cdot \length{x}})$.
+
+It was shown \parencite{young1983some} that every honest, one-one, polynomially computable function is the productive function for the complement of some $k$-creative set.
+In particular, this means that there are $k$-creative sets where the influence of the associated productive function on the length of its input is linear.
+Such functions can again be turned into linearly length increasing reductions.
+Hence, assuming we have $\cl{P} \ne \cl{NP}$, there are also $k$-creative sets that are \levelable{\cl{FPT}}.
+
+\subsection{Optimal Uniform Parameterizations}
+The proof of Theorem~\ref{thm:nuxpprincipal} fails for filters with respect to the uniform \clX{P}.
+First and foremost, the enumeration of polynomial segments is in general not effective by Rice's theorem.
+Additionally, the existence of a procedure that meets the requirements of Definition~\ref{def:xp} is not guaranteed.
+Lastly, being a principal parameterization with respect to a uniform complexity class requires a bound on the gap to any other parameterization to be computable.
+When focussing only on parameterizations that \emph{provably} put a set in \clX{P}, we regain something akin to Theorem~\ref{thm:nuxpprincipal}.
+Here, provability refers to being deducible in some fixed formal system \parencite{kleene1967mathematical}.
+\begin{theorem}
+\label{thm:xpprincipal}
+  Given any formal proof system, for any set $A$ there is a least parameterization among those provably, via a witnessing parameterized procedure and parameter dependence, putting $A$ in \clX{P}.
+\end{theorem}
+\begin{proof}
+  Let $\mathfrak{F}$ be the fixed deductive system.
+  A form of universal search, along the lines of \textcite{hutter2002fastest}, through polynomial approximations is possible in the parameterized setting.
+  To this end, let $\phi_1, \phi_2, \phi_3, \ldots$ be an effective enumeration of all partial procedures and $p_1, p_2, p_3, \ldots$ an effective enumeration of all polynomials.
+  Consider the parameterized procedure converging to $A$ that, on input $(x, k)$, does the following.
+  \begin{codelisting}
+  \item
+    We construct a finite set $M$ of polynomial approximations for $A$:
+    \begin{codelisting}
+    \item
+      \code{Initialize} $M$ to the empty set.
+    \item
+      \code{For each} combination of a proof $\mathfrak{p}$ in $\mathfrak{F}$, an index $i$ of a parameterized procedure, and an index $j$ of a polynomial, all of length at most $\asNat(k)$:
+      \begin{codelisting}
+      \item\label{alg:xpprincipal:approximations}
+        \code{If} $\mathfrak{p}$ proves that $\phi_i$ is a $p_j$-approximation of $A$,
+        \\\-\quad \code{Add} $i$ to $M$.
+      \end{codelisting}
+    \end{codelisting}
+  \item
+    We decide on membership of $x$ if any of the polynomial approximations in $M$ does:
+    \begin{codelisting}
+    \item
+      \code{For each} index $i$ in $M$:
+      \begin{codelisting}
+      \item
+        \code{Compute} $\phi_i(x)$.
+      \item
+        \code{If} $\phi_i(x) \in \{\bits{1}, \bits{0}\}$, \code{return} $\phi_i(x)$.
+      \end{codelisting}
+    \item
+      Else, as none of the polynomial approximation decides on membership of $x$, \code{return} \bits{?}.
+    \end{codelisting}
+  \end{codelisting}
+
+  We shall first show that $A$ is in \clX{P} with the parameterization corresponding to this procedure.
+  After that, we shall show that the gap from that parameterization to any other with which $A$ is provably in \clX{P} can be bounded by a computable function.
+
+  For all parameter values $k$, the set $M$ is finite throughout the execution of this parameterized procedure.
+  As a result, the first stage of this procedure takes a finite number of steps and the second stage can be executed in polynomial time, for every fixed $k$.
+  Moreover, we claim that the parameter dependence is computable.
+  For the first stage, the parameter dependence can be computed by simply performing the prescribed computation and clocking the number of steps taken.
+  Observe that we can also keep keep track of all the polynomials $p_j$ associated with indices $i$ added to $M$ in step \ref{alg:xpprincipal:approximations}.
+  Doing so, we can upper bound the running time of the second stage by the sum of all these polynomials.
+  Because this bound depends solely on the parameter value, we find that we can construct a computable function $f$ as required by Definition~\ref{def:xp}.
+  Thus, $A$ is in \clX{P} with the parameterization corresponding to the parameterized procedure above.
+
+  Let $\psi$ be a direct parameterized procedure converging to $A$, and $f$ a computable function.
+  Suppose $\psi$ and $f$ are witnesses in a proof, $\mathfrak{p}$, of the fact that $A$ is in \clX{P} with the parameterization corresponding to $\psi$.
+  Denote the parameterization corresponding to the $\psi$ by $\zeta$ and the parameterization corresponding to the parameterized procedure we constructed by $\eta$.
+  We claim that there is a computable function $g$ such that, for all $k'$, slice $\zeta_{k'}$ is included in slice $\eta_{g(k')}$.
+  This entails the desired relationship $\eta \quasile \zeta$.
+  Given $\psi$ and $k$ we can effectively come up with an index $i$ such that $\phi_i$ corresponds to the partial application of $\psi$ to $k'$.
+  Correspondingly, using $f$ we can come up with an index $j$ such that $\phi_i$ is a $p_j$-approximation of $A$.
+  A proof of this, $\mathfrak{p}'$, can be adapted from $\mathfrak{p}$.
+  Now, consider the function defined by
+  \begin{equation*}
+    g(k') \deq \asStr(\max\{\length{i}, \length{j}, \length{\mathfrak{p}'}\}).
+  \end{equation*}
+  As $i$, $j$, and $\mathfrak{p}'$ were derived effectively from $\psi$, $f$, $\mathfrak{p}$, and $k'$, this is a computable function of $k'$ for any fixed $\psi$, $f$, and $\mathfrak{p}$.
+  For any $k'$, the first stage of the above parameterized procedure includes the corresponding $i$ in the set $M$ when we have $k = g(k')$.
+  The second stage of the procedure then ensures that slice $\zeta_{k'}$ is included in slice $\eta_k = \eta_{g(k')}$, as we set out to prove.
+\end{proof}
+
+Thus, adding a provability requirement offsets the limitations we incurred by moving to a uniform setting.
+The provability requirement in Theorem~\ref{thm:xpprincipal} enforces the effectiveness that was not present in the proof of Theorem~\ref{thm:nuxpprincipal}.
+With respect to \cl{FPT}, the proof of Theorem~\ref{thm:nufptprincipal} cannot be reused to show that \immune{\cl{P}} sets induce principal filters.
+Specifically, it is no longer sufficient for the gap from one parameterization to another to take on only finite values.
+Instead, there must be a uniformly computable bound on the value of the gap function.
+Of course, we \emph{can} show that filters with respect to \cl{FPT} are principal for sets in \cl{P}.
+\begin{theorem}
+\label{thm:fptprincipal}
+  For any set $A$ that is in \cl{P}, the filter $\calF_{(A, \cl{FPT})}$ is principal.
+\end{theorem}
+\begin{proof}
+  The parameterization consisting of full slices, $(\binary^+)_{k \in \binary^+}$, is one with which $A$ is in \cl{FPT}.
+  Since the class of this parameterization is the least element of the encompassing lattice of parameterizations, the filter must be principal.
+\end{proof}
+
+Principal parameterizations with respect to \cl{FPT} for sets in \cl{P} do not have imix.
+More broadly, if an \immune{\cl{P}} set has a principal parameterization with respect to \cl{FPT}, this parameterization does not have imix.
+This is the extent to which the proof of Theorem~\ref{thm:nufptprincipal} can be applied to the uniform setting.
+Conversely, if a set has a principal parameterization with respect to \cl{FPT} that does have imix, the set must be \levelable{\cl{P}}.
+\begin{lemma}
+\label{lem:fptimix}
+  A set that, with respect to \cl{FPT}, has a principal parameterization without imix, is \immune{\cl{P}}.
+\end{lemma}
+\begin{proof}
+  A parameterization $\eta$ without imix has a slice $\eta_k$ such that for all other slices $\eta_{k'}$ the difference $\eta_k \backslash \eta_{k'}$ is finite.
+  Of any set $A$ that is in \cl{FPT} with $\eta$, this slice is a polynomial segment.
+  If $\eta$ is a principal parameterization for $A$, then $\eta_k$ is even maximal up to finite variations for all slices of all parameterizations in $\calF_{(A, \cl{FPT})}$.
+  Because every polynomial segment of $A$ can be turned into a slice of a parameterization with which $A$ is in \cl{FPT}, this means that $A$ must be \immune{\cl{P}}.
+\end{proof}
+
+This observation is of use as we turn to principality of filters with respect to \cl{FPT} for \levelable{\cl{P}} sets.
+While the proof of Theorem~\ref{thm:nufptnonprincipal} works for the uniform setting as well, the reach of the result can be extended.
+We shall do so in a way that has a clear kinship to the diagonal argument used in the proof of the time hierarchy theorem of \textcite{hartmanis1965computational}.
+Though, where the time hierarchy theorem constitutes a hierarchy of \emph{sets}, our theorem is about a hierarchy of \emph{parameterized procedures}.
+\begin{theorem}
+\label{thm:fptnonprincipal}
+  For any set $A$ that is \levelable{\cl{P}}, the filter $\calF_{(A, \cl{FPT})}$ is nonprincipal.
+\end{theorem}
+\begin{proof}
+  We present a proof by contradiction, assuming $\eta$ is a principal parameterization with respect to \cl{FPT} for $A$.
+  A contradiction is arrived at by the construction of a parameterization $\zeta$ with which $A$ is in \cl{FPT} and for which we have $\eta \not\quasile \zeta$.
+  Let $\phi$ be a direct parameterized procedure and $p$ a polynomial witnessing that $A$ is in \cl{FPT} with $\eta$ in accordance with Definition~\ref{def:fpt}.
+  Consider a direct parameterized procedure that converges to $A$ and proceeds as follows on input $(x, k)$.
+  \begin{codelisting}
+  \item
+    \code{Set a timeout} so that at most $\asNat(k) \cdot \length{x}^2 \cdot p(\length{x})$ steps are spent in total doing the following, \code{for each} $j \in \{1, 2, 3, \ldots\}$
+    \begin{codelisting}
+    \item
+      \code{Compute} $\phi(x, \asStr(j))$.
+    \item
+      \code{If} $\phi(x, \asStr(j)) \in \{\bits{1}, \bits{0}\}$, \code{return} $\phi(x, \asStr(j))$.
+    \end{codelisting}
+  \item
+    Else, as no decision about $x$ could be reached in time, \code{return} \bits{?}.
+  \end{codelisting}
+
+  Let $\zeta$ be the parameterization corresponding to this direct parameterized procedure.
+  The dependence on the parameter value in the self-imposed running time bound ensures that $\zeta$ is in fact a parameterization.
+  Because the dependence on the length of the instance is a polynomial of which the degree does not depend on the parameter value, $A$ is in \cl{FPT} with $\zeta$.
+
+  It remains to show that we have $\eta \not\quasile \zeta$.
+  Observe that our procedure computes values of $\bigO(p)$-approximations for $A$ until it encounters an approximation of which $x$ is in the domain.
+  By merit of the $\length{x}^2$ factor in the running time bound, the number of approximations that our procedure can compute increases as a function of $\length{x}$
+  In fact, this number increases without a bound for any constant value of $k$.
+  From Lemma~\ref{lem:fptimix}, it follows that $\eta$ must have imix.
+  Therefore, even for a fixed value of $k$, our procedure is able to decide membership of instances $x$ for which $\mu_\eta(x)$ is arbitrarily high.
+  Hence, the gap from $\eta$ to $\zeta$ is always infinite, proving $\eta \not\quasile \zeta$.
+\end{proof}
+
+From the perspective of Lemma~\ref{lem:fptimix}, we get from the above theorem that no principal parameterization in a filter of the form $\calF_{(A, \cl{FPT})}$ has imix.
+However, parameterizations with imix are the most interesting from an applications point of view.
+Thus, we find that sets for which parameterized algorithms are attractive do not admit optimal parameterizations.
+When the filter induced by a set is nonprincipal, there is no single structural origin of computational complexity inside the set.
+Of such sets, it is not possible to capture the structure responsible for the computational hardness of the set by a parameterization.
+Specifically, consider the many structural properties an instance may have.
+Some of these properties can be used to decide membership of the instance in a set in a way that defies the computational hardness of the set.
+If the set lacks an optimal parameterization, there are infinitely many distinct properties that can be used to that end.
+
+We now have a characterization of which filters with respect to \cl{FPT} are principal and which are not.
+In Figure~\ref{fig:principal}, this characterization, a combination of Theorem~\ref{thm:fptprincipal} and Theorem~\ref{thm:fptnonprincipal} is summarized visually.
+\begin{figure}
+  \centering
+  \begin{tabular}{|cccc|}
+    \multicolumn{2}{|c|}{\immune{\cl{P}}}	& \multicolumn{2}{|c|}{\levelable{\cl{P}}} \\
+    \multicolumn{1}{|c|}{\footnotesize{\cl{P}}}	& \multicolumn{1}{|c|}{}	& \hphantom{\emph{nonprincipal}}	& \hphantom{\footnotesize{\levelable{\cl{FPT}}}} \\
+    \hline
+    \multicolumn{1}{|c|}{\emph{principal}}	& open	& \multicolumn{2}{|c|}{\emph{nonprincipal}} \\
+  \end{tabular}
+  \caption{
+    The uniform counterpart to Figure~\ref{fig:nuprincipal}.
+    For \immune{\cl{P}} sets outside \cl{P}, no results regarding the principality of filters with respect to \cl{FPT} are available.
+  }
+  \label{fig:principal}
+\end{figure}

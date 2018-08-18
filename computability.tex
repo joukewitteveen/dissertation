@@ -167,7 +167,7 @@ As we have seen, the limit sets of convergent direct parameterized procedures we
 A parameterized foray into the realm of sets that are not necessarily decidable starts with parameterized procedures that are not necessarily direct.
 \begin{definition}
   Let $f$ be a function from $\binary^+$ to $\bbN$.
-  A parameterized procedure $\phi$ is \defkeyat{parameterized procedure!$f$-alternating}{$f$-alternating} if for every instance $x$ there are at most $f(x)$ values of $i$ satisfying
+  A parameterized procedure $\phi$ is \defkeyat{parameterized procedure!alternating@$f$-alternating}{$f$-alternating} if for every instance $x$ there are at most $f(x)$ values of $i$ satisfying
   \begin{equation*}
     \phi(x, \asStr(i)) \neq \phi(x, \asStr(i + 1)).
   \end{equation*}
@@ -177,7 +177,7 @@ Note that in this definition, we have imposed a linear order on the parameter va
 In the presence of a parameterization, this imposed order need not be related to the inclusion order on the slices of the parameterization.
 
 Extending Lemma~\ref{lem:convergent_finite}, the convergent parameterized procedures can be characterized in yet another way.
-An parameterized procedure is convergent if it is $f$-alternating and for every instance $x$ outputs \bits{?} for only finitely many parameter values.
+A parameterized procedure is convergent if it is $f$-alternating and for every instance $x$ outputs \bits{?} for only finitely many parameter values.
 When the function $f$ maps its inputs to the constant $n$, the limit set of an $f$-alternating parameterized procedure is said to be \emph{weakly $n$-computably enumerable} \parencite{odifreddi1992classical,epstein1981hierarchies}.
 Such sets form the $\Delta^{-1}_n$ levels of a hierarchy known today as the \defkey{difference hierarchy} \parencite{downey2010algorithmic}.
 The hierarchy originates in the 1960s \parencite{putnam1965trial,gold1965limiting,ershov1968hierarchyi} and is generally attributed to \citeauthor{ershov1968hierarchyi}.
@@ -236,8 +236,8 @@ Most importantly, the theorem implies that, when $f$ is computable, it is possib
   Let $\psi_1, \psi_2, \psi_3, \ldots$ be such an enumeration and consider the parameterized procedure
   \begin{equation*}
     \psi(x, k) \deq \begin{cases}
-      \bits{1}	& \text{if $\psi_{\asNat(x)}(x, k) = \bits{0}$}, \\
-      \bits{0}	& \text{otherwise}.
+      \bits{1}	&\text{if $\psi_{\asNat(x)}(x, k) = \bits{0}$}, \\
+      \bits{0}	&\text{otherwise}.
     \end{cases}
   \end{equation*}
   This procedure is $(1 + f)$-alternating and hence it is $g$-alternating.
@@ -248,7 +248,7 @@ Most importantly, the theorem implies that, when $f$ is computable, it is possib
 Similar theorems have been published \parencite{epstein1981hierarchies,arslanov1997degree}, but our parameterized framework inspired a notably more elegant proof.
 
 \subsection{Reducibility to the Halting Set}
-The undecidable halting set\index{\pr{Halt}},
+The undecidable halting set\index{Halt@\pr{Halt}},
 \begin{equation*}
   \pr{Halt} \deq \{x \in \binary^+ \st \text{$x$ encodes a procedure that terminates}\},
 \end{equation*}
@@ -391,7 +391,7 @@ In fact, the subset may be chosen so that it is ordered linearly by inclusion.
   Because a quasiparameterization is directed, it contains cofinal chains.
 
   When the order is decidable, such a chain can be constructed by going through all parameter values and selectively including some of the corresponding slices.
-  The slice corresponding to a parameter value is included in the subset of the quasiparameterization if it is greater than the last slice that was added.
+  The slice corresponding to a parameter value is included in the subset of the quasiparameterization if it is a superset of the last slice that was added.
   To the $i$th slice thus included, we associate the string representation of $i$ as a parameter value.
   This procedure is effective and by construction the resulting subset is ordered linearly.
   It remains to show that it is cofinal.

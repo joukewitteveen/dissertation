@@ -1,22 +1,44 @@
-%\usepackage{algorithmic}
-\usepackage{bbm}
+\usepackage{amssymb,bbm}
+
+
+\newlist{codelisting}{enumerate}{4}
+\setlist[codelisting,1]{label=\arabic*:,ref=\arabic*}
+\setlist[codelisting,2]{label=\thecodelistingi.\arabic*:,ref=\thecodelistingi.\arabic*}
+\setlist[codelisting,3]{label=\thecodelistingii.\arabic*:,ref=\thecodelistingii.\arabic*}
+\setlist[codelisting,4]{label=\thecodelistingiii.\arabic*:,ref=\thecodelistingiii.\arabic*}
 
 
 \DeclareMathOperator{\asNat}{asInt}
 \DeclareMathOperator{\asReal}{asReal}
 \DeclareMathOperator{\asStr}{asStr}
 \DeclareMathOperator{\bigO}{\mathcal{O}}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\gap}{gap}
+\DeclareMathOperator{\pad}{pad}
 
+\newcommand{\code}{\textsf}
 \newcommand{\bbN}{\mathbbm{N}}
 \newcommand{\binary}{\mathbbm{2}}
 \newcommand{\bits}[1]{\textnormal{\texttt{#1}}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calL}{\mathcal{L}}
 \newcommand{\cl}[1]{\textnormal{\textbf{#1}}}	% Complexity classes
 \newcommand{\cladv}[2]{\ensuremath{\textnormal{\textbf{#1}}\!_\textnormal{\textbf{/#2}}}}	% Complexity classes with advice
+\newcommand{\clnu}[1]{\cl{#1$_\textbf{nu}$}}	% Nonuniform complexity classes
+\newcommand{\cltime}[1]{\cl{TIME(#1)}}	% Deterministic time classes
+\newcommand{\clX}[1]{\cl{\textit{X}#1}}	% Slicewise complexity classes
+\newcommand{\clXnu}[1]{\clnu{\textit{X}#1}}	% Nonuniform slicewise complexity classes
 \newcommand{\deq}{=}	% Defined equal
 \newcommand{\length}[1]{{\lvert#1\rvert}}
+\newcommand{\pair}[2]{{\langle #1, #2\rangle}}
 \newcommand{\pr}[1]{\textnormal{\textsc{#1}}}	% Problems
+\newcommand{\quasile}{\preccurlyeq}
+\newcommand{\quasilenu}{\quasile_\mathrm{nu}}
 \newcommand{\reland}{\;\text{ and }\;}	% Relating conditions conjunctively
 \newcommand{\slp}{\textsl{p}}	% Polynomial time functions
 \newcommand{\st}[1][]{\;#1{|}\;}	% Such that (with optional size)
+
+\newcommand{\immune}[1]{almost #1-bi-immune}
+\newcommand{\levelable}[1]{#1-omni-levelable}
 
 % vim:ts=50
