@@ -1,14 +1,14 @@
 \section{as Polynomial Levelability}
 
-The computational complexity of a set is focussed on the complexity of its hardest instances, or on that of the majority of its instances.
+The computational complexity of a set is focused on the complexity of its hardest instances, or on that of the majority of its instances.
 This has been the case since the identification of efficient computability by Cobham and Edmonds around 1965 \parencite[see][]{goldreich2008computational}.
 Intractability results \parencite{cook1971complexity,garey1979computers} generally consider the hardest instances, while average case complexity looks at complexity of the bulk.
 Yet, even very hard sets can have simple instances and often lots of them.
 
-The indiscriminate judgement of the computational complexity of sets was addressed by \textcite{lynch1975reducibility} in \citeyear{lynch1975reducibility}.
+The indiscriminate judgment of the computational complexity of sets was addressed by \textcite{lynch1975reducibility} in \citeyear{lynch1975reducibility}.
 She dealt with the distribution of complexity inside sets by examining intrinsically hard subsets.
 Although fixed-parameter tractability would only be established some two decades later \parencite{downey1992fixed}, a parameterized computational complexity theory was thus started.
-In this section, we shall built a parameterized theory of computational complexity on these early foundations.
+In this section, we shall build a parameterized theory of computational complexity on these early foundations.
 While the traditional parameterized classes are easily recovered, our analysis will be concerned with parameterizations as independent measures of complexity.
 Much of our theory revolves around collections of parameterizations that put a given set in a parameterized complexity class.
 Such collections function as an interface to the complexity of the sets that gave rise to them.
@@ -271,7 +271,7 @@ When we look at $\calL_\clXnu{P}$ or $\calL_\clnu{FPT}$ in terms of equivalence 
   Indeed, any constant bounds the gap from this parameterization to another and thus this parameterization is below any other with respect to $\quasilenu$.
 
   A greatest element can be found in any parameterization of which the slices are all finite.
-  Take, for instance, the length parameterization, $(\{x \st \length{x} \le \asNat(k)\})_{k \in \binary^+}$.
+  Take, for instance, the length parameterization, $(\{x \st \length{x} \le \asNat(k)\})_{k \in \binary^+}$\indexkey{length parameterization}.
   Regardless of the bound on the length of parameter values, the gap from any parameterization to this parameterization is the maximum of a finite set.
   The gap is therefore always finite.
   Hence, this parameterization is above any other with respect to $\quasilenu$.
@@ -423,7 +423,7 @@ Luckily, we can also characterize the structure of parameterizations relative to
 
   In order for a parameterization to be a greatest element of $\calL_\cl{FPT}$, it is no longer sufficient for its slices to be finite.
   Specifically, the construction of a computable upper bound to the gap function requires knowing the number of instances in each slice.
-  With the length parameterization, $(\{x \st \length{x} \le \asNat(k)\})_{k \in \binary^+}$, this extra requirement is satisfied.
+  With the length parameterization, $(\{x \st \length{x} \le \asNat(k)\})_{k \in \binary^+}$,\indexkey{length parameterization} this extra requirement is satisfied.
   That it is a member of $\calL_\cl{FPT}$ is, again, witnessed by the empty set, which is put in \cl{FPT} by it.
   We claim that the gap from any parameterization to the length parameterization is computable.
   Observe that, for every parameterization $\eta$ that corresponds to a direct parameterized procedure, the minimization function $\mu_\eta$ is computable.
@@ -503,7 +503,7 @@ This is implied by Theorem~\ref{thm:decidable}, which says that direct parameter
 
   \paragraph{$\calF_{(A, \cl{FPT})}$ contains greatest lower bounds.}
   Every parameterization in $\calF_{(A, \cl{FPT})}$ corresponds to a direct parameterized procedure that converges to $A$ and meets the requirements of Definition~\ref{def:fpt}.
-  Thus, parameterizations $\eta$ and $\eta'$ taken from $\calF_{A, \cl{FPT})}$ are associated to parameterized procedures $\phi$ and $\phi'$, both converging to $A$.
+  Thus, parameterizations $\eta$ and $\eta'$ taken from $\calF_{(A, \cl{FPT})}$ are associated to parameterized procedures $\phi$ and $\phi'$, both converging to $A$.
   These procedures can be combined like in the construction of a greatest lower bound in the proof of Theorem~\ref{thm:lattice}.
   However, instead of returning \bits{0}, we let the constructed procedure return the output of $\phi$ or $\phi'$ that is not \bits{?}.
   If both do not output \bits{?}, their outputs are the same, since both parameterized procedures converge to $A$.
@@ -537,7 +537,7 @@ We shall call a least element in the filter corresponding to some set a \defkey{
 Theorem~\ref{thm:nuxpprincipal} shows that all sets have principal parameterizations with respect to \clXnu{P}.
 However, this is not a given for arbitrary parameterized complexity classes.
 When they exist, principal parameterizations provide insight into some of the computational complexity of a set.
-For instance, there is a one-to-one correspondence between the imix property of a principal parameterization with respect to \clXnu{P} and the levelability of a set.
+For instance, there is a one-to-one correspondence between the imix\indexkey{imix} property of a principal parameterization with respect to \clXnu{P} and the levelability\indexkey{omni-levelable!for P@for \cl{P}|(}\indexkey{almost bi-immune!for P@for \cl{P}|(} of a set.
 This correspondence arises as a consequence of Theorem~\ref{thm:nuxpprincipal}.
 \begin{corollary}
   A set is \levelable{\cl{P}} (\immune{\cl{P}}) if and only if a principal parameterization in the induced nonuniform filter with respect to \clXnu{P} has (does not have) imix.
@@ -545,7 +545,7 @@ This correspondence arises as a consequence of Theorem~\ref{thm:nuxpprincipal}.
 
 Note that the filter induced by a \cl{P}-bi-immune set consists of a single equivalence class of parameterizations.
 Namely it consists only of the class of parameterizations $\eta$ where for every parameter value $k$ the set $\eta_k$ is finite.
-For filters with respect to \clnu{FPT}, this is no different the filters induced by \immune{\cl{P}} sets are again principal.
+For filters with respect to \clnu{FPT}, this is no different and the filters induced by \immune{\cl{P}} sets are again principal.
 \begin{theorem}
 \label{thm:nufptprincipal}
   For any set $A$ that is \immune{\cl{P}}, the filter $\calF_{(A, \clnu{FPT})}$ is principal.
@@ -557,13 +557,14 @@ For filters with respect to \clnu{FPT}, this is no different the filters induced
   This parameterization is equivalent to any parameterization below it in $\calF_{(A, \clnu{FPT})}$, hence it is a principal parameterization for $A$.
 \end{proof}
 
+\indexkey{almost bi-immune!for P@for \cl{P}|)}
 Certainly, a principal parameterization with respect to \clnu{FPT} for any \immune{\cl{P}} set does not have imix.
 On the other hand, if the filter with respect to \clnu{FPT} were to be principal for any \levelable{\cl{P}} set, a principal parameterization has to have imix.
 The \levelable{\cl{P}} property is, however, indifferent to the degree of the polynomials involved in the polynomial segments of a set.
 This makes an investigation of filters with respect to \clnu{FPT} induced by \levelable{\cl{P}} sets difficult.
 We need a variant that is sensitive to the degree of the polynomials related to polynomial segments of a set.
 \begin{definition}
-  A set is \defkeyat{omni-levelable!for FPT@for \cl{FPT}}{\levelable{\cl{FPT}}} if there is a $c$ such that for all polynomials $p$ of degree at least $c$ the set has no maximal $\bigO(p)$-segment.
+  A set is \defkeyat{omni-levelable!for FPT@for \cl{FPT}|(}{\levelable{\cl{FPT}}} if there is a $c$ such that for all polynomials $p$ of degree at least $c$ the set has no maximal $\bigO(p)$-segment.
 \end{definition}
 
 Likewise, we could define a set being \immune{\cl{FPT}} as it having a maximal $\bigO(p)$-segment for all polynomials $p$ of sufficiently high degree.
@@ -576,7 +577,7 @@ Optimal parameterizations with respect to \clnu{FPT} do not exist for sets that 
   For any set $A$ that is \levelable{\cl{P}} and not \levelable{\cl{FPT}}, the filter $\calF_{(A, \clnu{FPT})}$ is nonprincipal.
 \end{theorem}
 \begin{proof}
-  In case $A$ is \levelable{\cl{P}} and not \levelable{\clnu{FPT}}, there is an infinite set of polynomials $\{p_1, p_2, p_3, \ldots\}$ such that, for all $i$,
+  In case $A$ is \levelable{\cl{P}} and not \levelable{\cl{FPT}}, there is an infinite set of polynomials $\{p_1, p_2, p_3, \ldots\}$ such that, for all $i$,
   \begin{itemize}
   \item $A$ has a maximal $\bigO(p_i)$ segment, and
   \item if $S_i$ is a maximal $\bigO(p_i)$-segment of $A$ and $S_{i + 1}$ is a maximal $\bigO(p_{i + 1})$-segment of $A$, then $S_{i + 1} \backslash S_i$ is infinite.
@@ -613,25 +614,25 @@ This is the case.
   We shall prove the theorem by constructing a \levelable{\cl{P}} set that has a maximal $\bigO(p)$-segment for infinitely many polynomials $p$ of distinct degrees.
   For this, let $\phi_1, \phi_2, \phi_3, \ldots$ be an effective enumeration of all partial procedures.
 
-  Consider a recursive procedure for deciding a set $A$ that, on input $\pair{c}{x}$, proceeds as follows.
+  Consider a recursive procedure for deciding a set $A$ that, on input $\pair{u}{x}$, proceeds as follows.
   \begin{codelisting}
   \item
     We determine a set $I$ of indices of procedures that are consistent with an initial segment of $A$:
     \begin{codelisting}
     \item
-      \code{Initialize} $I$ to $\{1, 2, 3, \ldots, \length{\pair{c}{x}}\}$.
+      \code{Initialize} $I$ to $\{1, 2, 3, \ldots, \length{\pair{u}{x}}\}$.
     \item
-      \code{For each} pair $\pair{d}{y}$ that satisfies $d \le c$ and $\length{\pair{d}{y}} \le \log \length{\pair{c}{x}}$ we remove those indices from $I$ that are not consistent with $A(\pair{d}{y})$:
+      \code{For each} pair $\pair{v}{y}$ that satisfies $\asNat(v) \le \asNat(u)$ and $\length{\pair{v}{y}} \le \log \length{\pair{u}{x}}$ we remove those indices from $I$ that are not consistent with $A(\pair{v}{y})$:
       \begin{codelisting}
       \item
-        Recursively \code{compute} $A(\pair{d}{y})$.
+        Recursively \code{compute} $A(\pair{v}{y})$.
       \item
         \code{For each} index $i$ in $I$:
         \begin{codelisting}
         \item
-          \code{Simulate} up to $\length{\pair{d}{y}}^{3c}$ steps of $\phi_i$ on input $\pair{d}{y}$.
+          \code{Simulate} up to $\length{\pair{v}{y}}^{3 \cdot \asNat(u)}$ steps of $\phi_i$ on input $\pair{v}{y}$.
         \item
-          \code{If} $\phi_i$ was simulated to completion and was inconsistent with $A(\pair{d}{y})$ in the sense that we have $\phi_i(\pair{d}{y}) = \bits{1} - A(\pair{d}{y})$,
+          \code{If} $\phi_i$ was simulated to completion and was inconsistent with $A(\pair{v}{y})$ in the sense that we have $\phi_i(\pair{v}{y}) = \bits{1} - A(\pair{v}{y})$,
           \\\-\quad \code{remove} $i$ from $I$.
         \end{codelisting}
       \end{codelisting}
@@ -643,44 +644,48 @@ This is the case.
       \code{For each} index $i$ in $I$:
       \begin{codelisting}
       \item
-        \code{Simulate} up to $\length{\pair{c}{x}}^{3c}$ steps of $\phi_i$ on input $\pair{c}{x}$.
+        \code{Simulate} up to $\length{\pair{u}{x}}^{3 \cdot \asNat(u)}$ steps of $\phi_i$ on input $\pair{u}{x}$.
       \item
-        \code{If} $\phi_i$ was simulated to completion and we have $\phi_i(\pair{c}{x}) \in \{\bits{1}, \bits{0}\}$,
-        \\\-\quad \code{return} $\bits{1} - \phi_i(\pair{c}{x})$.
+        \code{If} $\phi_i$ was simulated to completion and we have $\phi_i(\pair{u}{x}) \in \{\bits{1}, \bits{0}\}$,
+        \\\-\quad \code{return} $\bits{1} - \phi_i(\pair{u}{x})$.
       \end{codelisting}
     \item
       Else, as no procedure could be made inconsistent, \code{return} \bits{0}.
     \end{codelisting}
   \end{codelisting}
 
-  The first stage of this procedure performs at most $\length{\pair{c}{x}}^2$ simulations of computations, each of at most $\log(\length{\pair{c}{x}})^{3c}$ steps.
+  The first stage of this procedure performs at most $\length{\pair{u}{x}}^2$ simulations of computations, each of at most $\log(\length{\pair{u}{x}})^{3 \cdot \asNat(u)}$ steps.
   Besides these simulations, this stage computes an initial segment of $A$ to test against.
-  This segment is computed recursively and the recursion depth is bounded by the iterated logarithm of $\length{\pair{c}{x}}$.
+  This segment is computed recursively and the recursion depth is bounded by the iterated logarithm of $\length{\pair{u}{x}}$.
   By using dynamic programming, the time required to compute the segment is insignificant with respect to the total running time of the entire procedure.
 
-  The second stage of the procedure requires the simulation of at most $\length{\pair{c}{x}}$ computations, each of at most $\length{\pair{c}{x}}^{3c}$ steps.
+  The second stage of the procedure requires the simulation of at most $\length{\pair{u}{x}}$ computations, each of at most $\length{\pair{u}{x}}^{3 \cdot \asNat(u)}$ steps.
   Efficient simulation \parencite{arora2009computational} limits the overhead of simulation to a logarithmic factor.
-  As a function of the input $\pair{c}{x}$, the number of steps spent in the second stage is thus in $\bigO(\length{\pair{c}{x}} \cdot \length{\pair{c}{x}}^{3c} \cdot \log(\length{\pair{c}{x}}^{3c}))$.
-  This puts the number of steps taken by the entire procedure in $\bigO(\length{\pair{c}{x}}^{3c + 2})$.
-  Note that the running time of the procedure is not polynomial in the length of the input, $\length{\pair{c}{x}}$, as $c$ appears in the exponent.
+  As a function of the input $\pair{u}{x}$, the number of steps spent in the second stage is thus in
+  \begin{equation*}
+    \bigO(\length{\pair{u}{x}} \cdot \length{\pair{u}{x}}^{3 \cdot \asNat(u)} \cdot \log(\length{\pair{u}{x}}^{3 \cdot \asNat(u)})).
+  \end{equation*}
+  This puts the number of steps taken by the entire procedure in $\bigO(\length{\pair{u}{x}}^{3 \cdot \asNat(u) + 2})$.
+  Note that the running time of the procedure is not polynomial in the length of the input, $\length{\pair{u}{x}}$, as $u$ appears in the exponent.
 
   Given a constant $c$, let $p_c$ be the polynomial defined by $p(n) \deq n^{3c + 2}$.
-  For any fixed $c$, the set $\{\pair{d}{x} \st d \le c \reland x \in \binary^+\}$ is an $\bigO(p_c)$-segment of $A$.
+  For any fixed $c$, the set $\{\pair{u}{x} \st \asNat(u) \le c \reland x \in \binary^+\}$ is an $\bigO(p_c)$-segment of $A$.
   It is not a maximal polynomial segment, as for larger values of $c$ infinitely many elements are introduced in the corresponding sets.
   However, we claim that it is a maximal $\bigO(p_c)$-segment of $A$ and thus that $A$ is \levelable{\cl{P}}, yet not \levelable{\cl{FPT}}.
-  Suppose towards a contradiction that there is an infinite $\bigO(p_c)$-segment $S \subseteq \{\pair{w}{x} \st w > c \reland x \in \binary^+\}$ for $A$.
+  Suppose towards a contradiction that there is an infinite $\bigO(p_c)$-segment $S \subseteq \{\pair{w}{x} \st \asNat(w) > c \reland x \in \binary^+\}$ for $A$.
   Let $i$ be an index of an $\bigO(p_c)$-approximation for $A$ with domain $S$.
-  Allmost all $\pair{w}{x} \in S$ will be so that $\length{\pair{w}{x}} \ge i$.
-  Therefore, for allmost all inputs to our procedure, $i$ will be included in $I$ when the procedure enters its second stage.
-  Because we have $w > c$, we have $3w > 3c + 2$.
-  This means that any function in $\bigO(p_c)$ will eventually be dominated by the polynomial mapping $n$ to $n^{3w}$, for any value of $w$ that occurs in $S$.
+  Almost all $\pair{w}{x} \in S$ will be so that $\length{\pair{w}{x}} \ge i$.
+  Therefore, for almost all inputs to our procedure, $i$ will be included in $I$ when the procedure enters its second stage.
+  Because we have $\asNat(w) > c$, we have $3 \cdot \asNat(w) > 3 \cdot c + 2$.
+  This means that any function in $\bigO(p_c)$ will eventually be dominated by the polynomial mapping $n$ to $n^{3 \cdot \asNat(w)}$, for any value of $w$ that occurs in $S$.
   Indeed, this is the reason for the constant $3$ in the exponent of the time bounds in our decision procedure for $A$.
   Now, for almost all elements of $S$, the second stage of our procedure does one of two things.
   Either it invalidates $i$ as the index of an $\bigO(p_c)$-approximation for $A$, or it invalidates an index smaller than $i$.
   The latter of these possibilities can happen at most $i - 1$ times, so, since $S$ was assumed to be infinite, eventually $i$ must be invalidated.
   This contradicts our choice of $i$ as the index of an $\bigO(p_c)$-approximation for $A$ with domain $S$.
-  We conclude that there is no infinite $\bigO(p_c)$-segment $S \subseteq \{\pair{w}{x} \st w > c \reland x \in \binary^+\}$ for $A$.
+  We conclude that there is no infinite $\bigO(p_c)$-segment $S \subseteq \{\pair{w}{x} \st \asNat(w) > c \reland x \in \binary^+\}$ for $A$.
 \end{proof}
+\indexkey{omni-levelable!for P@for \cl{P}|)}
 
 For completeness, we shall also show the existence of \levelable{\cl{FPT}} sets.
 Our proof revolves around length increasing reductions.
@@ -711,7 +716,7 @@ The existence of \levelable{\cl{FPT}} sets now follows from the existence of set
   There are sets outside \cl{P} that have a linearly length increasing reduction to itself.
 \end{lemma}
 \begin{proof}
-  Let $X$ be a set outside \cl{P} and consider its cylindrification
+  Let $X$ be a set outside \cl{P} and consider its cylindrification \parencite{balcazar1990structural}
   \begin{equation*}
     A \deq \{\pair{x}{y} \st x \in X \reland y \in \binary^+\}.
   \end{equation*}
@@ -730,21 +735,22 @@ There are padding functions, $\pad$, for which there exists a constant $c$ such 
 \end{equation*}
 Padding functions that meet this enhanced honesty criterion can be turned into linearly length increasing reductions by mapping $x$ to $\pad(x, \bits{0}^{c \cdot \length{x}})$.
 
-It was shown \parencite{young1983some} that every honest, one-one, polynomially computable function is the productive function for the complement of some $k$-creative set.
+It was shown \parencite{young1983some} that every honest, one-one, polynomial time computable function is the productive function for the complement of some $k$-creative set.
 In particular, this means that there are $k$-creative sets where the influence of the associated productive function on the length of its input is linear.
 Such functions can again be turned into linearly length increasing reductions.
-Hence, assuming we have $\cl{P} \ne \cl{NP}$, there are also $k$-creative sets that are \levelable{\cl{FPT}}.
+Hence, assuming we have $\cl{P} \ne \cl{NP}$, there are also $k$-creative sets that are \levelable{\cl{FPT}}.\indexkey{omni-levelable!for FPT@for \cl{FPT}|)}
 
 \subsection{Optimal Uniform Parameterizations}
+\label{sec:optimal_uniform_parameterizations}
 The proof of Theorem~\ref{thm:nuxpprincipal} fails for filters with respect to the uniform \clX{P}.
 First and foremost, the enumeration of polynomial segments is in general not effective by Rice's theorem.
 Additionally, the existence of a procedure that meets the requirements of Definition~\ref{def:xp} is not guaranteed.
 Lastly, being a principal parameterization with respect to a uniform complexity class requires a bound on the gap to any other parameterization to be computable.
-When focussing only on parameterizations that \emph{provably} put a set in \clX{P}, we regain something akin to Theorem~\ref{thm:nuxpprincipal}.
+When focusing only on parameterizations that \emph{provably} put a set in \clX{P}, we regain something akin to Theorem~\ref{thm:nuxpprincipal}.
 Here, provability refers to being deducible in some fixed formal system \parencite{kleene1967mathematical}.
 \begin{theorem}
 \label{thm:xpprincipal}
-  Given any formal proof system, for any set $A$ there is a least parameterization among those provably, via a witnessing parameterized procedure and parameter dependence, putting $A$ in \clX{P}.
+  Given any formal proof system, for any decidable set $A$ there is a least parameterization among those provably, via a witnessing parameterized procedure and parameter dependence, putting $A$ in \clX{P}.
 \end{theorem}
 \begin{proof}
   Let $\mathfrak{F}$ be the fixed deductive system.
@@ -761,7 +767,7 @@ Here, provability refers to being deducible in some fixed formal system \parenci
       \code{For each} combination of a proof $\mathfrak{p}$ in $\mathfrak{F}$, an index $i$ of a parameterized procedure, and an index $j$ of a polynomial, all of length at most $\asNat(k)$:
       \begin{codelisting}
       \item\label{alg:xpprincipal:approximations}
-        \code{If} $\mathfrak{p}$ proves that $\phi_i$ is a $p_j$-approximation of $A$,
+        \code{If} $\mathfrak{p}$ proves that $\phi_i$ is a $p_j$-approximation for $A$,
         \\\-\quad \code{Add} $i$ to $M$.
       \end{codelisting}
     \end{codelisting}
@@ -799,7 +805,7 @@ Here, provability refers to being deducible in some fixed formal system \parenci
   We claim that there is a computable function $g$ such that, for all $k'$, slice $\zeta_{k'}$ is included in slice $\eta_{g(k')}$.
   This entails the desired relationship $\eta \quasile \zeta$.
   Given $\psi$ and $k$ we can effectively come up with an index $i$ such that $\phi_i$ corresponds to the partial application of $\psi$ to $k'$.
-  Correspondingly, using $f$ we can come up with an index $j$ such that $\phi_i$ is a $p_j$-approximation of $A$.
+  Correspondingly, using $f$ we can come up with an index $j$ such that $\phi_i$ is a $p_j$-approximation for $A$.
   A proof of this, $\mathfrak{p}'$, can be adapted from $\mathfrak{p}$.
   Now, consider the function defined by
   \begin{equation*}
@@ -825,6 +831,8 @@ Of course, we \emph{can} show that filters with respect to \cl{FPT} are principa
   Since the class of this parameterization is the least element of the encompassing lattice of parameterizations, the filter must be principal.
 \end{proof}
 
+\indexkey{imix|(}
+\indexkey{almost bi-immune!for P@for \cl{P}|(}
 Principal parameterizations with respect to \cl{FPT} for sets in \cl{P} do not have imix.
 More broadly, if an \immune{\cl{P}} set has a principal parameterization with respect to \cl{FPT}, this parameterization does not have imix.
 This is the extent to which the proof of Theorem~\ref{thm:nufptprincipal} can be applied to the uniform setting.
@@ -839,7 +847,9 @@ Conversely, if a set has a principal parameterization with respect to \cl{FPT} t
   If $\eta$ is a principal parameterization for $A$, then $\eta_k$ is even maximal up to finite variations for all slices of all parameterizations in $\calF_{(A, \cl{FPT})}$.
   Because every polynomial segment of $A$ can be turned into a slice of a parameterization with which $A$ is in \cl{FPT}, this means that $A$ must be \immune{\cl{P}}.
 \end{proof}
+\indexkey{almost bi-immune!for P@for \cl{P}|)}
 
+\indexkey{omni-levelable!for P@for \cl{P}|(}
 This observation is of use as we turn to principality of filters with respect to \cl{FPT} for \levelable{\cl{P}} sets.
 While the proof of Theorem~\ref{thm:nufptnonprincipal} works for the uniform setting as well, the reach of the result can be extended.
 We shall do so in a way that has a clear kinship to the diagonal argument used in the proof of the time hierarchy theorem of \textcite{hartmanis1965computational}.
@@ -878,10 +888,16 @@ Though, where the time hierarchy theorem constitutes a hierarchy of \emph{sets},
   Therefore, even for a fixed value of $k$, our procedure is able to decide membership of instances $x$ for which $\mu_\eta(x)$ is arbitrarily high.
   Hence, the gap from $\eta$ to $\zeta$ is always infinite, proving $\eta \not\quasile \zeta$.
 \end{proof}
+\indexkey{omni-levelable!for P@for \cl{P}|)}
 
 From the perspective of Lemma~\ref{lem:fptimix}, we get from the above theorem that no principal parameterization in a filter of the form $\calF_{(A, \cl{FPT})}$ has imix.
 However, parameterizations with imix are the most interesting from an applications point of view.
-Thus, we find that sets for which parameterized algorithms are attractive do not admit optimal parameterizations.
+Thus, we get the following.
+\indexkey{imix|)}
+\begin{slogan}
+  No set for which a parameterized algorithm is attractive admits an optimal parameterization.
+\end{slogan}
+
 When the filter induced by a set is nonprincipal, there is no single structural origin of computational complexity inside the set.
 Of such sets, it is not possible to capture the structure responsible for the computational hardness of the set by a parameterization.
 Specifically, consider the many structural properties an instance may have.

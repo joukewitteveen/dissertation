@@ -7,6 +7,8 @@
 \setlist[codelisting,3]{label=\thecodelistingii.\arabic*:,ref=\thecodelistingii.\arabic*}
 \setlist[codelisting,4]{label=\thecodelistingiii.\arabic*:,ref=\thecodelistingiii.\arabic*}
 
+\newtheorem{slogan}[theorem]{Slogan}
+
 
 \DeclareMathOperator{\asNat}{asInt}
 \DeclareMathOperator{\asReal}{asReal}
@@ -14,7 +16,12 @@
 \DeclareMathOperator{\bigO}{\mathcal{O}}
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\gap}{gap}
+\DeclareMathOperator{\ic}{ic}
+\DeclareMathOperator{\KC}{K}
 \DeclareMathOperator{\pad}{pad}
+\DeclareMathOperator{\pc}{pc}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\soph}{soph}
 
 \newcommand{\code}{\textsf}
 \newcommand{\bbN}{\mathbbm{N}}
@@ -29,6 +36,7 @@
 \newcommand{\clX}[1]{\cl{\textit{X}#1}}	% Slicewise complexity classes
 \newcommand{\clXnu}[1]{\clnu{\textit{X}#1}}	% Nonuniform slicewise complexity classes
 \newcommand{\deq}{=}	% Defined equal
+\newcommand{\given}{{\;|\;}}
 \newcommand{\length}[1]{{\lvert#1\rvert}}
 \newcommand{\pair}[2]{{\langle #1, #2\rangle}}
 \newcommand{\pr}[1]{\textnormal{\textsc{#1}}}	% Problems
@@ -37,6 +45,7 @@
 \newcommand{\reland}{\;\text{ and }\;}	% Relating conditions conjunctively
 \newcommand{\slp}{\textsl{p}}	% Polynomial time functions
 \newcommand{\st}[1][]{\;#1{|}\;}	% Such that (with optional size)
+\newcommand{\symdiff}{\bigtriangleup}	% Symmetric difference
 
 \newcommand{\immune}[1]{almost #1-bi-immune}
 \newcommand{\levelable}[1]{#1-omni-levelable}

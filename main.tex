@@ -20,11 +20,12 @@
 
 \newcommand{\defkeyat}[2]{\index{#1}\emph{#2}}
 \newcommand{\defkey}[1]{\defkeyat{#1}{#1}}
+\newcommand{\indexkey}[1]{\index{#1}}
 
 \makeindex
 
 
-\title{Parameterized Analysis of Complexity} %and Information}
+\title{Parameterized Analysis of Complexity} %and Information
 \author{Jouke Witteveen}
 
 \makeatletter
@@ -58,14 +59,13 @@
 
 \appendix
 
-\printbibliography
+\printbibliography[heading=bibintoc]
 
 \printindex
 
+%\include{gearfetting}
 %\include{samenvatting}
-
-\abstract
-??
+\include{abstract}
 
 %\include{curriculum}
 

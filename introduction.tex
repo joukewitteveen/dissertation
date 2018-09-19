@@ -11,20 +11,24 @@
 %It has been recognized that parameters need not be restricted to one dimensional numerical values.
 %Yet, to our knowledge the true limits of parameters have not been investigated before.
 
+%TODO: Introduce algorithmic complexity as any complexity measure rooted in the length of procedures.
+%TODO: Introduce Kolmogorov complexity (instance complexity is defined in Section~\ref{sec:algorithmic}).
+
 
 \section{Measuring Convergence}
 \todo[inline]{This section is not ready for critique.}
 
 \todo[inline]{
   $\bbN \deq \{1, 2, 3, \ldots\}$, $\binary \deq \{\bits{1}, \bits{0}\}$,
-  the finite non-empty binary strings $\binary^+$ are enumerated in order of increasing length as
+  the finite nonempty binary strings $\binary^+$ are enumerated in order of increasing length as
   $\bits{0}, \bits{1}, \bits{00}, \bits{01}, \bits{10}, \bits{11}, \bits{000}, \ldots$
   leading to the commutative diagram
   $\bbN \text{rightleftarrows}^{\asStr}_{\asNat} \binary^+$. %tikz in equation
+  Observe that for all $m, n \in \bbN$ we have $m \le n \implies \length{\asStr(m)} \le \length{\asStr(n)}$.
   %TODO: Pairing using the Cantor polynomial: $(a, b) \mapsto \frac{1}{2}((a + b)^2 -3a - b) + 1$
   %      The pairing for \bbN induces a pairing for \binary^+
-  %NOTE: we do not have |<a, b>| = |a| + f(b) or vice versa
-  %      alternatively, define a pairing such that |<a, b>| = max(|a|, |b|) + 2 min(|a|, |b|) + 1
+  %NOTE: we do not have \length{\pair{a}{b}} = \length{a} + f(b) or vice versa
+  %      alternatively, define a pairing such that \length{\pair{a}{b}} = max(\length{a}, \length{b}) + 2 min(\length{a}, \length{b}) + 1
   %TODO: All sets are countable, in particular when we speak of polynomials, all coefficients and powers are assumed to be in $\bbN$.
   %TODO: for a function f and constant c, c + f is the function x \mapsto c + f(x) and c · f is the function x \mapsto c · f(x).
   %TODO: Remark than we deviate from the \bigO convention of using functions as arguments in \cltime and use n as a free variable there.
@@ -42,13 +46,32 @@ Our machine model hence takes the form of `reasonable' pseudocode.
 That is, a programming language that is more or less obviously Turing complete, yet not stronger than that.
 %TODO: Check that we actually use pseudocode in this dissertation
 %  --> We do, but maybe warn that for each statements can have else clauses!
+%  --> Also, we use modern techniques like pattern matching: an input $\pair{x}{y}$ means that the input string is interpreted as a pair of strings
 %TODO: Refer to the sequential computation thesis [emdeboas2014machine], also known as the extended Church--Turing thesis [parberry1986parallel].
 %      We use that simulation is possible with polynomial overhead.
+
+%TODO: move the following to somewhere sensible.
+\begin{definition}
+  The \defkey{rank} of a string $x$ relative to a set $X$, denoted by $\rank(x : A)$ is the number of elements in the set
+  \begin{equation*}
+    \{y \in X \st \asNat(y) \le \asNat(x)\}.
+  \end{equation*}
+
+  A set relative to which the function $\rank$ is computable in polynomial time is called \defkeyat{p-rankable@\slp-rankable}{\slp-rankable}.
+\end{definition}
+The \slp-rankable sets were originally known as \emph{strongly \cl{P}-rankable} \parencite{goldberg1991compression}.
+
 A \emph{procedure} is the functional behavior of any particular Turing machine and can be represented by a pseudocode \emph{algorithm}.
 We strife for a strongly, yet sometimes implicitly, typed treatment, with the exception that we freely use sets in place of their characteristic functions.
-
+%TODO: Elaborate: thus, a decision procedure for A is any procedure \phi such that, for all $x$, we have \phi(x) = A(x).
+%TODO: There is a length notion for procedures, but this depends on the chosen encoding, e.g., on the programming language.
+%TODO: We limit ourselves to prefix-free encodings and our notion of Kolmogorov complexity will follow this choice.
+%TODO: There is no universally best prefix-free encoding.
+%      Fix a simple encoding that encodes an n-bit string as a n + 2\log n bit string.
+%      This will work fine for our purposes.
 \begin{definition}
-  A \defkey{partial decision procedure} is a procedure that takes a string as input and produces an output in the set $\{\bits{1}, \bits{0}, \bits{?}\}$, representing the judgements `yes', `no', and `unknown'.
+  A \defkey{partial decision procedure} is a procedure that takes a string as input and produces an output in the set $\{\bits{1}, \bits{0}, \bits{?}\}$, representing the judgments `yes', `no', and `unknown'.
+%TODO: use a different name or shy the concept altogether.
 
   Likewise, a \defkey{parameterized procedure} is a procedure that takes \emph{two} strings as input and produces an output in the set $\{\bits{1}, \bits{0}, \bits{?}\}$.
 \end{definition}
@@ -84,27 +107,31 @@ The domain of a polynomial approximation is also known as the \emph{definite par
 Note that a quasiparameterization is necessarily countable, while there are uncountably many subsets of $\binary^+$.
 
 %uniqueness of the limit set for a given parameterized procedure
+%NOTE: With the point-cofinite requirement, the directedness is not really needed anymore, although point-cofinite nondirected covers are possible.
+%      Requiring a parameterization to be directed mainly has a conceptual (axiomatic) reason.
 \begin{definition}
   A \defkey{parameterization} is a point-cofinite quasiparameterization, meaning each $x \in \binary^+$ is excluded from only finitely many elements of the cover.
 \end{definition}
 
-A noteworthy example of a parameterization is the \defkey{length parameterization},
-\begin{equation*}
-  (\{x \st \length{x} \le \asNat(k)\})_{k \in \binary^+}.
-\end{equation*}
-In this parameterization, depicted in Figure~\ref{fig:length_parameterization}, the parameter value $k$ acts as an upper bound to the lengths of instances.
-Given our previous discussion, however, it is better to think of the instances independent of their encoding.
-In that sense, the length parameterization is not philosophically pure.
-\begin{figure}
-%TODO: add a picture showing the length parameterization (x/k axes)
-\caption{
-  An initial segment of the length parameterization.
-  Note that the elements of the parameterization, depicted as rows in the figure, are finite.
-  Furthermore, the inclusion order on the elements of the parameterization matches the natural enumeration order on the set $\binary^+$ of parameter values.
-  Neither of these two properties is required to hold for an arbitrary parameterization.
-}
-\label{fig:length_parameterization}
-\end{figure}
+\begin{example}
+  A noteworthy example of a parameterization is the \defkey{length parameterization},
+  \begin{equation*}
+    (\{x \st \length{x} \le \asNat(k)\})_{k \in \binary^+}.
+  \end{equation*}
+  In this parameterization, depicted in Figure~\ref{fig:length_parameterization}, the parameter value $k$ acts as an upper bound to the lengths of instances.
+  Given our previous discussion, however, it is better to think of the instances independent of their encoding.
+  In that sense, the length parameterization is not philosophically pure.
+  \begin{figure}
+  %TODO: add a picture showing the length parameterization (x/k axes)
+  \caption{
+    An initial segment of the length parameterization.
+    Note that the elements of the parameterization, depicted as rows in the figure, are finite.
+    Furthermore, the inclusion order on the elements of the parameterization matches the natural enumeration order on the set $\binary^+$ of parameter values.
+    Neither of these two properties is required to hold for an arbitrary parameterization.
+  }
+  \label{fig:length_parameterization}
+  \end{figure}
+\end{example}
 
 Parameterizations are intended to measure structures other than the length of an instance.
 We therefore prefer to use a symbol orthographically similar to $n$, which is commonly used to indicate a length, for parameterizations: $\eta$.
@@ -115,6 +142,8 @@ For instances, we shall mostly use $x$.
 In this framework, a parameterization $\eta$ associates to an instance $x$ the set of parameter values $\{k \st x \in \eta_k\}$.
 Conversely, other frameworks have parameterizations associate specific parameter values to instances.
 This is the case for the two dominant schools, that of \textcite{downey1999parameterized}, and that of \textcite{flum2006parameterized}.
+Most often, the parameter value is interpreted as a single number, though it has been recognized that this is no necessity \parencite{fellows2013towards,niedermeier2010reflections}.
+
 To facilitate a comparison between parameterizations \parencite{komusiewicz2012new}, we numerically capture the point of convergence for some input given a parameterization.
 \begin{definition}
   Given a parameterization $\eta$, the \defkeyat{m@$\mu_\eta$}{minimization function} of $\eta$ is defined as
