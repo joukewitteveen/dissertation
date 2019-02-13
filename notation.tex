@@ -1,4 +1,12 @@
 \usepackage{amssymb,bbm}
+\usepackage{unicode-math}
+
+\defineshorthand{"~}{\babelhyphen{nobreak}}
+\AtBeginDocument{\useshorthands*{"}}
+
+\tikzset{>=latex}
+\pgfkeys{/pgf/number format/set thousands separator={\,}}
+\pgfplotsset{compat=1.16,cycle list name=black white,colormap name=viridis}
 
 
 \newlist{codelisting}{enumerate}{4}
@@ -7,47 +15,60 @@
 \setlist[codelisting,3]{label=\thecodelistingii.\arabic*:,ref=\thecodelistingii.\arabic*}
 \setlist[codelisting,4]{label=\thecodelistingiii.\arabic*:,ref=\thecodelistingiii.\arabic*}
 
-\newtheorem{slogan}[theorem]{Slogan}
-
 
 \DeclareMathOperator{\asNat}{asInt}
 \DeclareMathOperator{\asReal}{asReal}
 \DeclareMathOperator{\asStr}{asStr}
-\DeclareMathOperator{\bigO}{\mathcal{O}}
+\DeclareMathOperator{\bigO}{\symcal{O}}
 \DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator*{\Ex}{E}
 \DeclareMathOperator{\gap}{gap}
 \DeclareMathOperator{\ic}{ic}
 \DeclareMathOperator{\KC}{K}
+\DeclareMathOperator{\littleo}{\symcal{o}}
 \DeclareMathOperator{\pad}{pad}
 \DeclareMathOperator{\pc}{pc}
+\let\Pr\relax	% Just P for probability
+\DeclareMathOperator*{\Pr}{P}
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\soph}{soph}
 
-\newcommand{\code}{\textsf}
-\newcommand{\bbN}{\mathbbm{N}}
+\AtBeginDocument{
+  \renewcommand{\epsilon}{\varepsilon}
+  \renewcommand{\mu}{{\symup{\mupmu}}}	% Do not use \mu as a variable
+}
 \newcommand{\binary}{\mathbbm{2}}
+\newcommand{\bbN}{\mathbbm{N}}
+\newcommand{\calF}{{\symcal{F}\kern-.2em}}
+\newcommand{\calL}{\symcal{L}}
+\DeclareMathOperator{\updelta}{\symup{\mupdelta}}
+\DeclareMathOperator{\upM}{\symup{M}}
+\DeclareMathOperator{\upN}{\symup{N}}
+
 \newcommand{\bits}[1]{\textnormal{\texttt{#1}}}
-\newcommand{\calF}{\mathcal{F}}
-\newcommand{\calL}{\mathcal{L}}
 \newcommand{\cl}[1]{\textnormal{\textbf{#1}}}	% Complexity classes
 \newcommand{\cladv}[2]{\ensuremath{\textnormal{\textbf{#1}}\!_\textnormal{\textbf{/#2}}}}	% Complexity classes with advice
 \newcommand{\clnu}[1]{\cl{#1$_\textbf{nu}$}}	% Nonuniform complexity classes
 \newcommand{\cltime}[1]{\cl{TIME(#1)}}	% Deterministic time classes
 \newcommand{\clX}[1]{\cl{\textit{X}#1}}	% Slicewise complexity classes
 \newcommand{\clXnu}[1]{\clnu{\textit{X}#1}}	% Nonuniform slicewise complexity classes
+\newcommand{\code}{\textsf}
+\newcommand{\Cpp}{C\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny\bf +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny\bf +}}
 \newcommand{\deq}{=}	% Defined equal
-\newcommand{\given}{{\;|\;}}
+\newcommand{\given}{\mid}
+\newcommand{\itemcont}{\\\hspace*{1em}}
 \newcommand{\length}[1]{{\lvert#1\rvert}}
+\newcommand{\num}{\pgfmathprintnumber[fixed]}
 \newcommand{\pair}[2]{{\langle #1, #2\rangle}}
+\newcommand{\pdash}{\textsl{p}\babelhyphen{nobreak}}	% Polynomial time functions
 \newcommand{\pr}[1]{\textnormal{\textsc{#1}}}	% Problems
 \newcommand{\quasile}{\preccurlyeq}
 \newcommand{\quasilenu}{\quasile_\mathrm{nu}}
 \newcommand{\reland}{\;\text{ and }\;}	% Relating conditions conjunctively
-\newcommand{\slp}{\textsl{p}}	% Polynomial time functions
-\newcommand{\st}[1][]{\;#1{|}\;}	% Such that (with optional size)
+\newcommand{\st}[1][]{\;#1|\;}	% Such that (with optional size)
 \newcommand{\symdiff}{\bigtriangleup}	% Symmetric difference
 
-\newcommand{\immune}[1]{almost #1-bi-immune}
-\newcommand{\levelable}[1]{#1-omni-levelable}
+\newcommand{\immune}[1]{almost #1\babelhyphen{nobreak}bi-immune}
+\newcommand{\levelable}[1]{#1\babelhyphen{nobreak}omni-levelable}
 
 % vim:ts=50

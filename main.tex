@@ -1,22 +1,45 @@
+% This document should be compiled with lualatex
 \documentclass{illcdiss}
 
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage{microtype}
 \usepackage[english]{babel}
 \usepackage{csquotes}
 \usepackage[backend=biber,style=numeric]{biblatex}
 \usepackage{makeidx}
-\usepackage[hidelinks]{hyperref}
-%\usepackage[section]{algorithm}
 \usepackage{amsmath,mathtools}
 \usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{tikz,pgfplots}
+\usepackage[hidelinks]{hyperref}
 
 \usepackage{todonotes} %TODO: get rid of all TODO items
 
-\addbibresource{refs.bib}
+\usetikzlibrary{babel,decorations.pathreplacing,graphs,graphdrawing,patterns,quotes}
+\usegdlibrary{layered}
+
 \input{notation}
 
+\addbibresource{refs.bib}
+%\SetCiteCommand{\textcite}
+%\renewcommand*{\mkccitation}[1]{ ---#1}
+
+
+\makeatletter
+\AtBeginDocument{\toggletrue{blx@useprefix}}
+
+\newtheorem{@slogan}[theorem]{Slogan}
+\newcommand{\slogan}[2][]{\begin{@slogan}%
+  \addcontentsline{los}{slogan}{\protect\numberline{\the@slogan}#2}%
+  \addtocontents{los}{\protect\bigbreak}%
+  #1#2%
+\end{@slogan}}
+\newcommand{\l@slogan}{\@dottedtocline{1}{0em}{3.8em}}
+\newcommand{\listofslogans}{%
+  \renewcommand{\@tocrmarg}{3.8em}%
+  \chapter*{List of Slogans}%
+  \@starttoc{los}%
+}
+\makeatother
 
 \newcommand{\defkeyat}[2]{\index{#1}\emph{#2}}
 \newcommand{\defkey}[1]{\defkeyat{#1}{#1}}
@@ -32,6 +55,9 @@
 \hypersetup{pdftitle=\@title,pdfauthor=\@author}
 \makeatother
 
+\DeclareDelimFormat{namelabeldelim}{\addnbspace}
+\DeclareFieldFormat{url}{\mkbibacro{URL}\addcolon\\*\url{#1}}
+
 
 \begin{document}
 
@@ -40,9 +66,13 @@
 
 \include{front}
 
+%\include{preface}
+%\cleardoublepage
+
 \microtypesetup{protrusion=false}
 %\setcounter{tocdepth}{1}
 \tableofcontents
+\listofslogans
 \microtypesetup{protrusion=true}
 
 %\acknowledgements (k2 mates, office mates)
@@ -53,6 +83,7 @@
 \pagenumbering{arabic}
 
 \include{introduction}
+%\include{preliminaries}
 \include{parameterizations}
 %\include{conclusion}
 

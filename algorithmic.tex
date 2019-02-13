@@ -1,13 +1,13 @@
-\section{as Uniform Algorithmic Complexity}
+\section{as Algorithmic Complexity}
 
 In the search for sources of computational complexity, the complexity cores of \citeauthor{lynch1975reducibility} get no further than the identification of hard subsets.
-Because finite variations of a complexity core are complexity cores too, the notion does not lead to any useful formulation of single instance complexity.
+Because finite variations of a complexity core are complexity cores too, the notion does not lead to any useful formulation of single-instance complexity.
 With algorithmic complexity, it is possible to define a measure of computational complexity of individual instances \parencite{li2008introduction}.
-To overcome the difficulty of finite variations, this definition takes into account the sizes of decision procedures for a set \parencite{orponen1994instance}.
+To overcome the difficulty of finite variations, this definition takes into account the sizes of decision procedures for a set \parencite{ko1986hard,orponen1994instance}.
 \begin{definition}
-  Given a function $t$, the time $t$ bounded \defkey{instance complexity} of a string $x$ relative to a set $A$ is
+  Given a function $t$, the time"~$t$-bounded \defkey{instance complexity} of a string $x$ relative to a set $A$ is
   \begin{equation*}
-    \ic^t(x : A) \deq \min\{\length{\phi} \st \text{$\phi$ is a $t$-approximation for $A$} \reland x \in \dom(\phi)\}.
+    \ic^t(x : A) \deq \min\{\length{\phi} \st \text{$\phi$ is a $t$"~approximation for $A$} \reland x \in \dom(\phi)\}.
   \end{equation*}
 \end{definition}
 
@@ -23,10 +23,18 @@ It was for this reason that a provability requirement was necessary in Theorem~\
 The other way around, our parameterized framework provides a way to analyze the computational hardness of instances relative to a known set of approximations.
 Of course, these sets take the shape of parameterizations.
 
+\subsubsection{Synopsis}
+\todo[inline]{
+  TODO
+
+  The previous section looked at collections of parameterizations that make a set fixed-parameter tractable.
+  Orthogonal to that, this section looks at sets that are made fixed-parameter tractable by a particular collection of parameterizations.
+}
+
 \subsection{Instance Complexity}
 An interface between instance complexity and a parameterized complexity class becomes apparent when we base a parameterization on instance complexity.
 \begin{theorem}
-\label{thm:nufptic}
+\label{thm:nufptic}%
   Given a polynomial $p$, any set $A$ is in \clnu{FPT} with the parameterization
   \begin{equation*}
     \eta \deq (\{x \st \ic^p(x : A) \le \asNat(k)\})_{k \in \binary^+}.
@@ -34,13 +42,13 @@ An interface between instance complexity and a parameterized complexity class be
 \end{theorem}
 \begin{proof}
   To begin with, we shall verify that $\eta$ as defined in the theorem is indeed a parameterization.
-  This readily follows from the fact that every instance has a finite time $p$ bounded instance complexity.
+  This readily follows from the fact that every instance has a finite time"~$p$-bounded instance complexity.
   For each $x$, there is a procedure that recognizes $x$ and returns a hardcoded decision within $p$ steps.
-  Returning \bits{?} on other inputs, this procedure is a $p$-approximation and its length serves as an upper bound to the instance complexity of $x$.
+  Returning \bits{?} on other inputs, this procedure is a $p$"~approximation and its length serves as an upper bound on the instance complexity of $x$.
   From this, it follows that $\eta$ is point-cofinite.
 
-  For any value of $k$, there are only finitely many $p$-approximations for $A$ of length at most $\asNat(k)$.
-  These can be combined into a single $\bigO(p)$-approximation for $A$ of which the domain is exactly $\eta_k$.
+  For any value of $k$, there are only finitely many $p$"~approximations for $A$ of length at most $\asNat(k)$.
+  These can be combined into a single $\bigO(p)$"~approximation for $A$ of which the domain is exactly $\eta_k$.
   Hence, $A$ is in \clnu{FPT} with parameterization $\eta$.
 \end{proof}
 
@@ -50,34 +58,36 @@ Namely, for any set $A$ the parameterization
 \begin{equation*}
   (\{x \st \exists p\text{, a polynomial}\colon \ic^p(x : A) \le \asNat(k)\})_{k \in \binary^+}
 \end{equation*}
-is a principal element of $\calF_{(A, \clXnu{P})}$.
-We might be inclined to say that the minimization with respect to a parameterization in $\calF_{(A, \clnu{FPT})}$ can get below the time $p$ bounded instance complexity.
-Remark, though, that the minimization with respect to the parameterization $\eta$ of Theorem~\ref{thm:nufptic} equals \emph{the length of} the instance complexity.
+is a principal element of $\calF_\clXnu{P}(A)$.
+Remark that the minimization function with respect to this parameterization is not the same as some time"~$p$-bounded instance complexity.
+Neither is the minimization function with respect to the parameterization $\eta$ of Theorem~\ref{thm:nufptic}.
+Specifically, given a polynomial $p$ and set $A$, the corresponding parameterization $\eta$ is so that we have $\mu_\eta(x) = \length{\asStr(\ic^p(x : A))}$.
+In other words, the minimization function with respect to $\eta$ equals \emph{the length of} the instance complexity.
 Essentially, this is the result of the nonuniform order on parameterizations rendering the minimization function oblivious to specific parameter lengths.
-What remains is a sensitivity to behavior of the inclusion order on the parameterization as a point-cofinite directed cover.
+What remains is a sensitivity to the behavior of the inclusion order on the parameterization as a point-cofinite directed cover.
 For specific parameterizations, our link between the minimization function and instance complexity may be meaningful.
-We could define the \emph{polynomial instance complexity} relative to a set $A$ as the minimization with respect to the parameterization
+We could define the \emph{polytime instance complexity} relative to a set $A$ as the minimization with respect to the parameterization
 \begin{align*}
   (\{x \st \exists \phi\colon &\asNat(\phi) \le \asNat(k) \reland \\
-  	&\text{$\phi$ is a polynomial approximation for $A$} \reland \\
+  	&\text{$\phi$ is a polytime-approximation for $A$} \reland \\
   	&x \in \dom(\phi)\})_{k \in \binary^+}.
 \end{align*}
-This parameterization too is a principal element of $\calF_{(A, \clXnu{P})}$.
+This parameterization too is a principal element of $\calF_\clXnu{P}(A)$.
 However, the parameterized framework offers little means to single out canonical representatives of classes of parameterizations.
 
 In the uniform setting, instance complexity can also act as a lower bound to the minimization function.
 For this, the insensitivity of the order on parameterizations to specific parameter values has an explicit effect.
 \begin{theorem}
-\label{thm:fptic}
+\label{thm:fptic}%
   For any set $A$ that is in \cl{FPT} with a parameterization $\eta$ there is a function $f$ and a polynomial $p$ such that, with $x$ as a free variable, we have
   \begin{equation*}
     \ic^{f(\mu_\eta(x))p}(x : A) \in \bigO(\mu_\eta(x)).
   \end{equation*}
 \end{theorem}
 \begin{proof}
-  It suffices to show that for some polynomial $p$ and every parameter value $k$ there is an $\bigO(p)$-approximation for $A$ with domain $\eta_k$ of which the size is in $\bigO(\length{k})$.
+  It suffices to show that for some polynomial $p$ and every parameter value $k$ there is an $\bigO(p)$"~approximation for $A$ with domain $\eta_k$ of which the size is in $\bigO(\length{k})$.
   Let $\phi$ be a direct parameterized procedure and $p$ a polynomial witnessing that $A$ is in \cl{FPT} with $\eta$.
-  By definition, for every $k$, the partial application of $\phi$ to $k$ yields a $\bigO(p)$-approximation for $A$ with domain $\eta_k$.
+  By definition, for every $k$, the partial application of $\phi$ to $k$ yields an $\bigO(p)$"~approximation for $A$ with domain $\eta_k$.
   This partial application can be computed from $\phi$ and $k$.
   Thus, the length of the approximation can be kept in $\bigO(\length{\pair{\phi}{k}})$.
   Because $\phi$ is fixed for all instances $x$, the theorem follows.
@@ -90,13 +100,13 @@ When the minimization is considered with respect to a parameterization that puts
 In that sense, the minimization function serves as a form of uniform instance complexity.
 
 Central to the study of instance complexity is the \defkey{instance complexity conjecture} \parencite{orponen1994instance}.
-This conjecture posits that the Kolmogorov complexity is within an additive constant of the instance complexity.
+This conjecture posits that the Kolmogorov complexity\indexkey{Kolmogorov complexity|(} is infinitely often within an additive constant of the instance complexity.
 It formalizes the idea that, for the appropriate time bounds, infinitely many instances have no computational redundancy in their description.
 The conjecture has been resolved for various time bounds \parencite{fortnow1996resource,buhrman1996random}.
 For the unbounded version, which targets the semidecidable sets, the conjecture was proven wrong by \textcite{kummer1996kolmogorov}.
-A time unbounded but uniform statement similar in spirit to the instance complexity conjecture is true.
+A time-unbounded but uniform statement similar in spirit to the instance complexity conjecture is true.
 \begin{theorem}
-\label{thm:parameterizedicc}
+\label{thm:parameterizedicc}%
   Let $\eta$ be a decidable parameterization that does not include $\binary^+$, and let $f$ be any computable function with an unbounded limit inferior.
   There are infinitely many instances $x$ for which we have
   \begin{equation*}
@@ -144,7 +154,7 @@ In particular, the parameterization given by
 \label{eq:kcparameterization}
   (\{x \st \KC(x) \le \asNat(k)\})_{k \in \binary^+}
 \end{equation}
-is not a member of $\calL_\cl{FPT}$.
+is not a member of $\calL_\cl{FPT}$.\indexkey{Kolmogorov complexity|)}
 This illustrates the remark in the proof of Theorem~\ref{thm:lattice} that not every parameterization of which all slices are finite is a greatest element of $\calL_\cl{FPT}$.
 
 \subsection{Equivalent Filters}
@@ -158,49 +168,54 @@ Nevertheless, a sense of optimality is still reserved for the complexity \emph{b
 Somewhat more abstract, the entire filter with respect to a parameterized complexity class can be taken as a representation of the distribution of complexity inside a set.
 This view has the added benefit that it is applicable also when the filter is not principal.
 The approach is a continuation of an idea by \textcite{orponen1986classification}, who represented the complexity characteristics of a set by the filter of its complexity cores.
-Where this idea was shown fruitless when using proper polynomial cores, our parameterized setting is promising.
+Where this idea was shown fruitless when using proper polytime-cores, our parameterized setting is promising.
 
 \subsubsection{Nonuniform Filters and the Berman--Hartmanis Conjecture}
-For sets $A, B$, let $A \symdiff B$ denote the symmetric difference $(A \backslash B) \cup (B \backslash A)$.
+\todo[inline]{
+  Put some text here.
+  %Remember: we look an \symdiff in \cl{P} because we are really interested in sets that have the same distribution of computational complexity (relative to \cl{P}).
+  %\parencite{goldsmith1996scalability}
+  %We conjecture that any distribution of complexity is unique, not up to polytime-isomorphisms (Berman--Hartmanis), but up to polytime-postprocessing.
+}
 \begin{theorem}
-\label{thm:nufptsymdiffeq}
+\label{thm:nufptsymdiffeq}%
   For any set $X$ in \cl{P} and any set $A$ we have
   \begin{equation*}
-    \calF_{(A, \clnu{FPT})} = \calF_{(A \symdiff X, \clnu{FPT})}.
+    \calF_\clnu{FPT}(A) = \calF_\clnu{FPT}(A \symdiff X).
   \end{equation*}
 \end{theorem}
 \begin{proof}
-  Given $X$, any polynomial segment of $A$ can be turned into a polynomial segment of $A \symdiff X$ and vice versa.
-  Let $\eta$ be a parameterization with which $A$ is in \clnu{FPT} and let $c$ be the degree in the running time of a polynomial time decision procedure for $X$.
-  The polynomial segments of $A$ that are present in $\eta$ have associated to them polynomials of a bounded degree.
+  Given $X$, any polytime-segment of $A$ can be turned into a polytime-segment of $A \symdiff X$ and vice versa.
+  Let $\eta$ be a parameterization with which $A$ is in \clnu{FPT} and let $c$ be the degree in the running time of a polynomial-time decision procedure for $X$.
+  The polytime-segments of $A$ that are present in $\eta$ have associated to them polynomials of a bounded degree.
   Let $d$ be this degree.
-  The degree of the constructed polynomial segments of $A \symdiff X$ can be kept below $\max(c, d)$, hence $A \symdiff X$ is also in \clnu{FPT} with $\eta$.
+  The degree of the constructed polytime-segments of $A \symdiff X$ can be kept below $\max(c, d)$, hence $A \symdiff X$ is also in \clnu{FPT} with $\eta$.
 \end{proof}
 
 Intuitively, the above theorem states that taking the symmetric difference with an easy set does not alter the distribution of complexity.
 Similarly, we find that the symmetric difference of two sets with the same distribution of complexity is easier than either of the initial sets.
 \begin{theorem}
-\label{thm:nufptsymdiffsubeq}
-  For any two sets $A, B$ satisfying $\calF_{(A, \clnu{FPT})} = \calF_{(B, \clnu{FPT})}$ we have
+\label{thm:nufptsymdiffsubeq}%
+  For any two sets $A, B$ satisfying $\calF_\clnu{FPT}(A) = \calF_\clnu{FPT}(B)$ we have
   \begin{equation*}
-    \calF_{(A, \clnu{FPT})} \subseteq \calF_{(A \symdiff B, \clnu{FPT})}.
+    \calF_\clnu{FPT}(A) \subseteq \calF_\clnu{FPT}(A \symdiff B).
   \end{equation*}
 \end{theorem}
 \begin{proof}
-  Like in the proof of the previous theorem, we shall prove this theorem by combining polynomial approximations.
-  For the current theorem, let $\phi$ and $\psi$ be polynomial approximations for $A$ and $B$ respectively.
-  It suffices to show that if their domains match, $\phi$ and $\psi$ can be combined into a polynomial approximation for $A \symdiff B$ with the same domain.
+  Like in the proof of the previous theorem, we shall prove this theorem by combining polytime-approximations.
+  For the current theorem, let $\phi$ and $\psi$ be polytime-approximations for $A$ and $B$ respectively.
+  It suffices to show that if their domains match, $\phi$ and $\psi$ can be combined into a polytime-approximation for $A \symdiff B$ with the same domain.
   The degree of the running time of this combined approximation should not be larger than the maximum of the degrees of the running times of $\phi$ and $\psi$.
   A procedure that, on input $x$, computes $\phi(x)$ and $\psi(x)$, and subsequently returns the exclusive disjunction of their outputs meets these requirements.
-  From this, it follows that every parameterization that is in $\calF_{(A, \clnu{FPT})}$ is also in $\calF_{(A \symdiff B, \clnu{FPT})}$.
+  From this, it follows that every parameterization that is in $\calF_\clnu{FPT}(A)$ is also in $\calF_\clnu{FPT}(A \symdiff B)$.
 \end{proof}
 
-The above theorem asserts that the symmetric difference of two sets that share all their parameterizations is easier than either of the sets
+The above theorem asserts that the symmetric difference of two sets that share all their parameterizations is easier than either of the sets.
 However, it does not guarantee that this symmetric difference is in \cl{P}.
 If this would be the case, a filter with respect to \clnu{FPT} would uniquely define a set up to variations in \cl{P}.
 Of comparable flavor is the \defkey{Berman--Hartmanis conjecture} \parencite{berman1977isomorphisms,young1983some}.
 This conjecture states that completeness for \cl{NP} uniquely defines a set up to isomorphisms computable in polynomial time.
-The existence of a polynomial time computable isomorphism between two sets indicates that the sets have a \emph{comparable} distribution of difficulty.
+The existence of a polynomial-time computable isomorphism between two sets indicates that the sets have a \emph{comparable} distribution of difficulty.
 By contrast, when two sets give rise to the same filter with respect to \clnu{FPT} \emph{exactly the same} elements are difficult.
 Nonetheless, isomorphic sets have isomorphic filters.
 To see why, first note that a bijection $f$ from $\binary^+$ to itself can be lifted to a function on parameterizations via
@@ -213,9 +228,9 @@ Defined this way, the function preserves minimization in the sense that, for all
 \end{equation*}
 As a consequence, the order on parameterizations is preserved as well.
 This means that a bijection from $\binary^+$ to itself can be lifted even further, into an isomorphism of filters.
-Now, suppose some bijection $f$ that is polynomial time computable in both directions reduces a set $A$ to a set $B$.
-In other words, suppose $A$ and $B$ are polynomial time isomorphic.
-Conveniently, the filter that is isomorphic to $\calF_{(A, \clnu{FPT})}$ via $f$ is $\calF_{(B, \clnu{FPT})}$.
+Now, suppose some bijection $f$ that is polynomial-time computable in both directions reduces a set $A$ to a set $B$.
+In other words, suppose $A$ and $B$ are polynomial-time isomorphic.
+Conveniently, the filter that is isomorphic to $\calF_\clnu{FPT}(A)$ via $f$ is $\calF_\clnu{FPT}(B)$.
 
 Of special interest are the fixed points of an isomorphism of filters that is generated by an order-preserving bijective mapping of parameterizations.
 These fixed points are equivalence classes of parameterizations that are mapped onto themselves by the isomorphism.
@@ -237,105 +252,106 @@ This property too is preserved by the mappings of parameterizations that stem fr
 \end{example}
 
 When a permutation of $\binary^+$ induces an automorphism of an equivalence class of parameterizations, we could say that the class is closed under that permutation.
-Suppose the equivalence class of a parameterization $\eta$ is closed under all permutations that are polynomial time computable in both directions.
+Suppose the equivalence class of a parameterization $\eta$ is closed under all permutations that are polynomial-time computable in both directions.
 The Berman--Hartmanis conjecture implies that if $\eta$ puts any set that is complete for \cl{NP} in \clnu{FPT}, it puts every such set in \clnu{FPT}.
-This parameterization $\eta$ would then be in the filter of parameterizations that put all \cl{NP}-complete sets in \clnu{FPT},
+This parameterization $\eta$ would then be in the filter of parameterizations that put all \cl{NP}"~complete sets in \clnu{FPT},
 \begin{equation*}
-  \bigcap_{\mathclap{A\text{, \cl{NP}-complete}}}\ \calF_{(A, \clnu{FPT})}.
+  \bigcap_{\mathclap{A\text{, \cl{NP}"~complete}}}\ \calF_\clnu{FPT}(A).
 \end{equation*}
 Note that for any collection of sets, finite or infinite, a similar intersection of filters yields the filter of parameterizations that put all sets in \clnu{FPT}.
 That the intersections are filters is a consequence of the fact that $\calL_\clnu{FPT}$ is bounded.
 Every intersection of filters contains at least the greatest element of the lattice, so is nonempty.
-Further, note that a parameterization that puts all \cl{NP}-complete sets in \clnu{FPT} also puts all \cl{co-NP}-complete sets in \clnu{FPT}.
+Further, note that a parameterization that puts all \cl{NP}"~complete sets in \clnu{FPT} also puts all \cl{co"~NP}"~complete sets in \clnu{FPT}.
 This is because \clnu{FPT} treats members and nonmembers of sets the same.
 
-We shall now return our attention to filters in $\calL_\clnu{FPT}$ that, for some set $A$, arise as filters of the form $\calF_{(A, \clnu{FPT})}$.
+We shall now return our attention to filters in $\calL_\clnu{FPT}$ that, for some set $A$, arise as filters of the form $\calF_\clnu{FPT}(A)$.
 By studying the connections between such filters, we have abstracted from the complexity of instances fourfold.
-Our first level of abstraction is that of polynomial segments.
+Our first level of abstraction is that of polytime-segments.
 Combined as slices, they constitute our second level, that of parameterizations.
 The structure of parameterizations with respect to parameterized complexity classes is that of a filter, which is our third level of abstraction.
 Theorem~\ref{thm:nufptsymdiffeq} and Theorem~\ref{thm:nufptsymdiffsubeq} are suggestive of an algebraic structure of filters.
 Suppose the symmetric difference of any two sets of which the filters are the same would end up in \cl{P}.
-In that case, the symmetric difference would make of the filters of the form $\calF_{(A, \clnu{FPT})}$, for some set $A$, a commutative group.
-The filter of any set in \cl{P}, which we could represent by $\calF_{(\emptyset, \clnu{FPT})}$, serves as an identity.
+In that case, the symmetric difference would make of the filters of the form $\calF_\clnu{FPT}(A)$, for some set $A$, a commutative group.
+The filter of any set in \cl{P}, which we could represent by $\calF_\clnu{FPT}(\emptyset)$, serves as an identity.
 Choosing $\emptyset$ as a representative set in \cl{P} sits well with the fact that every element of the group is its own inverse.
-Indeed, we have $\calF_{(A \symdiff A, \clnu{FPT})} = \calF_{(\emptyset, \clnu{FPT})}$.
-In this setting, the kernel of the function that maps a set $A$ to its filter $\calF_{(A, \clnu{FPT})}$ expresses the idea of \emph{having the same complexity}.
+Indeed, we have $\calF_\clnu{FPT}(A \symdiff A) = \calF_\clnu{FPT}(\emptyset)$.
+In this setting, the kernel of the function that maps a set $A$ to its filter $\calF_\clnu{FPT}(A)$ expresses the idea of \emph{having the same complexity}.
 Unfortunately, it does not do a satisfactory job in expressing this notion as sets in different computational complexity classes may share a filter.
 \begin{theorem}
-\label{thm:nufptsymdiff}
+\label{thm:nufptsymdiff}%
   There exist sets $A$ and $B$ satisfying
   \begin{itemize}
   \item $A \symdiff B \notin \cl{P}$, and
-  \item $\calF_{(A, \clnu{FPT})} = \calF_{(B, \clnu{FPT})}$.
+  \item $\calF_\clnu{FPT}(A) = \calF_\clnu{FPT}(B)$.
   \end{itemize}
 \end{theorem}
 \begin{proof}
-  Recall that the filter with respect to \clnu{FPT} induced by a \cl{P}-bi-immune set consists only of the class of parameterizations of which all slices are finite.
-  Conversely, if this is the filter induced by some set, then that set is \cl{P}-bi-immune.
-  To prove the theorem it thus suffices to construct two \cl{P}-bi-immune sets with a symmetric difference outside \cl{P}.
+  Recall that the filter with respect to \clnu{FPT} induced by a \cl{P}"~bi-immune set consists only of the class of parameterizations of which all slices are finite.
+  Conversely, if this is the filter induced by some set, then that set is \cl{P}"~bi-immune.
+  To prove the theorem it thus suffices to construct two \cl{P}"~bi-immune sets with a symmetric difference outside \cl{P}.
 
-  A decidable \cl{P}-bi-immune set can be crafted using the finite extension method \parencite{downey2010algorithmic}.
-  Of every polynomial approximation it is required that either it is not an approximation for the set being built, or that its domain is finite \parencite{balcazar1990structural}.
+  A decidable \cl{P}"~bi-immune set can be crafted using the finite extension method \parencite{downey2010algorithmic}.
+  Of every polytime-approximation it is required that either it is not an approximation for the set being built, or that its domain is finite \parencite{balcazar1990structural}.
   By augmenting these requirements, we can ensure that the symmetric difference with some known decidable set is not in \cl{P}.
   We need to ensure that there is no set in \cl{P} that equals the symmetric difference of the set we are constructing and the known decidable set.
 
   Instead of spelling out all technicalities, we refer to a stronger result by \textcite{geske1991note}.
-  Using a similar approach, they derive that for all $c > 0$ there is a \cltime{$2^{cn}$}-bi-immune set that is decidable in linear exponential time \parencite{mayordomo1994almost}.
+  Using a similar approach, they derive that for all $c > 0$ there is a \cltime{$2^{cn}$}"~bi-immune set that is decidable in linear exponential time~\parencite{mayordomo1994almost}.
   Let $A$ be such a set for $c = 1$ and let $c_A$ be so that $A$ is in \cltime{$2^{c_An}$}.
   Likewise, let $B$ be such a set for $c = c_A + 1$.
   If $A \symdiff B$ would be in \cl{P}, then $A \symdiff (A \symdiff B) = B$ would be in \cltime{$2^{(c_A + 1)n}$}.
-  This contradicts the fact that $B$ was constructed to be \cltime{$2^{(c_A + 1)n}$}-bi-immune, hence $A \symdiff B$ cannot be in \cl{P}.
+  This contradicts the fact that $B$ was constructed to be \cltime{$2^{(c_A + 1)n}$}"~bi-immune, hence $A \symdiff B$ cannot be in \cl{P}.
 \end{proof}
 
 \subsubsection{Uniform Filters and a Separation Conjecture}
 From a topology perspective, Theorem~\ref{thm:nufptsymdiff} represents the failure of a tantalizing separation axiom.
-We could say that a set in \cl{P} separates two sets if it contains a polynomial core for precisely one of the two.
+We could say that a set in \cl{P} separates two sets if it contains a polytime-core for precisely one of the two.
 Unfortunately, Theorem~\ref{thm:nufptsymdiff} holds that not every two sets of which the symmetric difference is outside \cl{P} have such a separating set in \cl{P}.
 A more intricate separation axiom may be available when uniformity constraints are added.
 We conjecture that, in the uniform case, the filter of the symmetric difference of two sets that share a filter collapses to that of a set in \cl{P}.
 \begin{conjecture}
-\label{con:fptsymdiff}
+\label{con:fptsymdiff}%
   For any two sets $A, B$ we have
   \begin{equation*}
-    \calF_{(A, \cl{FPT})} = \calF_{(B, \cl{FPT})} \:\iff\: \calF_{(A \symdiff B, \cl{FPT})} = \calF_{(\emptyset, \cl{FPT})}.
+    \calF_\cl{FPT}(A) = \calF_\cl{FPT}(B) \:\iff\: \calF_\cl{FPT}(A \symdiff B) = \calF_\cl{FPT}(\emptyset).
   \end{equation*}
 \end{conjecture}
+%TODO: Also add a slogan? The computational complexity behavior is reflected by the collection of parameterizations (that put a set in \cl{FPT}).
 
 In other words, we conjecture that when the filters of two sets $A$ and $B$ are equal, there is a set $X$ in \cl{P} such that we have $B = A \symdiff X$.
 At the very least, we find that the converse is true since Theorem~\ref{thm:nufptsymdiffeq} has a uniform counterpart.
 \begin{theorem}
   For any set $X$ in \cl{P} and any set $A$ we have
   \begin{equation*}
-    \calF_{(A, \cl{FPT})} = \calF_{(A \symdiff X, \cl{FPT})}.
+    \calF_\cl{FPT}(A) = \calF_\cl{FPT}(A \symdiff X).
   \end{equation*}
 \end{theorem}
 \begin{proof}
   We claim that any parameterization $\eta$ with which some set $A$ is in \cl{FPT} also puts $A \symdiff X$ in \cl{FPT}.
   Because we have $(A \symdiff X) \symdiff X = A$, the theorem follows from this claim.
 
-  Let $\phi$ be a parameterized procedure witnessing that $A$ is in \cl{FPT} with $\eta$, and let $\psi$ be a polynomial time decision procedure for $X$.
+  Let $\phi$ be a parameterized procedure witnessing that $A$ is in \cl{FPT} with $\eta$, and let $\psi$ be a polynomial-time decision procedure for $X$.
   These procedures can be combined into a parameterized procedure that witnesses that $A \symdiff X$ is in \cl{FPT} with $\eta$ as follows.
   First, given an instance $x$ and parameter value $k$, the parameterized procedure simulates $\phi$ to completion on input $(x, k)$.
-  If $\phi(x, k)$ yielded \bits{?}, our procedure does so as well.
+  If $\phi(x, k)$ yielded~\bits{?}, our procedure does so as well.
   Otherwise, it also computes $\psi(x)$ and outputs the exclusive disjunction of $\phi(x, k)$ and $\psi(x)$.
   The parameterized procedure thus defined meets the running time requirements of the definition of \cl{FPT} and converges to $A \symdiff X$.
   Finally, the corresponding parameterization is $\eta$, as desired.
 \end{proof}
 
-Conjecture~\ref{con:fptsymdiff} suggests that a notion of \emph{having the same complexity} is provided by the kernel of the function that maps a set $A$ to the filter $\calF_{(A, \cl{FPT})}$.
+Conjecture~\ref{con:fptsymdiff} suggests that a notion of \emph{having the same complexity} is provided by the kernel of the function that maps a set $A$ to the filter $\calF_\cl{FPT}(A)$.
 If true, a filter in the range of this function would determine the input set up to a symmetric difference in \cl{P}.
 In support of the conjecture, we have a uniform counterpart to Theorem~\ref{thm:nufptsymdiffsubeq} too.
 While it does not show that the symmetric difference of two sets with the same filter is in \cl{P}, it does show that it is easier than either of the sets.
 \begin{theorem}
-  For any two sets $A, B$ satisfying $\calF_{(A, \cl{FPT})} = \calF_{(B, \cl{FPT})}$ we have
+  For any two sets $A, B$ satisfying $\calF_\cl{FPT}(A) = \calF_\cl{FPT}(B)$ we have
   \begin{equation*}
-    \calF_{(A, \cl{FPT})} \subseteq \calF_{(A \symdiff B, \cl{FPT})}.
+    \calF_\cl{FPT}(A) \subseteq \calF_\cl{FPT}(A \symdiff B).
   \end{equation*}
 \end{theorem}
 \begin{proof}
   The proof of Theorem~\ref{thm:nufptsymdiffsubeq} can easily be adapted for the uniform setting.
-  The polynomial approximations at play in that proof can be obtained uniformly in the parameter.
+  The polytime-approximations at play in that proof can be obtained uniformly in the parameter.
   Rather than combining these approximations, we combine the parameterized procedures that produce them at once.
   Let $\phi$ and $\psi$ be parameterized procedures putting $A$ and $B$, respectively, in \cl{FPT} with some shared parameterization.
   These procedures can be combined into a parameterized procedure that puts $A \symdiff B$ in \cl{FPT} with the same parameterization.
@@ -349,6 +365,7 @@ Equivalence of uniform filters can thus be seen as a refinement over equivalence
 Interestingly, the usefulness of such a refinement was already hinted at by \textcite{orponen1986classification} in \citeyear{orponen1986classification}.
 
 \subsection{Randomness and Hardness}
+\label{sec:randomness_hardness}%
 The instance complexity conjecture provides a bridge between algorithmic complexity and computational complexity.
 It does so by considering all decision procedures with some restricted running time for a given set at once.
 If the set adheres to the instance complexity conjecture, there are infinitely many instances on which no decision procedure can do better than a table lookup.
@@ -365,7 +382,7 @@ Instead, we are interested in properties shared by each of the decision procedur
 Using parameterizations, we can analyze to what extent high algorithmic complexity implies high computational complexity.
 For algorithmic complexity, characterizing high complexity is routine \parencite{li2008introduction}.
 \begin{definition}
-\label{def:random}
+\label{def:random}%
   A set of strings $X$ is \defkey{random} if there is a constant $r$ such that, for all $n$ and all $x \in X$ of length $n$, we have
   \begin{equation*}
     \KC(x) \ge n + \KC(n) - r.
@@ -378,97 +395,98 @@ Fortunately, there exist infinite random sets as well as infinite nonrandom sets
 As a result, the interesting random sets are the infinite ones.
 
 For computational complexity, a characterization of sets of high complexity may not be immediately obvious.
-Identifying minimal computational complexity with polynomial time decidability, complexity can be measured from parameterizations that put a set in \clX{P} or \cl{FPT}.
+Identifying minimal computational complexity with polynomial-time decidability, complexity can be measured from parameterizations that put a set in \clX{P} or \cl{FPT}.
 Instances of high computational complexity are those that only occur in slices that are high up in the inclusion order of a parameterization.
 For most natural encodings of parameters, this makes of the minimization function of a parameterization a measure of computational complexity of instances.
-We say that the encoding of a parameter is \emph{compatible} with the inclusion order of a parameterization $\eta$ if $\eta$ satisfies
-\begin{equation*}
+We say that the encoding of a parameter is \defkeyat{parameter!encoding!compatible with inclusion order}{compatible} with the inclusion order of a parameterization $\eta$ if $\eta$ satisfies
+\begin{equation}
+\label{eq:compatible}
   \forall k, k'\colon \eta_k \subseteq \eta_{k'} \implies \length{k} \le \length{k'}.
-\end{equation*}
+\end{equation}
 Note that any parameterization has a subparameterization on which the encoding of the parameter is compatible with the inclusion order.
 Most parameterizations in the literature \parencite[e.g.][]{downey1999parameterized,flum2006parameterized,niedermeier2006invitation,cygan2015parameterized} meet this compatibility criterion.
 Hence, for most common parameterization $\eta$ that put some given set in \cl{FPT}, a measure of the computational complexity of instances is provided by $\mu_\eta$.
 
 We have identified sets of high algorithmic complexity as those where the Kolmogorov complexity of members is within a constant of the highest value possible.
-Likewise, we wish to identify sets of high computational complexity as those where the members have a near maximal computational complexity.
+Likewise, we wish to identify sets of high computational complexity as those where the members have a near-maximal computational complexity.
 Intractable instances attain high values under the minimization function with respect to a parameterization, thus the following notation is of use.
 \begin{definition}
-  Given a parameterization $\eta$, we use $N_\eta(n, m)$ for the number of elements in the set $\{x \in \binary^n \st \mu_\eta(x) \le m\}$ and further define
+  Given a parameterization $\eta$, we use $\upN_\eta(n, k)$ for the number of elements in the set $\binary^n \cap \eta_k$ and further define\indexkey{N@$\upN_\eta$}\indexkey{M@$\upM_\eta$}
   \begin{equation*}
-    M_\eta(n) \deq \max\{\mu_\eta(x) \st x \in \binary^n\}.
+    \upM_\eta(n) \deq \max\{\mu_\eta(x) \st x \in \binary^n\}.
   \end{equation*}
 \end{definition}
 
-Observe that when a parameterization $\eta$ is decidable, the functions $N_\eta$ and $M_\eta$ are computable.
+Observe that when a parameterization $\eta$ is decidable, the functions $\upN_\eta$ and $\upM_\eta$ are computable.
 By our findings in Section~\ref{sec:optimal_uniform_parameterizations}, we should not expect optimal parameterizations with respect to \cl{FPT} to exist for a given set.
 Therefore, a parameterized notion of hardness must be dependent on the choice of a parameterization.
 \begin{definition}
-  With respect to a parameterization $\eta$, a set of strings $X$ is \defkeyat{hard@$\eta$-hard}{$\eta$-hard} if there is a constant $h$ such that, for all $n$ and all $x \in X$ of length $n$, we have
+  With respect to a parameterization $\eta$, a set of strings $X$ is \defkeyat{hard@$\eta$-hard}{$\eta$"~hard} if there is a constant $h$ such that, for all $n$ and all $x \in X$ of length $n$, we have
   \begin{equation*}
-    \mu_\eta(x) \ge M_\eta(n) - h.
+    \mu_\eta(x) \ge \upM_\eta(n) - h.
   \end{equation*}
 \end{definition}
-
-As with random sets, only infinite $\eta$-hard sets are of interest.
+As with random sets, only infinite $\eta$"~hard sets are of interest.
 
 The connection between high algorithmic complexity, randomness, and high computational complexity, hardness, goes beyond the similarity of their definitions.
 Using an incompressibility argument, we can prove that randomness implies hardness with respect to certain parameterizations.
 The parameterizations for which we can do so are those that hold information about almost all strings.
 This requirement translates into an informativeness criterion.
 \begin{definition}
-\label{def:informative}
-  A decidable parameterization $\eta$ is \defkeyat{parameterization!informative}{informative} if there is a constant $c$ such that for every $n$ and $m$ that satisfy $M_\eta(n) - m \ge c$ we have
-\begin{equation*}
-  M_\eta(n) N_\eta(n, m) \le 2^{n + c - (M_\eta(n) - m)}.
-\end{equation*}
+\label{def:informative}%
+  A decidable parameterization $\eta$ is \defkeyat{parameterization!informative}{informative} if there is a constant $c$ such that for every $n$ and $k$ that satisfy $\upM_\eta(n) - \length{k} \ge c$ we have
+  \begin{equation*}
+    \upN_\eta(n, k) \le 2^{n + \length{k} + c - 2 \cdot \upM_\eta(n)}.
+  \end{equation*}
 \end{definition}
 
-For every parameterization $\eta$ that includes $\binary^+$ as a slice, and for which $\mu_\eta$ is thus bounded, any set is $\eta$-hard.
+For every parameterization $\eta$ that includes $\binary^+$ as a slice, and for which $\mu_\eta$ is therefore bounded, any set is $\eta$"~hard.
 Thus, we turn to parameterizations that do not include $\binary^+$.
 Informally, the rather ad~hoc informativeness criterion holds that the density of any fixed slice of an informative parameterization gets lower as $n$ increases.
+To see why, observe that $\upN_\eta(n, k)$ must at least be less than $2^{n - \upM_\eta(n)}$.
 Shortly, we shall see that informativeness of a parameterization is implied by a more practically useful property.
 For now, we are set to connect high algorithmic complexity to high computational complexity.
 \begin{theorem}
-\label{thm:randomhard}
-  For any informative parameterization $\eta$, every random set is $\eta$-hard.
+\label{thm:randomhard}%
+  For any informative parameterization $\eta$, every random set is $\eta$"~hard.
 \end{theorem}
 In less technical terms, this amounts to the following.
-\begin{slogan}
-  Random instances are hard.
-\end{slogan}
+\slogan{Random instances are hard.}
 \begin{proof}
-  Let $\eta$ be a decidable parameterization and $x$ an arbitrary string of length $n$.
-  We shall consider a three-part encoding of $x$ based on $\eta$.
-  This encoding consists of a part that specifies $n$, a part that specifies $\mu_\eta(x)$, and a part that specifies the rank of $x$ in $\{y \in \binary^n \st \mu_\eta(y) \le \mu_\eta(x)\}$.
-  Because $\eta$ is decidable, the second and third part can be specified in $\log M_\eta(n)$ and $\log N_\eta(n, \mu_\eta(x))$ bits respectively.
+  Let $\eta$ be a decidable parameterization, $x$ an arbitrary string of length~$n$, and $k$ a parameter value of length $\mu_\eta(x)$ such that we have $x \in \eta_k$.
+  Denote by $\KC(\eta)$ the minimum length of a decision procedure for~$\eta$.
+  We shall consider a four-part encoding of~$x$ based on~$\eta$.
+  The first two parts of this encoding specify $\eta$ and $n$, the last two specify $k$ and the rank of $x$ in $\binary^n \cap \eta_k$, respectively.
+  Because $\eta$ is decidable, the last two parts can be specified in $\upM_\eta(n) + 1$ and $\log \upN_\eta(n, k)$ bits respectively.
   By always using this many bits, we can concatenate the two specifications without the need for a separation marker to distinguish the two parts.
-  For this, we make use of the fact that, given $\eta$, we can compute $M_\eta(n)$ from $n$, and $N_\eta(n, \mu_\eta(x))$ from $n$ and $\mu_\eta(x)$.
+
+  A few things are worth noting about this encoding scheme.
+  The number of parameter values to distinguish is $2^{\upM_\eta(n) + 1} - 1$, which is why our fixed-length encoding of parameter values uses $\upM_\eta(n) + 1$ bits.
+  Additionally, we make use of the fact that, given $\eta$ and $n$, we can compute $\upM_\eta(n)$.
+  In turn, we can compute $\upN_\eta(n, k)$ once $k$ is known too.
   Thus, we find
   \begin{equation*}
-    \KC(x \given \eta) \le \KC(n) + \log M_\eta(n) + \log N_\eta(n, \mu_\eta(x)).
+    \KC(x) \le \KC(\eta) + \KC(n) + \upM_\eta(n) + 1 + \log \upN_\eta(n, k).
   \end{equation*}
 
   Now, let $X$ be a random set, the randomness of which is witnessed by a constant $r$, and let $x$ be a string in $X$ of length $n$.
-  Fixing a decision procedure for $\eta$ and denoting its length by $\length{\eta}$, we find $\KC(x) \le \length{\eta} + \KC(x \given \eta)$.
-  This allows us to combine the defining equation for random sets, $n + \KC(n) - r \le \KC(x)$, with the upper bound on $\KC(x \given \eta)$ obtained above.
-  We thus get
+  We can combine the defining equation for random sets, $n + \KC(n) - r \le \KC(x)$, with the upper bound on $\KC(x)$ obtained above to get
   \begin{equation*}
-    n - r - \length{\eta} \le \log M_\eta(n) + \log N_\eta(n, \mu_\eta(x)).
+    n - r - \KC(\eta) \le \upM_\eta(n) + 1+ \log \upN_\eta(n, k).
   \end{equation*}
 
   Lastly, suppose $\eta$ is an informative parameterization and a constant $c$ witnesses its informativeness.
-  On the right-hand side of the previous inequality we recognize the logarithm of the left-hand side of the informativeness criterion.
-  We may assume that we have $M_\eta(n) - \mu_\eta(x) \ge c$, for if not, $\eta$-hardness of $X$ is immediate.
-  Thus, $n - r - \length{\eta}$ is also upper bounded by the logarithm of the right side of the informativeness criterion and we get
+  We may assume that we have $\upM_\eta(n) - \mu_\eta(x) \ge c$, for if not, $\eta$"~hardness of $X$ is immediate.
+  Thus, we may substitute $\upN_\eta(n, k)$ for its bound provided by the informativeness criterion and get
   \begin{equation*}
-    n - r - \length{\eta} \le n + c - (M_\eta(n) - \mu_\eta(x)).
+    n - r - \KC(\eta) \le \upM_\eta(n) + 1 + n + \length{k} + c - 2 \cdot \upM_\eta(n).
   \end{equation*}
   After rearranging, we obtain
   \begin{equation*}
-    \mu_\eta(x) \ge M_\eta(n) - (\length{\eta} + r + c),
+    \length{k} \ge \upM_\eta(n) - (\KC(\eta) + r + c + 1),
   \end{equation*}
-  where $\length{\eta}$, $r$, and $c$ are independent of $x$.
-  This proves $\eta$-hardness of $X$.
+  where $\KC(\eta)$, $r$, and $c$ are independent of $x$.
+  Because we have chosen $k$ to be so that we have $\length{k} = \mu_\eta(x)$, this proves $\eta$"~hardness of $X$.
 \end{proof}
 
 Of course, Theorem~\ref{thm:randomhard} was made possible by the way we defined being informative in Definition~\ref{def:informative}.
@@ -477,46 +495,67 @@ In fact, at this point we have little reason to believe informative parameteriza
 It is therefore useful to identify a class of parameterizations of which informativeness can be established easily.
 Central to this class will be a density requirement on the slices of parameterizations.
 \begin{definition}
-  A parameterization $\eta$ has uniform exponential density if there is a function $f$, and there are two constants $\epsilon$ and $\gamma$, both strictly between $0$ and $1$, such that, for all $n$ and all $m \le M_\eta(n)$, we have
+  A parameterization $\eta$ has \defkeyat{parameterization!uniform exponential density}{uniform exponential density} if there is a non-decreasing function~$f$, and there are two constants~$\epsilon$ and~$\gamma$, both strictly between $0$ and $1$, such that, for all~$n$ and all~$k$ with $\length{k} \le \upM_\eta(n)$, we have
 \begin{equation*}
-  2^{\epsilon f(m) n^\gamma} \le N_\eta(n, m) \le 2^{f(m) n^\gamma}.
+  2^{\epsilon f(\length{k}) n^\gamma} \le \upN_\eta(n, k) \le 2^{f(\length{k}) n^\gamma}.
 \end{equation*}
 \end{definition}
 
 Parameterizations of which the slices have exponential density are especially nicely behaved from a parameterized tractability point of view.
-The slices of a parameterization are polynomial segments of every set that the parameterization puts in \clX{P} or \cl{FPT}.
-With polynomial segments, we have looked at the approximations with a running time that was bounded by a polynomial as a function of the length of the input.
+The slices of a parameterization are polytime-segments of every set that the parameterization puts in \clX{P} or \cl{FPT}.
+With polytime-segments, we have looked at the approximations with a running time that was bounded by a polynomial as a function of the length of the input.
 It may make sense to also consider the running time of an approximation as a function of the rank of an element in the domain of the approximation.
-If the domain of a polynomial approximation is subexponential, the running time may become superpolynomial as a function of the rank of inputs in the domain.
+If the domain of a polytime-approximation is of subexponential density, the running time may become superpolynomial as a function of the rank of inputs in the domain.
 This could be indicative of the existence of a more frugal encoding of objects with respect to the approximated set.
-In particular, an encoding similar to the three-part encoding used in the proof of Theorem~\ref{thm:randomhard} may be viable and even invertible in polynomial time.
+In particular, an encoding similar to the multi-part encoding used in the proof of Theorem~\ref{thm:randomhard} may be viable and even invertible in polynomial time.
+This will be discussed in more detail in Section~\ref{sec:encodings_distributions}.
 Having exponentially dense slices is a guarantee that no recoding based on the parameterization is going to influence the fixed-parameter tractability of a set.
 
 For parameterizations that have uniform exponential density, informativeness follows from a simple property.
 \begin{lemma}
-\label{lem:exponentialinformative}
+\label{lem:exponentialinformative}%
   Let $\eta$ be a decidable parameterization having uniform exponential density.
-  If we have $M_\eta(n) \in \bigO(\log n)$, then $\eta$ is informative.
+  If we have $\upM_\eta(n) \in \bigO(\log n)$, then $\eta$ is informative.
 \end{lemma}
 \begin{proof}
   Let $f$, $\epsilon$, and $\gamma$ witness the uniform exponential density of $\eta$.
-  Because we have $f(M_\eta(n)) \ge n^{1 - \gamma}$ and $M_\eta(n) \in \bigO(\log n)$, we find that $f$ grows at least exponentially fast.
-  Assume now that we have some $m$ that is at most $M_\eta(n) - c$, where we shall settle on the value of $c$ later.
-  By the growth rate of $f$ and because we also have $\epsilon f(M_\eta(n)) \le n^{1 - \gamma}$, we find
+  As, for all~$k$, the value of $\upN_\eta(n, k)$ cannot exceed $2^n$, and the left-hand side of the density criterion is at most $2^{\epsilon f(\upM_\eta(n)) n^\gamma}$, we find $2^{\epsilon f(\upM_\eta(n)) n^\gamma} \le 2^n$.
+  Equivalently, this means that we have
   \begin{equation*}
-    f(m) \le f(M_\eta(n) - c) \le \frac{f(M_\eta(n))}{c'} \le \frac{n^{1 - \gamma}}{\epsilon c'}
+    f(\upM_\eta(n)) \le \frac{n}{\epsilon n^\gamma} = \frac{n^{1 - \gamma}}{\epsilon}.
   \end{equation*}
-  for some $c'$ that grows exponentially in $c$.
-  Moreover, we find
+
+  Because of the bound on $\upM_\eta$, there is a constant~$\delta$ such that, for every~$n$, we have $\upM_\eta(2 n) \le \upM_\eta(n) + \delta$.
+  Since $f$ is non-decreasing, we can combine this with the previous inequality to obtain
+  \begin{align*}
+    f(\upM_\eta(n) - \delta) &\le f(\upM_\eta(n / 2)) \\
+      &\le \frac{(n / 2)^{1 - \gamma}}{\epsilon} \\
+      &= \frac{n^{1 - \gamma}}{\epsilon 2^{1 - \gamma}}.
+  \end{align*}
+
+  We can plug this bound on~$f$ into the right-hand side of the density criterion to find, for all $k$ of length at most $\upM_\eta(n) - \delta$,
+  \begin{align*}
+    \upN_\eta(n, k) &\le 2^{f(\upM_\eta(n) - \delta) n^\gamma} \\
+      &\le 2^{\frac{n^{1 - \gamma}}{\epsilon 2^{1 - \gamma}} n^\gamma} \\
+      &= 2^{\frac{n}{\epsilon 2^{1 - \gamma}}}.
+  \end{align*}
+  More generally, for any constant~$c$ we find that, for all~$k$ of length at most $\upM_\eta(n) - c \cdot \delta$, we have
   \begin{equation*}
-    M_\eta(n) N_\eta(n, m) \le M_\eta(n) 2^{\frac{n}{\epsilon c'}}.
+    \upN_\eta(n, k) \le 2^{\frac{n}{\epsilon 2^{c(1 - \gamma)}}}.
   \end{equation*}
-  Using the fact that we have $M_\eta(n) \in \bigO(\log n)$ once more, we see that it is possible to choose $c$ so that this is indeed bounded by $2^{n + c - (M_\eta(n) - m)}$.
+  If we choose $c$ large enough, then the denominator in the exponent, $\epsilon 2^{c(1 - \gamma)}$, will become larger than~$1$.
+  Because we have $\upM_\eta(n) \in \bigO(\log n)$, choosing $c$ larger still we can make sure that we have $\frac{n}{\epsilon 2^{c(1 - \gamma)}} \le n + c \cdot \delta - 2 \cdot \upM_\eta(n)$.
+  From this, because we have
+  \begin{equation*}
+    \upN_\eta(n, k) \le 2^{n + c \cdot \delta - 2 \cdot \upM_\eta(n)} \le 2^{n + \length{k} + c \cdot \delta - 2 \cdot \upM_\eta(n)},
+  \end{equation*}
+  it follows that $\eta$ is informative.
 \end{proof}
 
-A parameterization of which informativeness can be shown using this lemma is the fruit fly of parameterized complexity theory, the vertex cover parameterization.
+A parameterization of which informativeness can be shown using this lemma is the vertex cover parameterization.
 \begin{example}
-  To be technically correct, we should distinguish between the \cl{NP} complete \parencite{garey1979computers} set
+\label{ex:vc_informative}%
+  To be technically correct, we should distinguish between the \cl{NP}"~complete \parencite{garey1979computers} set
   \begin{align*}
     \defkeyat{VertexCover@\pr{VertexCover}}{\pr{VertexCover}} \deq \{\pair{G}{l} \st &\text{the graph encoded by $G$} \\
     	&\text{has a vertex cover of size at most $\asNat(l)$}\},
@@ -528,36 +567,39 @@ A parameterization of which informativeness can be shown using this lemma is the
   \end{align*}
   It is well known that \pr{VertexCover} is in \cl{FPT} when parameterized by the parameterization that bounds the size of the solution, $(\{\pair{x}{l} \st \asNat(l) \le \asNat(k)\})_{k \in \binary^+}$.
   This latter parameterization is not informative, but the vertex cover parameterization given by $\eta$ as defined above is.
+  Note, however, that $\eta$ does not count as a parameterization in the framework of \citeauthor{flum2006parameterized}.
+  Unless, of course, \cl{P} equals \cl{NP} and the minimum vertex cover size can be computed in polynomial time.
 
   The parameterization $\eta$ is emblematic of having uniform exponential density.
   Consider the adjacency matrix encoding of graphs and let $n$ represent the number of cells in an adjacency matrix.
-  For any parameter value $k$, there are roughly $2^{k^2 + k\sqrt{n}}$ graphs of size $n$ that have a vertex cover of size at most $k$.
+  For any parameter value $k$, there are roughly $2^{\asNat(k)^2 + \asNat(k)\sqrt{n}}$ graphs of size $n$ that have a vertex cover of size at most $\asNat(k)$.
   From Lemma~\ref{lem:exponentialinformative}, it follows that the vertex cover parameterization is informative, because we have
   \begin{equation*}
-    M_\eta(n) = \length{\asStr(\sqrt{n})} \in \bigO(\log n).
+    \upM_\eta(n) = \length{\asStr(\sqrt{n})} \in \bigO(\log n).
   \end{equation*}
-  That is, the largest minimum vertex cover has about as many nodes as there are available in the graph.
-  The size of a minimum vertex cover can thus be specified in a number of bits that is logarithmic in the number of nodes in the graph.
+  That is, the largest minimum vertex cover has about as many vertices as there are available in the graph.
+  The size of a minimum vertex cover can thus be specified in a number of bits that is logarithmic in the number of vertices in the graph.
 \end{example}
 
 \subsubsection{Low Complexity}
 Turning to the other end of the complexity spectrum, we may ask whether low algorithmic complexity in turn implies low computational complexity.
 A formalization of the notion of low computational complexity is readily available in our parameterized framework.
-With respect to a parameterization $\eta$, a set is $\eta$-easy if on that set the minimization with respect to $\eta$ is bounded by a constant.
+With respect to a parameterization $\eta$, a set is $\eta$"~easy if on that set the minimization with respect to $\eta$ is bounded by a constant.
 Using that a parameterization is directed, this leads to a pleasantly succinct definition.
 \begin{definition}
-  With respect to a parameterization $\eta$, a set of strings $X$ is \defkeyat{easy@$\eta$-easy}{$\eta$-easy} if there is a parameter value $k$ such that we have $X \subseteq \eta_k$.
+\label{def:easy}%
+  With respect to a parameterization $\eta$, a set of strings $X$ is \defkeyat{easy@$\eta$-easy}{$\eta$"~easy} if there is a parameter value $k$ such that we have $X \subseteq \eta_k$.
 \end{definition}
 As with our definition of hard sets, this definition is most meaningful in the context of a set that is in \clX{P} or \cl{FPT} with the particular parameterization.
-Then, a set is easy when it is the subset of a polynomial segment.
+Then, a set is easy when it is the subset of a polytime-segment.
 This leads to a connection to algorithmic complexity related to Theorem~\ref{thm:nufptic}.
-The key observation in the proof of that theorem is that sets of bounded polynomial instance complexity are polynomial segments.
+The key observation in the proof of that theorem is that sets of which the instance complexity with respect to a polynomial is bounded are polytime-segments.
 Since our notion of easiness is concerned with only finitely many slices, we can remain in the realm of uniform parameterized complexity theory.
 \begin{theorem}
   The following statements about a decidable set $A$ and an arbitrary set $X$ are equivalent.
   \begin{enumerate}
   \item\label{enum:easy:easy}
-    There is a parameterization $\eta$ with which $A$ is in \cl{FPT} such that $X$ is $\eta$-easy.
+    There is a parameterization $\eta$ with which $A$ is in \cl{FPT} such that $X$ is $\eta$"~easy.
   \item\label{enum:easy:ic}
     There is a polynomial $p$ and a constant $c$ such that for all $x \in X$ we have $\ic^p(x : A) \le c$.
   \end{enumerate}
@@ -567,16 +609,16 @@ $\ref{enum:easy:easy} \implies \ref{enum:easy:ic}$.
   This is a corollary of Theorem~\ref{thm:fptic}.
 
 $\ref{enum:easy:ic} \implies \ref{enum:easy:easy}$.
-  We are given that $X$ is the subset of a polynomial segment of $A$.
-  Any such polynomial segment of $A$ may be added as a slice to a parameterization with which $A$ is in \cl{FPT}.
-  Doing so yields a new parameterization, $\eta$, with which $A$ is in \cl{FPT} and for which $X$ is $\eta$-easy.
+  We are given that $X$ is the subset of a polytime-segment of $A$.
+  Any such polytime-segment of $A$ may be added as a slice to a parameterization with which $A$ is in \cl{FPT}.
+  Doing so yields a new parameterization, $\eta$, with which $A$ is in \cl{FPT} and for which $X$ is $\eta$"~easy.
 \end{proof}
 
 This theorem lines up a notion of low computational complexity with a notion of low algorithmic complexity.
 As such it complements Theorem~\ref{thm:randomhard}.
-However, we feel that bounded polynomial instance complexity\indexkey{instance complexity} is not an adequate formalization of the opposite of randomness.
-Where our definition of random sets is freestanding, bounded polynomial instance complexity depends on both a time bound and a reference set.
-In that regard, bounded polynomial instance complexity is already very much a notion of computational complexity.
+However, we feel that bounded instance complexity\indexkey{instance complexity} with respect to a polynomial is not an adequate formalization of the opposite of randomness.
+Where our definition of random sets is freestanding, bounded instance complexity with respect to a polynomial depends on both a time bound and a reference set.
+In that regard, bounded instance complexity with respect to a polynomial is already very much a notion of computational complexity.
 
 Looking at Definition~\ref{def:random}, an obvious formalization of the opposite of randomness would be to require the Kolmogorov complexity to be bounded.
 A definition along these lines, though, would face two problems.
@@ -591,7 +633,7 @@ This is a drawback of the proposed definition as compressibility can only be tak
 A measure of algorithmic complexity that is not relative to a reference set and takes into account how fast a string can be produced was proposed by \textcite{hartmanis1983generalized}.
 According to this measure, the opposite of a random set is a set of small generalized Kolmogorov complexity \parencite{balcazar1986sets,allender1988p-printable}.
 \begin{definition}
-  A set of strings $X$ has \defkeyat{generalized Kolmogorov complexity!small}{small generalized Kolmogorov complexity} if there is a constant $c$ such that, for all $n$ and all $x \in X$ of length $n$, there is a procedure $\phi$ that satisfies
+  A set of strings $X$ has \defkeyat{Kolmogorov complexity!generalized!small}{small generalized Kolmogorov complexity} if there is a constant $c$ such that, for all $n$ and all $x \in X$ of length $n$, there is a procedure $\phi$ that satisfies
   \begin{itemize}
   \item $\length{\phi} \le c\log n$, and
   \item $\phi$ outputs $x$ within $n^c$ steps.
@@ -604,26 +646,28 @@ Yet, this does not mean that every set with small generalized Kolmogorov complex
 Every subset of a set with small generalized Kolmogorov complexity, no matter how difficult to decide, has small generalized Kolmogorov complexity.
 To add a sense of uniformity, we may want to think only of the sets in \cl{P} with small generalized Kolmogorov complexity as nonrandom sets.
 As it turns out, this gets us another class of sets of highly structured strings.
-This class was first identified by \textcite{hartmanis1984computation}.
+The class we get was first identified by \textcite{hartmanis1984computation}.
 \begin{definition}
-  A set of strings $X$ is \defkeyat{p-printable@\slp-printable}{\slp-printable} if there is a polynomial $p$ and a procedure $\phi$ that, on any input $\asStr(n)$, lists all elements of $X$ up to size $n$ within $p(n)$ steps.
+  A set of strings $X$ is \defkeyat{p-printable@\pdash{}printable}{\pdash{}printable} if there is a polynomial $p$ and a procedure $\phi$ that, on any input $\asStr(n)$, lists all elements of $X$ up to size $n$ within $p(n)$ steps.
 \end{definition}
 
-The equivalence of the class of \slp-printable sets and the class of sets in \cl{P} with small generalized Kolmogorov complexity was shown independently by \textcite{balcazar1986sets}, and \textcite{rubinstein1986note}.
-Shortly after, \textcite{allender1988p-printable} identified two more ways of characterizing the \slp-printable sets.
-They observed that a set is \slp-printable precisely when it is polynomial time isomorphic to some tally set in \cl{P}.
-Consequently, they showed that a set is polynomial time isomorphic to a tally set in \cl{P} precisely when it is sparse and \slp-rankable\indexkey{p-rankable@\slp-rankable}.
-Whether or not all sparse sets in \cl{P} are \slp-rankable and thus \slp-printable is an open problem.
-Yet, oracles are known relative to which not all sparse sets in \cl{P} are \slp-printable \parencite{hartmanis1983generalized}.
+The equivalence of the class of \pdash{}printable sets and the class of sets in \cl{P} with small generalized Kolmogorov complexity was shown independently by \textcite{balcazar1986sets}, and \textcite{rubinstein1986note}.
+Shortly after, \textcite{allender1988p-printable} identified two more ways of characterizing the \pdash{}printable sets.
+They observed that a set is \pdash{}printable precisely when it is polynomial-time isomorphic to some tally set in \cl{P}.
+Consequently, they showed that a set is polynomial-time isomorphic to a tally set in \cl{P} precisely when it is sparse and \pdash{}rankable\indexkey{p-rankable@\pdash{}rankable} \parencite[see also][]{goldsmith1996scalability}.
+Whether or not all sparse sets in \cl{P} are \pdash{}rankable and thus \pdash{}printable is an open problem.
+Yet, oracles are known relative to which not all sparse sets in \cl{P} are \pdash{}printable \parencite{hartmanis1983generalized}.
 
 With Theorem~\ref{thm:randomhard}, we have found that random sets are hard in relation to any informative parameterization.
 For the converse, we may expect every set with small generalized Kolmogorov complexity to be easy in relation to some parameterization.
 While we shall leave this as an open problem, it has been shown that such a theorem would be at odds with the Berman--Hartmanis conjecture\indexkey{Berman--Hartmanis conjecture}.
 \begin{theorem}[{\textcite[Theorem~14]{hartmanis1983generalized}}]
-  If there exists a set of strings $X$ such that for some function $f$ that grows faster than any polynomial, all $n$, and all $x \in X$ of length $n$, there is a procedure $\phi$ that satisfies
+  Let $f$ be a function that grows faster than any polynomial, and $X$ the set of strings such that for all $n$ and all $x \in X$ of length $n$, there is a procedure $\phi$ that satisfies
   \begin{itemize}
   \item $\length{\phi} \le \log n$, and
-  \item $\phi$ outputs $x$ within $f(n)$ steps,
+  \item $\phi$ outputs $x$ within $f(n)$ steps.
   \end{itemize}
-  then there is a set that is many-one equivalent to, but not polynomial time isomorphic to \pr{Satisfiability}.
+  If $X$ is easy for some parameterization with which an \cl{NP}"~complete set is in \cl{FPT}, then there are nonisomorphic \cl{NP}"~complete sets.
 \end{theorem}
+%TODO: Note that the set $X$ in the theorem above is not actually a set with small generalized Kolmogorov complexity as the time bound is not polynomial.
+%      However, the time bound can be close to polynomial and the difference between $X$ and a similar set with small generalized Kolmogorov complexity is slim.
