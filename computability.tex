@@ -370,7 +370,7 @@ In terms of $f$"~alternating parameterized procedures, the characterization fore
   We shall use $\psi$ to define a parameterized procedure $\phi$ converging to $A$.
   On input $(x, k)$, our $\phi$ simulates the reduction from $A$ to \pr{Halt} for up to $\length{k}$ steps.
   When the reduction queries membership of some $y$ in \pr{Halt}, the query is answered according to $\psi(y, k)$.
-  The steps needed to compute $\psi(y, k)$ are not counted towards the number of steps used in simulating the reduction.
+  The steps needed to compute $\psi(y, k)$ are not counted toward the number of steps used in simulating the reduction.
   If the reduction arrives at a decision within the allotted number of steps, the decision is propagated by $\phi$.
   Otherwise, $\phi$ yields \bits{?}.
   For sufficiently long parameter values, this procedure can simulate the reduction to completion and answers all queries in agreement with \pr{Halt}.
@@ -397,6 +397,7 @@ Comparing this corollary to Corollary~\ref{cor:decidable}, we see that we have g
 %TODO: conclude: a parameterized complexity theory based on non-parameterized sets has very limited prospects.
 %      technically (using definitions from a later section): if a set is cosidered fixed-parameter tractable when it is in FPT with any parameterization
 %Slogan: If parameters are promises, then the fixed-parameter tractable sets are the sets that are semidecidable and have a semidecidable complement.
+%TODO: Fix the above slogan. \Delta^0_2 is not the class of semidecidable sets with a semidecidable complement (i.e. the decidable sets), it is one \Delta level higher than that!
 
 \subsection{Subparameterizations}
 Let us take a brief excursion from looking at limit sets and examine the structure of parameterizations.
@@ -540,7 +541,7 @@ Exploiting the decidability of the order on the real numbers associated with par
 \end{proof}
 
 The existence of a \pdash{}selective bi-immune set was claimed before \parencite{goldsmith1993note}.
-However, the proof that was provided was a convoluted finite injury priority argument \parencite[see also][]{downey2010algorithmic}.
+However, the proof that was provided was a convoluted finite injury priority argument \parencite[see also][Section~2.11]{downey2010algorithmic}.
 In our parameterized framework, such arguments can be made more transparent, as is demonstrated by the proofs of Lemma~\ref{lem:subparameterization_bi-immune} and Theorem~\ref{thm:subparameterization_p-selective}.
 The number of alternations of a parameterized procedure is related to the number of injuries in a finite injury construction.
 In that sense, our proof does not differ from the original proof.

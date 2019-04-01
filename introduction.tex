@@ -77,7 +77,7 @@ A set $S$ is in $\Sigma^0_{n+1}$ if there is a set $P$ in $\Pi^0_n$ such that we
   P &= \{x \st \forall y\colon (x, y) \in S\}.
 \end{align*}
 All that remains to define the arithmetical hierarchy is a definition of the base case, the classes $\Sigma^0_0$ and $\Pi^0_0$.
-We follow \textcite{rogers1967theory} and \textcite{downey2010algorithmic} and set both classes equal to the class of decidable sets.
+We follow \textcite{rogers1967theory,downey2010algorithmic} and set both classes equal to the class of decidable sets.
 Originally, \citeauthor{kleene1943recursive} chose a smaller class, namely that of sets definable through `primitive recursive' predicates.
 Yet another option is to take for $\Sigma^0_0$ and $\Pi^0_0$ the class of sets definable in first-order~logic with only bounded quantifiers \parencite{odifreddi1992classical}.
 We shall not go into details about these alternatives.
@@ -162,13 +162,13 @@ This measure also revolves around a hierarchy of classes of sets and is in that 
 We have seen that the $\Sigma$ and $\Pi$ classes of the arithmetical hierarchy are not closed with respect to taking complements.
 The starting point of \citeauthor{ershov1968hierarchyi}'s hierarchy was the observation that these classes are also not closed with respect to taking relative complements.
 Given two sets $A$ and $B$ in some class $\Sigma^0_n$, with $n$ at least $1$, the set $A \setminus B$ need not be in $\Sigma^0_n$ and similarly for the classes $\Pi^0_n$.
-However, when $A$ and $B$ are taken from $\Sigma^0_n$, we may go about deciding whether a given $x$ is in $A \setminus B$ as follows.
+However, when $A$ and $B$ are taken from~$\Sigma^0_n$, we may go about deciding whether a given~$x$ is in~$A \setminus B$ as follows.
 \begin{codelisting}
 \item
   We assume $x$ is neither in $A$ nor in $B$ and if our computations are interrupted and we are asked our best guess about $x$, we answer that it \emph{is not} in $A \setminus B$.
 \item
   We try to find out whether $x$ is in $A$ by running a procedure that halts precisely on the members of $A$.
-  If this procedure halts, we have learned that $x$ is in $A$.
+  If this procedure halts, we have learned that~$x$ is in~$A$.
   In case we are then asked our best guess about $x$, we answer that it \emph{is} in $A \setminus B$.
 \item
   Having found that $x$ is in $A$, we try to find out whether $x$ is in $B$ by running a procedure that halts precisely on the members of $B$.
@@ -178,7 +178,7 @@ However, when $A$ and $B$ are taken from $\Sigma^0_n$, we may go about deciding 
 Only in the final situation, we can answer a membership query with centainty.
 Therefore, our procedure should be considered a kind of approximation of a decision procedure.
 Observe that the procedure adjusts its knowledge about membership of $x$ in $A \setminus B$ at most twice.
-Procedures that are not convergent in the classical sense, but are allowed to `change their mind' a finite number of times were first put forward by \textcite{putnam1965trial} and \textcite{gold1965limiting}.
+Procedures that are not convergent in the classical sense, but are allowed to `change their mind' a finite number of times were first put forward by \textcite{putnam1965trial,gold1965limiting}.
 
 The idea of \citeauthor{ershov1968hierarchyi} was to base a hierarchy on number of times a decision procedure in the sense of \citeauthor{putnam1965trial} and \citeauthor{gold1965limiting} is allowed to change its mind.
 The resulting hierarchy is known today as the \defkey{difference hierarchy} \parencite{downey2010algorithmic}.
@@ -189,7 +189,7 @@ A set $S$ is in $\Sigma^{-1}_n$ if there are sets $A_1, A_2, A_3, \ldots A_n$ in
 \label{eq:difference_hierarchy}
   S = A_1 \symdiff A_2 \symdiff A_3 \symdiff \ldots \symdiff A_n.
 \end{equation}
-Like in the arithmetical hierarchy, a set $P$ is in $\Pi^{-1}_n$ if its complement, $P^\complement$ is in $\Sigma^{-1}_n$.
+Like in the arithmetical hierarchy, a set $P$ is in $\Pi^{-1}_n$ if its complement, $P^\complement$, is in~$\Sigma^{-1}_n$.
 Note that when $n$ is odd, we have
 \begin{equation*}
   (A_1 \symdiff A_2 \symdiff A_3 \symdiff \ldots \symdiff A_n)^\complement = A_1^\complement \symdiff A_2^\complement \symdiff A_3^\complement \symdiff \ldots \symdiff A_n^\complement.
@@ -200,7 +200,7 @@ Therefore, for odd $n$, a set $P$ is in $\Pi^{-1}_n$ if there are sets $A_1, A_2
 \end{equation*}
 These definitions are equivalent to the original characterization by \textcite{ershov1968hierarchyi} that was stated in terms of unions of disjoint relative complements.
 The equivalence follows from elementary identities.
-The resulting hierarchy, including the levels $\Delta^{-1}_n$ that are the intersection of $\Sigma^{-1}_n$ and $\Pi^{-1}_n$, is depicted in Figure~\ref{fig:difference_hierarchy}.
+The resulting hierarchy, including the levels~$\Delta^{-1}_n$ that are the intersection of $\Sigma^{-1}_n$ and $\Pi^{-1}_n$, is depicted in Figure~\ref{fig:difference_hierarchy}.
 
 Because the $\Delta^0_2$ class is closed under taking unions, intersections, and complements, it is also closed under taking symmetric differences.
 Moreover, it includes both $\Sigma^0_1$ and $\Pi^0_1$, thus for all natural numbers $n$, the classes $\Sigma^{-1}_n$, $\Pi^{-1}_n$, and $\Delta^{-1}_n$ of the difference hierarchy are included in $\Delta^0_2$.
@@ -601,6 +601,84 @@ We have seen in Example~\ref{ex:pin} that the universal distribution is not alwa
 Fortunately, it is possible to employ the methods of algorithmic statistics in a setting where we restrict our attention to a specific collection of models.
 
 \subsection{Computational Redundancy}
+At the end of Moore's~law, advances in computer engineering are no longer visible as more powerful computation, but instead as more ubiquitous computation.
+With this shift, the choice of \emph{where} to perform computation, along with \emph{when} to perform \emph{how much} of it, become increasingly influential.
+
+\begin{example}
+  There are many ways to store digital information, ranging from dynamic random access memory to magnetic tape and optical discs.
+  Each storage medium has its own strengths and weaknesses.
+  Storage can be classified according to different metrics, such as cost per bit, availability, or access speed.
+  Typically, embedded volatile memory is fast, but expensive, whereas archived non-volatile memory is cheap, but slow.
+  It is commonplace for applications to make use of different types of memory for different types of data, depending on the anticipated use.
+  For a large database, cost is a primary concern, while the cache of a dynamic algorithm is best served by memory that is as fast as possible.
+  In practice, this means the database may be stored on an off-site storage server, while the dynamic algorithm makes use of the CPU~cache.
+
+  For computation, similar considerations can be made.
+  Computing on a mobile device may provide very low latency, yet faces bottlenecks in terms of speed and energy consumption.
+  The alternative would be to move computation to an external computer.
+  This architecture, treating computation as a service, is nowadays known as cloud computing.
+  Offloading computation becomes interesting when a computational workload is more demanding than the locally available computational power.
+  One possibility is that the workload is inherently heavy, as is the case for rendering computer-generated imagery.
+  Another possibility is that the local computational power is limited, as is the case when cross-compilation for embedded devices is used.
+\end{example}
+
+There is an interplay between the location where data is stored and the location where computation is performed.
+The two are best kept close together, and modern databases implement increasingly rich query languages \parencite[see also][]{agarwal2015succinct}.
+An extreme example is provided by the {Apache} {Hadoop} Distributed File System.
+Its manual phrases it as follows.
+\blockcquote{borthakur:hdfs}{
+  A computation requested by an application is much more efficient if it is executed near the data it operates on.
+  This is especially true when the size of the data set is huge.
+  This minimizes network congestion and increases the overall throughput of the system.
+  The assumption is that it is often better to migrate the computation closer to where the data is located rather than moving the data to where the application is running.
+}
+
+Note that a server may be highly capable as a data storage facility, yet be unimpressive in its computational abilities.
+The converse is possible as well.
+In both cases, we may still want to minimize the cost of communication with the server.
+For this, it becomes necessary to recognize redundancy in our computational task and leave it out of transmission.
+\begin{example}
+  Suppose we want to render many frames of an animation on a so called `render farm'.
+  This requires the transmission of a description of the computational task for each frame.
+  The animation may, however, contain duplicate frames.
+  It is worthwhile to preprocess our data and remove all duplicate frames before invoking the render farm.
+  This preprocessing operation does not require much computational effort from our side, yet it might reduce the amount of data transmitted substantially.
+
+  Conversely, if we want to perform a computation on data stored in an external database, it may be beneficial for the database to preprocess the data.
+  To accomplish this, we not only send the database a request for certain data, but also a description of the operation we want to perform on it.
+  The database may then analyze the data in terms of computational redundancy, and leave the redundant parts out of its reply.
+  Again, this requires minimal computational effort from the database, yet may reduce the total amount of communication taking place.
+\end{example}
+
+When the computational context of data is known already when the data is recorded, it may be beneficial to perform the preprocessing step early on.
+Doing so may save the database some storage capacity, or at least bring the storage requirement more in line with the computational complexity of the data.
+As our database may not have great computational power, it is important that we limit preprocessing to computation that can be performed quickly.
+
+With our examples so far, we have thought of machines connected via a network as atomic units of computation.
+However, also within a computer, there are many independent units capable of computing.
+These are the device controllers and other management systems that all run their own firmware.
+Traditionally, such systems are extremely limited in their computational power.
+This power has, however, been increasing steadily, and the potential of these devices to run application-level code has long been recognized \parencite[for example][]{riedel1998active}.
+We have seen that preprocessing can reduce traffic on the network connecting computers.
+Similarly, preprocessing can reduce traffic on the system bus connecting components inside a computer.
+
+For certain computational tasks, a useful separation into a computational redundant and a computational hard part may be possible.
+For others, it may be impossible to find such a clear cut separation that is of any practical value.
+This does not mean that we cannot benefit from remote computational powers.
+Sometimes, a computational task is really a serialization of multiple subtasks, the specifics of each subtask depending on the outcome of the previous one.
+With such a task, we may be able to identify computational redundancy in each subtask as we get to it.
+In that case, making use of preprocessing for each subtasks requires a form of communication between the computational parties.
+The party holding the data performs the preprocessing and communicates to the computationally powerful party the data relevant to the current subtask.
+The computationally powerful party in turn executes the subtask in order to find out the specifics of the next subtask.
+These specifics it then sends back, and the cycle repeats.
+This protocol should be compared to the naive protocol, where all data is transmitted to the computationally powerful party.
+When each subtask requires only a small part of the data, the computational cost of preprocessing at the site of the data can really pay off.
+
+With multi-stage preprocessing, computational redundancy has become a composite notion.
+It is no longer possible to trace a computation and pinpoint where preprocessing stops and the hard part of the computation begins.
+Instead, the two types of computation are interwoven, and computation switches back and forth between harvesting redundancy and essential computing.
+Computational redundancy is thus a multifaceted notion, and an investigation of computational redundancy must be multifaceted too.
+In particular, an analysis of computational redundancy should consider how various aspects of preprocessing can be related to properties of data.
 
 
 \section{Parameterized Complexity Theory}

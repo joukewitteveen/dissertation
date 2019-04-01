@@ -1,0 +1,12 @@
+\chapter*{Notation}
+\addcontentsline{toc}{chapter}{Notation}
+
+The following notation is invented in this thesis.
+In these definitions, $n$~s a natural number, $x$~a binary string, $k$~a parameter value (also a string), $\eta = (\eta_k)_{k \in \binary^+}$~a parameterization, $A$~a set, and \cl{\itshape C}~a parameterized complexity class. \\[1em]
+\begin{align*}
+  \calF_\cl{\itshape C}(A) &\deq \{\eta \st (A, \eta) \in \cl{\itshape C}\} \\[1em]
+  \calL_\cl{\itshape C} &\deq \{\eta \st \exists A\colon (A, \eta) \in \cl{\itshape C}\} \\[1em]
+  \mu_\eta(x) &\deq \min\{\length{k} \st x \in \eta_k\} \\[1em]
+  \upM_\eta(n) &\deq \max\{\mu_\eta(x) \st x \in \binary^n\} \\[1em]
+  \upN_\eta(n, k) &\deq \text{the number of elements in }\binary^n \cap \eta_k
+\end{align*}

@@ -133,6 +133,9 @@
 %   \vspace*{\@spaceafterchapterhead}\vspace{\stretch{0.01}}\par\mbox{}\par
 }}
 
+% Used in the index and list of symbols for compatibility with the hyperref package
+\providecommand{\phantomsection}{}
+
 %% Part Header and ToC
 
 %% convert numbers to words; a hack, but whose dissertation has more than 5 parts?
@@ -340,6 +343,7 @@
    }%
    \endlist
 }
+\newcommand{\MakeMarkcase}[1]{#1}%    No uppercased headings with biblatex
 
 \renewenvironment{theindex}{%
    \cleardoublepage%                               Start on a right-hand page
@@ -350,7 +354,7 @@
    \fi
    \columnseprule \z@
    \columnsep 35\p@
-   \twocolumn[\phantom{\Large\bf\chaptername}%
+   \twocolumn[\phantomsection\phantom{\Large\bf\chaptername}%
               \@makeschapterhead{\indexname}]%
    \@mkboth{\indexname}{\indexname}%           Headings not uppercased
    \addcontentsline{toc}{chapter}{Index}%      Add to table-of-contents
@@ -372,7 +376,7 @@
    \fi
    \columnseprule \z@
    \columnsep 35\p@
-   \twocolumn[\phantom{\Large\bf\chaptername}%
+   \twocolumn[\phantomsection\phantom{\Large\bf\chaptername}%
               \@makeschapterhead{List of symbols}]%
    \@mkboth{List of symbols}{List of symbols}%   Headings not uppercased
    \addcontentsline{toc}{chapter}{List of Symbols}% Add to table-of-contents

@@ -20,12 +20,21 @@
 \input{notation}
 
 \addbibresource{refs.bib}
+
+\renewcommand*{\subtitlepunct}{\addcolon\space}
 %\SetCiteCommand{\textcite}
 %\renewcommand*{\mkccitation}[1]{ ---#1}
 
 
 \makeatletter
-\AtBeginDocument{\toggletrue{blx@useprefix}}
+\AtBeginDocument{
+  \toggletrue{blx@useprefix}
+  \renewcommand*{\mkbibnameprefix}[1]{\MakeCapital{#1}}
+}
+\AtBeginBibliography{
+  \togglefalse{blx@useprefix}
+  \renewcommand*{\mkbibnameprefix}[1]{#1}
+}
 
 \newtheorem{@slogan}[theorem]{Slogan}
 \newcommand{\slogan}[2][]{\begin{@slogan}%
@@ -54,6 +63,7 @@
 \makeatletter
 \hypersetup{pdftitle=\@title,pdfauthor=\@author}
 \makeatother
+\pdfvariable suppressoptionalinfo \numexpr32+64+512\relax  % Reproducible builds
 
 \DeclareDelimFormat{namelabeldelim}{\addnbspace}
 \DeclareFieldFormat{url}{\mkbibacro{URL}\addcolon\\*\url{#1}}
@@ -67,6 +77,9 @@
 \include{front}
 
 %\include{preface}
+
+%\acknowledgements
+
 %\cleardoublepage
 
 \microtypesetup{protrusion=false}
@@ -74,8 +87,6 @@
 \tableofcontents
 \listofslogans
 \microtypesetup{protrusion=true}
-
-%\acknowledgements (k2 mates, office mates)
 
 
 \cleardoublepage
@@ -90,6 +101,8 @@
 
 \appendix
 
+\include{definitions}
+
 \printbibliography[heading=bibintoc]
 
 \printindex
@@ -97,8 +110,6 @@
 %\include{gearfetting}
 %\include{samenvatting}
 \include{abstract}
-
-%\include{curriculum}
 
 \cleardoublepage
 \include{illcdissertations}

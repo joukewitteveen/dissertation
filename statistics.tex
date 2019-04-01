@@ -328,7 +328,7 @@ One benefit of parameterized complexity over Kolmogorov complexity is that it ca
       \code{If} $\eta_k$ includes $x$,
       \itemcont \code{break} out of the current loop and continue at step~\ref{code:pc:bounded}.
     \end{codelisting}
-  \item\label{code:pc:bounded}
+  \item\label{code:pc:bounded}%
     \code{For each} parameter value $k'$ of length at most $\length{\pair{k}{\rank(x : \eta_k)}}$:
     \begin{codelisting}
     \item
@@ -637,6 +637,7 @@ Consequently, $\eta$ does not capture the complexity of~$x$ and the non"~$\eta$"
 Indeed, there would be no reason to assume that $x$ is non-stochastic in the traditional sense.
 
 \subsection{Parameter Estimation}
+\label{sec:estimation}%
 In Lemma~\ref{lem:pccomputable}, we found that the parameterized complexity with respect to a decidable quasiparameterization is computable.
 Not only does this result extend to the computability of sophistication, it also entails that optimality deficiency is computable.
 Therefore, for a fixed~$\alpha$ and~$\beta$, and a decidable~$\eta$, the set of $(\alpha, \beta)$"~$\eta$"~stochastic strings is decidable.
@@ -680,7 +681,7 @@ In summary, some natural estimators derived from the two-part description of a s
 \end{center}
 
 The parameterization defined by~\eqref{eq:quasi_decision} is not decidable and traditional algorithmic statistics pays attention to the computability of estimators.
-One approach to the computability of estimators is to place an upper bound on the model complexity and consider each estimator as a function of this bound \parencite{gacs2001algorithmic,vereshchagin2004kolmogorov} \parencite[in the presence of resource bounds][]{milovanov2017algorithmic}.
+One approach to the computability of estimators is to place an upper bound on the model complexity and consider each estimator as a function of this bound \parencite{gacs2001algorithmic,vereshchagin2004kolmogorov} \parencite[in the presence of resource bounds,][]{milovanov2017algorithmic}.
 Specifically, we consider ML and MDL relative to a quasiparameterization consisting of a selection of the slices of~\eqref{eq:quasi_decision}.
 The selection is obtained by including only those models of which the corresponding parameter value has a length shorter than the anticipated bound.
 As mentioned before, OR is not interesting in the traditional context because it can be upper bounded by a constant.
@@ -693,84 +694,97 @@ Unfortunately, in the parameterized setting MDL cannot simply be used as a subst
 The tight correspondence between the two in traditional algorithmic statistics is not a given in the parameterized setting.
 
 There are many more estimators than the three we have looked at so far, OR, ML, and MDL.
-Consider a quasiparameterization $\eta$ and a computable estimator $f$ for $\eta$.
-In other words, $f$ is a computable function that, for all strings~$x$, satisfies $x \in \eta_{f(x)}$.
-We have seen that when~$\eta$ is decidable, the estimators OR and MDL are computable, but even when $\eta$ is not decidable, an estimator for~$\eta$ may be computable.
-For instance, if $f$ maps all strings to an encoding of a decision procedure for $\binary^+$, it is a computable estimator for~\eqref{eq:quasi_decision}.
+For a quasiparameterization~$\eta$, we may look at those estimators that are in some sense consistent with~$\eta$.
+\begin{definition}
+  A function $\kappa\colon \binary^+ \to \binary^+$ is a \defkeyat{estimator!parameter estimator}{parameter estimator} for a quasiparameterization~$\eta$ if it is consistent with $\eta$ in the sense that, for all strings~$x$, we have $x \in \eta_{\kappa(x)}$
+\end{definition}
+\begin{example}
+  Suppose $\kappa$ is a parameterization in the \citeauthor{flum2006parameterized} framework for parameterized complexity theory.
+  On page~\pageref{eq:flum_parameterization}, we associated with this function the parameterization
+  \begin{equation*}
+    \eta \deq (\{x \st \asNat(\kappa(x)) \le \asNat(k)\})_{k \in \binary^+}.
+  \end{equation*}
+  For this parameterization, $\kappa$ is a polytime-computable parameter estimator.
+\end{example}
+
+We have seen that when~$\eta$ is decidable, the parameter estimators OR and MDL are computable.
+Yet, even when $\eta$ is not decidable, a parameter estimator for~$\eta$ may be computable.
+For instance, if $\kappa$ maps all strings to an encoding of a decision procedure for $\binary^+$, it is a computable parameter estimator for~\eqref{eq:quasi_decision}.
 
 \begin{example}[continued from Example~\ref{ex:p-cylinder}]
   \indexkey{example!p-cylinder@\pdash{}cylinder}%
-  Let $A$ be a \pdash{}cylinder and $g : \binary^+ \to \binary^+ \times \binary^+$ a corresponding isomorphism.
+  Let $A$ be a \pdash{}cylinder and $g\colon \binary^+ \to \binary^+ \times \binary^+$ a corresponding isomorphism.
   Recall that the parameterization based on $g$ was defined as
   \begin{equation*}
     \eta \deq (\{x \st \asNat(g_1(x)) \le \asNat(k)\})_{k \in \binary^+}.
   \end{equation*}
-  For this parameterization, $g_1$ is an estimator.
+  For this parameterization, $g_1$ is a parameter estimator.
   As $g_1$ is computable in polynomial time, it is also a parameterization in the sense of \citeauthor{flum2006parameterized}.
   Moreover, we have, for all $x$,
   \begin{equation*}
     \mu_\eta(x) = \soph_\eta(x) = \length{g_1(x)}.
   \end{equation*}
-  Note that~\eqref{eq:compatible_strong} holds for~$\eta$, so we find that OR, ML, MDL, and $g_1$ are all the same estimator for~$\eta$.
+  Note that~\eqref{eq:compatible_strong} holds for~$\eta$, so we find that OR, ML, MDL, and $g_1$ are all the same parameter estimator for~$\eta$.
 \end{example}
 
-Using computable estimators we can obtain a lower bound on the Kolmogorov complexity of a string.
+Using computable parameter estimators we can obtain a lower bound on the Kolmogorov complexity of a string.
 Since~\eqref{eq:soph} extends to parameterized complexity,
 \begin{equation}
 \label{eq:kclepc}
   \KC(x) \le \pc_\eta(x) + \KC(\eta),
 \end{equation}
 a bound on the Kolmogorov complexity can be turned into a bound on the parameterized complexity.
-This, then, will allow us to upper bound the parameterized optimality deficiency using our computable estimator $f$.
+This, then, will allow us to upper bound the parameterized optimality deficiency using a computable parameter estimator~$\kappa$.
 
-Bounding the Kolmogorov complexity of a string using a computable estimator~$f$ is possible via the inverse images of~$f$.
-Since $f$ is computable, for every parameter value~$k$, the inverse $f^{-1}(k) = \{x \st f(x) = k\}$ is a decidable set.
-Therefore, letting $\KC(f)$ denote the minimum length of a procedure for computing~$f$, we have, for every string~$x$ and with $k = f(x)$,
+Bounding the Kolmogorov complexity of a string using a computable parameter estimator~$\kappa$ is possible via the inverse images of~$\kappa$.
+Since $\kappa$ is computable, for every parameter value~$k$, the inverse $\kappa^{-1}(k) = \{x \st \kappa(x) = k\}$ is a decidable set.
+Therefore, letting $\KC(\kappa)$ denote the minimum length of a procedure for computing~$\kappa$, we have, for every string~$x$ and with $k = \kappa(x)$,
 \begin{equation}
 \label{eq:kclowerbound}
-  \KC(\pair{k}{\rank(x : f^{-1}(k))}) \le \KC(x) + \KC(f).
+  \KC(\pair{k}{\rank(x : \kappa^{-1}(k))}) \le \KC(x) + \KC(\kappa).
 \end{equation}
-Specifically, from $x$ we can compute $k$ and $\rank(x : f^{-1}(k))$, so the complexity of those values together is at most that of~$x$ plus that of~$f$.
-It should be noted that $f^{-1}(k)$ need not be a slice of the quasiparameterization~$\eta$.
+Specifically, from $x$ we can compute $k$ and $\rank(x : \kappa^{-1}(k))$, so the complexity of those values together is at most that of~$x$ plus that of~$\kappa$.
+It should be noted that $\kappa^{-1}(k)$ need not be a slice of the quasiparameterization~$\eta$.
 However, this is mainly a technical concern as we can extend $\eta$ to include these inverses for all parameter values.
-Given~$\eta$ and an estimator~$f$ for $\eta$, let~$\eta'$ be the quasiparameterization defined by
+Given~$\eta$ and a parameter estimator~$\kappa$ for $\eta$, let~$\eta'$ be the quasiparameterization defined by
 \begin{equation*}
   \eta'_{k'} \deq \begin{cases}
     \eta_k	&\text{if $k' = \bits{0}k$}, \\
-    f^{-1}(k)	&\text{if $k' = \bits{1}k$}.
+    \kappa^{-1}(k)	&\text{if $k' = \bits{1}k$}.
   \end{cases}
 \end{equation*}
-If $\eta$ is decidable and $f$ is computable, then $\eta'$ is decidable too.
+If $\eta$ is decidable and $\kappa$ is computable, then $\eta'$ is decidable too.
 Moreover, it is in the same equivalence class as $\eta$ in the uniform order on parameterizations defined in Definition~\ref{def:uniform_order}.
-For completeness, we lift the estimator~$f$ to an estimator~$f'$ defined by $f'(x) \deq \bits{1}f(k)$.
-This turns a computable estimator~$f$ for~$\eta$ into a computable estimator~$f'$ for~$\eta'$ in a way that we have, for any string $x$,
+For completeness, we lift the parameter estimator~$\kappa$ to a parameter estimator~$\kappa'$ defined by $\kappa'(x) \deq \bits{1}\kappa(x)$.
+This turns a computable parameter estimator~$\kappa$ for~$\eta$ into a computable parameter estimator~$\kappa'$ for~$\eta'$ in a way that we have, for any string $x$,
 \begin{equation*}
-  \eta'_{f'(x)} = f'^{-1}(f'(x)).
+  \eta'_{\kappa'(x)} = \kappa'^{-1}(\kappa'(x)).
 \end{equation*}
-Let us say that an estimator~$f$ for a quasiparameterization~$\eta$ that, for all~$x$, satisfies $\eta_{f(x)} = f^{-1}(f(x))$ is a \defkeyat{estimator!slice-estimator}{slice"~estimator}.
+
+Let us say that a parameter estimator~$\kappa$ for a quasiparameterization~$\eta$ that, for all~$x$, satisfies $\eta_{\kappa(x)} = \kappa^{-1}(\kappa(x))$ is a \defkeyat{estimator!slice-estimator}{slice"~estimator}.
 We then get the following theorem that allows us to identify $\eta$"~stochastic strings.
 \begin{theorem}
 \label{thm:etastochastic}%
-  Let $\eta$ be a decidable quasiparameterization, $f$ a computable slice"~estimator for~$\eta$.
+  Let $\eta$ be a decidable quasiparameterization, $\kappa$ a computable slice"~estimator for~$\eta$.
   There is a constant $c$ such that, for any string~$x$, when we set
   \begin{align*}
-    k &\deq f(x), \\
-    i &\deq \rank(x : f^{-1}(k)), \\
+    k &\deq \kappa(x), \\
+    i &\deq \rank(x : \kappa^{-1}(k)), \\
     \beta &\deq \length{\pair{k}{i}} - \KC(\pair{k}{i}) + c,
   \end{align*}
   we find that $x$ is $(\length{k}, \beta)$-$\eta$-stochastic.
 \end{theorem}
 \begin{proof}
-  The claimed parameterized stochasticity is witnessed by the slice $\eta_k = f^{-1}(k)$.
+  The claimed parameterized stochasticity is witnessed by the slice $\eta_k = \kappa^{-1}(k)$.
   To see that the parameterized optimality deficiency of~$x$ with respect to~$\eta$ is indeed at most~$\beta$, consider
   \begin{align*}
     \updelta_\eta(x, k) &= \length{\pair{k}{\rank(x : \eta_k)}} - \pc_\eta(x) \\
       &= \length{\pair{k}{i}} - \pc_\eta(x) \\
     \intertext{which, by~\eqref{eq:kclepc} and~\eqref{eq:kclowerbound}, satisfies}
       &\le \length{\pair{k}{i}} - (\KC(x) - \KC(\eta)) \\
-      &\le \length{\pair{k}{i}} - \KC(\pair{k}{i}) + \KC(\eta) + \KC(f).
+      &\le \length{\pair{k}{i}} - \KC(\pair{k}{i}) + \KC(\eta) + \KC(\kappa).
   \end{align*}
-  As $\KC(\eta)$ and $\KC(f)$ are independent of $x$, we may set $c \deq \KC(\eta) + \KC(f)$, with which the last line becomes to equal $\beta$ and the bound is proven.
+  As $\KC(\eta)$ and $\KC(\kappa)$ are independent of $x$, we may set $c \deq \KC(\eta) + \KC(\kappa)$, with which the last line becomes to equal $\beta$ and the bound is proven.
 \end{proof}
 
 Of course, a string should only be called $\eta$"~stochastic if it has a simple model with a low optimality deficiency.
@@ -786,11 +800,11 @@ Moreover, this is still true of all the possible values of~$i$ after we fix a va
 Thus, we can turn Theorem~\ref{thm:etastochastic} into a statement about the prevalence of stochastic strings.
 \begin{corollary}
 \label{cor:stochastic}%
-  Let $k$ be an infinite $\eta$"~model in the range of~$f$.
-  For all~$\beta$, among the first $m$ elements of~$\eta_k$ at least $(1 - 2^{-c})m$ are $(\length{k}, \beta)$"~$\eta$"~stochastic, where~$c$ equals $\beta - \bigO(1)$ with the final term depending on $\eta$, $f$, and $k$.
+  Let $k$ be an infinite $\eta$"~model in the range of~$\kappa$.
+  For all~$\beta$, among the first $m$ elements of~$\eta_k$ at least $(1 - 2^{-c})m$ are $(\length{k}, \beta)$"~$\eta$"~stochastic, where~$c$ equals $\beta - \bigO(1)$ with the final term depending on $\eta$, $\kappa$, and $k$.
 \end{corollary}
 Note that, for a fixed value of~$\beta$, the dependence on~$k$ of the hidden constant is more specifically a dependence on~$\length{k} - \KC(k)$.
-Because of that, the corollary is especially powerful when the range of~$f$ contains an infinite random set of parameter values belonging to infinite $\eta$"~models.
+Because of that, the corollary is especially powerful when the range of~$\kappa$ contains an infinite random set of parameter values belonging to infinite $\eta$"~models.
 In that case, the same density of strings with an optimality deficiency bounded by~$\beta$ is achieved on infinitely many $\eta$"~models.
 Informally, disregarding the density considerations, the corollary can then be phrased in a way that somewhat resembles the instance complexity conjecture:\indexkey{instance complexity conjecture}
 Infinitely many $\eta$"~models are a near-sufficient parameterized statistic infinitely often.
@@ -810,7 +824,7 @@ Likewise, if the slices of $\eta$ are sparse, then most of these strings of whic
   Instead, it revolved around isolating not descriptive redundancy, but computational redundancy associated with a string in light of a decision problem.
   It is worthwhile to note that a quasiparameterization can achieve both these feats simultaneously.
 
-  Let $A$ be a \pdash{}cylinder, $g : \binary^+ \to \binary^+ \times \binary^+$ a corresponding isomorphism and $\eta$ the quasiparameterization based on $g$.
+  Let $A$ be a \pdash{}cylinder, $g\colon \binary^+ \to \binary^+ \times \binary^+$ a corresponding isomorphism and $\eta$ the quasiparameterization based on $g$.
   All slices of $\eta$ are infinite and the range of $g_1$ is the entire set $\binary^+$.
   Because of this, it follows from Corollary~\ref{cor:stochastic} that infinitely many slices of $\eta$ contain infinitely many strings of which $\eta$ captures the complexity.
   For those strings, $\eta$ acts as a measure of both algorithmic and computational complexity.
@@ -898,7 +912,7 @@ Thus, for all $n$ and all~$x$ of length~$n$, we have
 Typically, slices corresponding to parameter values with a short length contain fewer strings than those corresponding to parameter values with a longer length.
 Therefore, the above probability distribution assigns higher probability to strings that occur in a slice for which the parameter value has a short length.
 The random--hard probability distribution is the marginal distribution of the strings~$x$ as part of pairs of strings and parameter values, $\pair{k}{x}$.
-Here, the parameter values are restricted in size to at most $\upM_\eta(\length{x})$.
+Here, the parameter values are restricted in length to at most $\upM_\eta(\length{x})$.
 Because the distribution is a marginal distribution, it is not straightforward to work with the expected minimum length of a parameter value, $\mu_\eta(x)$.
 Therefore, we shall initially consider the expected length of a parameter value, $\length{k}$.
 Unfortunately, the expected parameter value length is essentially its maximum value.
@@ -1046,6 +1060,7 @@ This fact hardly depend on the chosen pairing function, as it only requires that
 
 The above theorem augments our observation in Example~\ref{ex:simultaneous} that $\eta$ may act as a measure of both algorithmic and computational complexity.
 A data structure conforming to a parameterization in $\calF_\cl{FPT}(A)$ compresses those instances for which deciding membership in~$A$ is easy best.
+This is especially pleasant because the success of fixed-parameter tractability hinges on the observation that deciding membership of real-world data is easy.
 Note that this compression is lossless.
 The lossless compression obtained by dropping the second part of the two-part data structure may be of its own interest.
 However, with our parameterized data structure, good lossless compression does not imply good lossy compression.
@@ -1093,7 +1108,7 @@ Hence, there is a neat characterization of the quasiparameterizations of interes
 \label{ex:fp-rankable}%
   \indexkey{example!p-cylinder@\pdash{}cylinder}%
   The parameterizations related to certain \pdash{}cylinders are examples of fixed-parameter \pdash{}rankable parameterizations.
-  Let $g : \binary^+ \to \binary^+ \times \binary^+$ be a polytime-isomorphism that is increasing in its second component.
+  Let $g\colon \binary^+ \to \binary^+ \times \binary^+$ be a polytime-isomorphism that is increasing in its second component.
   That is, for all strings~$z_1$,~$z_2$, and~$y$, if we have $\asNat(z_1) < \asNat(z_2)$, then we also have $\asNat(g^{-1}(y, z_1)) < \asNat(g^{-1}(y, z_2))$.
   Further, let~$\eta$ be the parameterization related to~$g$ as described in Example~\ref{ex:p-cylinder}.
   We shall show that the second component of the image of~$g$, can be used to compute the rank of a string in a slice of~$\eta$.
@@ -1150,14 +1165,15 @@ Still, the overhead of storing the parameter value in the data structure may be 
 An alternative way to obtain encodings of strings in our data structure is via transformations \emph{inside} slices.
 Operations on data may exist that do not impact the parameter value $k$, and have a known impact on the rank in a slice.
 One can imagine a setting involving graphs where the act of adding an isolated vertex is such an operation that does not influence the sophistication.
-It may be possible to perform such operations on the two-part data structure directly, without first reconstructing the original string.
+It may be possible to perform such operations on the two-part data structure directly, without first reconstructing the original graph, or, in general, string.
+Essentially, we record the steps by which a string was constructed, as a series of transformations that enumerate the elements of a slice \parencite[see also][Theorem~4.2]{hemachandra1991sets}.
 In this way, the data structure is transparent to certain complexity-preserving operations.
 As, by Theorem~\ref{thm:easycompressible}, the data structure may be compressing, we could say that quasiparameterizations allow for \emph{partially homomorphic compression}.
 Other compression methods that enable operations on the compressed representations exist.
-One nice example is the \emph{Succinct} data store of \textcite{agarwal2015succinct}.
+One nice example is the data store by \textcite{agarwal2015succinct} called \emph{Succinct}.
 This compression method is designed specifically to allow certain pattern searches to be performed directly on the compressed data.
 Whether or not it is suitable in the context of a certain computational workload is left for the relevant specialist to decide.
 Unique to our parameterized approach is that we can link our data structure to the computational complexity of a set.
 If, for a set~$A$, we take a parameterization from $\calF_\cl{FPT}(A)$, this parameterization embodies some computational redundancies in~$A$.
 The operations to which our corresponding data structure is transparent are determined by these redundancies.
-This way, we can ensure a good fit of the data structure to the computational workload.
+This way, we ensure a good fit of the data structure to the computational workload.
