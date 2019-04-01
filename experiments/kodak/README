@@ -1,0 +1,10 @@
+Compression performance on the Kodak image suite at varying quality settings.
+
+Usage:
+    make [-j [JOBS]] [Q="$(echo {1..100})"]
+
+Requirements:
+- GNU Make
+- Bash
+- Curl
+- ImageMagick (convert)

@@ -1,0 +1,11 @@
+Extracting occurrence counts of PINs from a compressed password database
+
+Usage:
+    7z x -so pwned-passwords-ordered-by-count.7z | ./extract.sh {0000..9999}
+
+Requirements:
+- Bash
+- p7zip (usage)
+
+See also:
+https://haveibeenpwned.com/Passwords
