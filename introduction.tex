@@ -1,14 +1,105 @@
 \chapter{Introduction}
 
 
-\section{The Size of a Cube}
+\bigsection{The Size of a Cube}
 \label{sec:size_of_a_cube}%
 
+\begin{figure}
+  % Unit vectors using azimuth a and elevation e:
+  % x = ( cos(a), sin(a)sin(e) )
+  % y = ( -sin(a), cos(a)sin(e) )
+  % z = ( 0, cos(e) )
+  % We use an azimuth of 30 degrees and an elevation of 15 degrees.
+  % Additionally, we scale the first two figures by 1/cos(a).
+  \centering
+  \subcaptionbox{??tetrahedron\label{fig:tetrahedron}}[0.3\textwidth]{
+    \begin{tikzpicture}[line join=round,x={(1cm, .1494cm)},y={(-.5774cm, .2588cm)},z={(0cm, 1.1154cm)}]
+      \draw[every edge/.append style={densely dashed, opacity=.5}]
+        (-1,1,-1) edge (1,1,1)
+        -- (-1,-1,1) -- (1,-1,-1) -- cycle
+        (1,1,1) -- (-1,-1,1) -- (1,-1,-1) -- cycle;
+    \end{tikzpicture}
+  }
+  \quad
+  \subcaptionbox{??cube\label{fig:cube}}[0.3\textwidth]{
+    \begin{tikzpicture}[line join=round,x={(1cm, .1494cm)},y={(-.5774cm, .2588cm)},z={(0cm, 1.1154cm)}]
+      \draw[every edge/.append style={densely dashed, opacity=.5}]
+        (1,1,1) edge coordinate[at end] (obscured) (1,1,-1)
+        -- (1,-1,1) -- (-1,-1,1) -- (-1,1,1) -- cycle
+        (-1,1,-1) edge (obscured)
+        -- (-1,1,1) -- (-1,-1,1) -- (-1,-1,-1) -- cycle
+        (1,-1,-1) edge (obscured)
+        -- (-1,-1,-1) -- (-1,-1,1) -- (1,-1,1) -- cycle;
+    \end{tikzpicture}
+  }
+  \quad
+  \subcaptionbox{??dodecahedron\label{fig:dodecahedron}}[0.3\textwidth]{
+    \begin{tikzpicture}[line join=round,x={(.8660cm, .1294cm)},y={(-.5cm, .2241cm)},z={(0cm, .9659cm)},declare function={phi()=(1 + sqrt(5)) / 2;}]
+      \draw[densely dashed, opacity=.5]
+        (1, 1, 1) -- (0, phi, 1/phi) -- (0, phi, -1/phi) -- (1, 1, -1) -- (phi, 1/phi, 0) -- cycle;
+
+      \draw[every edge/.append style={densely dashed, opacity=.5}]
+        (1/phi, 0, phi) edge (1, 1, 1)
+        -- (1, -1, 1) -- (0, -phi, 1/phi) -- (-1, -1, 1) -- (-1/phi, 0, phi) -- cycle
+        (-1, 1, 1) edge (0, phi, 1/phi)
+        -- (-1/phi, 0, phi) -- (-1, -1, 1) -- (-phi, -1/phi, 0) -- (-phi, 1/phi, 0) -- cycle
+        (-1, 1, -1) edge (0, phi, -1/phi)
+        -- (-phi, 1/phi, 0) -- (-phi, -1/phi, 0) -- (-1, -1, -1) -- (-1/phi, 0, -phi) -- cycle
+        (1/phi, 0, -phi) edge (1, 1, -1)
+        -- (-1/phi, 0, -phi) -- (-1, -1, -1) -- (0, -phi, -1/phi) -- (1, -1, -1) -- cycle
+        (phi, -1/phi, 0) edge (phi, 1/phi, 0)
+        -- (1, -1, -1) -- (0, -phi, -1/phi) -- (0, -phi, 1/phi) -- (1, -1, 1) -- cycle;
+    \end{tikzpicture}
+  }
+  \caption{
+    ??
+  }
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \begin{tikzpicture}[line join=round]
+      \draw
+        (0,0) -- (0,4) -- (1,3) -- (1,1) -- cycle
+        (0,4) -- (4,4) -- (3,3) -- (1,3) -- cycle
+        (4,4) -- (4,0) -- (3,1) -- (3,3) -- cycle
+        (4,0) -- (0,0) -- (1,1) -- (3,1) -- cycle;
+      \filldraw
+        (0,0) circle[] (1,3) circle[]
+        (0,4) circle[] (3,3) circle[]
+        (4,4) circle[] (3,1) circle[]
+        (4,0) circle[] (1,1) circle;
+    \end{tikzpicture}
+    \caption{??cube graph}
+    \label{fig:graphs:cube}
+  \end{subfigure}
+  \qquad
+  \begin{subfigure}{0.4\textwidth}
+    \centering
+    \begin{tikzpicture}[line join=round]
+      \draw
+        (0,0) -- (0,4) -- (4,4) -- (4,0) --
+        (1,1) -- (1,3) -- (3,3) -- (3,1) -- cycle;
+      \filldraw
+        (0,0) circle[] -- (1,1) circle[]
+        (0,4) circle[] -- (1,3) circle[]
+        (4,4) circle[] -- (3,3) circle[]
+        (4,0) circle -- (3,1) circle;
+    \end{tikzpicture}
+    \caption{??wagner graph}
+  \end{subfigure}
+  \caption{
+    ??
+  }
+\end{figure}
 \todo[inline]{
   \footnotesize
   A picture of a cube (and a tetrahedron and dodecahedron).
   \\- What is the size of this cube?
   \\- Impossible to answer, since the picture only shows the abstract essence of a cube and not any physical cube in particular.
+%also: an abstract cube has no defined mass
   \\- However, there are still ways to measure the cube as an abstraction.
   \\- A cube has 8 corners, 12 edges, and 6 faces.
   \\- In that sense, it is larger than a tetrahedron (picture) and smaller than a dodecahedron (picture).
@@ -46,7 +137,7 @@
 }
 
 
-\section{Historical Encounters}
+\bigsection{Historical Encounters}
 
 The word \emph{complexity} is used in various contexts and its meaning is not always made precise.
 Still, it has often been observed that structural properties of data may influence the notion of complexity at hand.
@@ -56,6 +147,7 @@ In relation to their notions of complexity, each of these structural properties 
 In Chapter~\ref{ch:parameterizations}, this parameterized nature is made explicit by rephrasing the corresponding results in a unified parameterized framework.
 
 \subsection{Computability}
+\label{sec:history:computability}%
 Some sets are intrinsically undecidable.
 For such sets, there is no effective procedure that is able to distinguish the members of the set from the nonmembers of the set.
 This is a very extreme form of complexity:
@@ -78,25 +170,25 @@ A set $S$ is in $\Sigma^0_{n+1}$ if there is a set $P$ in $\Pi^0_n$ such that we
 \end{align*}
 All that remains to define the arithmetical hierarchy is a definition of the base case, the classes $\Sigma^0_0$ and $\Pi^0_0$.
 We follow \textcite{rogers1967theory,downey2010algorithmic} and set both classes equal to the class of decidable sets.
-Originally, \citeauthor{kleene1943recursive} chose a smaller class, namely that of sets definable through `primitive recursive' predicates.
-Yet another option is to take for $\Sigma^0_0$ and $\Pi^0_0$ the class of sets definable in first-order~logic with only bounded quantifiers \parencite{odifreddi1992classical}.
+Originally, \citeauthor{kleene1943recursive} chose a smaller class, namely that of sets definable through \enquote{primitive recursive} predicates.
+Yet another option is to take for $\Sigma^0_0$ and $\Pi^0_0$ the class of sets definable in first-order~logic with only bounded quantifiers~\parencite{odifreddi1992classical}.
 We shall not go into details about these alternatives.
 Whichever definition we adhere to, we end up with the same classes $\Sigma^0_n$ and $\Pi^0_n$, whenever $n$ is at least $1$.
-To wit, regardless of our choice for $\Sigma^0_0$ and $\Pi^0_0$, a set is in $\Sigma^0_1$ precisely when it is semidecidable (also known as \emph{recursively enumerable}) \parencite{kleene1943recursive,odifreddi1992classical,rogers1967theory}.
+To wit, regardless of our choice for $\Sigma^0_0$ and $\Pi^0_0$, a set is in $\Sigma^0_1$ precisely when it is \emph{semidecidable} (also known as \emph{recursively enumerable})~\parencite{kleene1943recursive,odifreddi1992classical,rogers1967theory}.
 Likewise, the complement of a semidecidable set is in $\Pi^0_1$, as $\exists$ and $\forall$ are dual to each other in the sense that, for every predicate $Q$ we have
 \begin{equation*}
   \lnot \exists x\colon Q(x) \:\iff\: \forall x\colon \lnot Q(x).
 \end{equation*}
-Indeed, a set $S$ is in $\Sigma^0_n$ if there is a decidable set $A$ such that we have
+Indeed, a set $S$ is in $\Sigma^0_n$ precisely when there is a decidable set $A$ such that we have
 \begin{equation}
 \label{eq:arithmetical_hierarchy}
-  S = \{x \st \exists y_1\colon \forall y_2\colon\exists y_3\colon \ldots\colon ((\cdots((x, y_1), y_2)\ldots, y_{n-1}), y_n) \in A\}
+  S = \{x \st \exists y_1\colon \forall y_2\colon\exists y_3\colon \ldots\colon ((\cdots((x, y_1), y_2)\ldots, y_{n-1}), y_n) \in A\},
 \end{equation}
 and similarly for $\Pi^0_n$ when we exchange $\exists$ and $\forall$.
 It follows that, in general, a set is in $\Sigma^0_n$ if its complement is in $\Pi^0_n$.
-As, for $n$ at least $1$, the classes $\Sigma^0_n$ and $\Pi^0_n$ are unequal, neither is closed with respect to taking complements.
+As, whenever $n$ is at least $1$, the classes $\Sigma^0_n$ and $\Pi^0_n$ are unequal, neither is closed with respect to taking complements.
 For convenience, we therefore define classes $\Delta^0_n$ as the intersection of $\Sigma^0_n$ and $\Pi^0_n$.
-These classes are closed with respect to taking complements.
+These classes \emph{are} closed with respect to taking complements.
 Remark that sets in $\Delta^0_1$ are both semidecidable and have a semidecidable complement, and are therefore decidable.
 Visually, the arithmetical hierarchy thus looks like depicted in Figure~\ref{fig:arithmetical_hierarchy}.
 \begin{figure}
@@ -144,8 +236,8 @@ Visually, the arithmetical hierarchy thus looks like depicted in Figure~\ref{fig
   }
 \end{figure}
 
-Returning to undecidability as a form of complexity, the arithmetical hierarchy provides a means to analyze complexity.
-For sets that appear in one of the classes of the arithmetical hierarchy, say $\Delta^0_n$, we may assign the level at which it occurs, $n$, to the complexity of the set.
+Returning to undecidability as a form of complexity, the arithmetical hierarchy provides a means of analyzing complexity.
+For sets that appear in one of the classes of the arithmetical hierarchy, say $\Delta^0_n$, we may assign the level at which it occurs, $n$, to \enquote{the complexity} of the set.
 Thus, we can compare how undecidable certain sets are.
 As demonstrated by~\eqref{eq:arithmetical_hierarchy}, this notion of complexity ties in with a more or less structural property of the set it applies to.
 The number of quantifier alternations required for defining a set starting from a decidable set expresses its complexity.
@@ -161,7 +253,7 @@ One such measure was introduced by \textcite{ershov1968hierarchyi} some 25 years
 This measure also revolves around a hierarchy of classes of sets and is in that regard similar in spirit to the arithmetical hierarchy.
 We have seen that the $\Sigma$ and $\Pi$ classes of the arithmetical hierarchy are not closed with respect to taking complements.
 The starting point of \citeauthor{ershov1968hierarchyi}'s hierarchy was the observation that these classes are also not closed with respect to taking relative complements.
-Given two sets $A$ and $B$ in some class $\Sigma^0_n$, with $n$ at least $1$, the set $A \setminus B$ need not be in $\Sigma^0_n$ and similarly for the classes $\Pi^0_n$.
+Given two sets $A$ and $B$ in some class $\Sigma^0_n$, with $n$ at least $1$, the set $A \setminus B$ need not be in $\Sigma^0_n$, and similarly for the classes $\Pi^0_n$.
 However, when $A$ and $B$ are taken from~$\Sigma^0_n$, we may go about deciding whether a given~$x$ is in~$A \setminus B$ as follows.
 \begin{codelisting}
 \item
@@ -178,12 +270,12 @@ However, when $A$ and $B$ are taken from~$\Sigma^0_n$, we may go about deciding 
 Only in the final situation, we can answer a membership query with centainty.
 Therefore, our procedure should be considered a kind of approximation of a decision procedure.
 Observe that the procedure adjusts its knowledge about membership of $x$ in $A \setminus B$ at most twice.
-Procedures that are not convergent in the classical sense, but are allowed to `change their mind' a finite number of times were first put forward by \textcite{putnam1965trial,gold1965limiting}.
+Procedures that are not convergent in the classical sense, but are allowed to \enquote{change their mind} a finite number of times were first put forward by \textcite{putnam1965trial,gold1965limiting}.
 
 The idea of \citeauthor{ershov1968hierarchyi} was to base a hierarchy on number of times a decision procedure in the sense of \citeauthor{putnam1965trial} and \citeauthor{gold1965limiting} is allowed to change its mind.
-The resulting hierarchy is known today as the \defkey{difference hierarchy} \parencite{downey2010algorithmic}.
+The resulting hierarchy is known today as the \defkey{difference hierarchy}~\parencite{downey2010algorithmic}.
 The classes of the difference hierarchy are denoted $\Sigma^{-1}_n$ and $\Pi^{-1}_n$.
-For sets $A, B$, let $A \symdiff B$ denote the symmetric difference $(A \setminus B) \cup (B \setminus A)$.
+For sets $A, B$, let $A \symdiff B$ denote the \defkey{symmetric difference} $(A \setminus B) \cup (B \setminus A)$.
 A set $S$ is in $\Sigma^{-1}_n$ if there are sets $A_1, A_2, A_3, \ldots A_n$ in $\Sigma^0_1$ such that we have
 \begin{equation}
 \label{eq:difference_hierarchy}
@@ -209,18 +301,19 @@ Still, its core ideas make the ensuing notion of complexity an interesting measu
 As we have seen, the number of semidecidable sets needed to write a set like in~\eqref{eq:difference_hierarchy} relates to a generalized form of convergence of computation.
 
 \subsection{Computational Tractability}
+\label{sec:history:tractability}%
 In computational complexity theory, a set is deemed complex if it is intractable.
 Here, tractability is customarily taken with respect to the running time behavior of decision procedures.
-While we can measure the time a decision procedure takes on a specific input, we are primarily interested in the way this time scales to other, unknown, inputs.
-The running time of a decision procedure is therefore traditionally measured as a function of, or functional behavior relative to, the size of its input.
+While we can measure the time a decision procedure takes on a specific input, we are primarily interested in how this time compares to other, unknown, inputs.
+The running time of a decision procedure is therefore traditionally expressed as a function of the size of its input.
 As we saw in Section~\ref{sec:size_of_a_cube}, the notion of input size is heavily reliant on the choice of an encoding scheme for inputs.
 No computable encoding scheme reflects all possible structural aspects an input may have.
-This is especially visible in contexts that offer some `standard' encoding.
+This is especially visible in contexts that offer some \enquote{standard} encoding.
 For instance, in graph theory, graphs are often thought of as encoded by an adjacency matrix.
 In that case, the size of a graph is determined by the number of its vertices.
 However, in deciding a set of graphs, certain structural properties other than the number of vertices may be exploitable by a decision procedure.
 Regarding sets that are intractable because the running time of a decision procedure is at least exponential as a function of the input size, \citeauthor{garey1979computers} remark the following.
-\blockcquote{garey1979computers}{
+\blockcquote[Section~4.3]{garey1979computers}{
   \textelp{} there are a variety of ways in which the time complexity of an algorithm can be \enquote{exponential,} some of which might be preferable to others.
   This is especially evident when, as is customary in practice, we consider time complexity expressed in terms of natural problem parameters instead of the artificially constructed \enquote{input length.}
 }
@@ -230,17 +323,18 @@ In addition, \citeauthor{garey1979computers} note that inputs encountered in pra
 \enquote{\textelp{} in practice it is often the subproblem, rather than the general problem, that we are called upon to solve.}
 
 \begin{example}
+\label{ex:clique}%
   We can model a social network by a graph, representing persons by vertices and connecting two vertices when the persons they represent know each other.
   Given a graph that models mutual acquaintance, we may ask how large a subset of people there exists that all know each other.
   This is formalized by the set
   \begin{align*}
-    \pr{Clique} \deq \{(G, l) \st &\text{there is a set of at least $l$ vertices of the graph $G$} \\
-    	&\text{that are pairwise connected}\}.
+    \defkeyat{Clique@\pr{Clique}}{\pr{Clique}} \deq \{(G, l) \st &\text{there is a set of at least $l$ vertices of the graph $G$ in which} \\
+    	&\text{each pair of vertices is connected by an edge}\},
   \end{align*}
 
   Let $G$ be a graph with $n$ vertices and let $l$ be at most $n$.
   The number of possible subsets of the vertices of $G$ that are of size $l$ cannot be bounded by a polynomial of $n$ alone.
-  In fact, when $l$ is approximately $\frac{n}{2}$, the number of subsets is exponential as a function of $n$.
+  In fact, when $l$ is, say, $\frac{n}{2}$, the number of subsets is exponential as a function of $n$.
   It is widely believed that there are no decision procedures for \pr{Clique} that have a subexponential running time.
   Nonetheless, given a subset of vertices of $G$, we can check whether its members are pairwise connected within a polynomial running time.
 
@@ -248,7 +342,7 @@ In addition, \citeauthor{garey1979computers} note that inputs encountered in pra
   It is rare to come across a person with very many mutual acquaintances.
   Therefore, it is safe to assume that in any graph we encounter as the model of a social network, no vertex is connected to more than, say, $20$ others.
   As a consequence, we find that in any graph encountered in practice, a set of pairwise connected vertices, a \emph{clique}, can contain at most $21$ elements.
-  This means that the number of subsets of vertices that needs to be checked is less than $n^{21}$, which, as \citeauthor{garey1979computers} observe, is polynomial in $n$.
+  This means that the number of subsets of vertices that needs to be checked is less than $n^{21}$, which, as \citeauthor{garey1979computers} observe~\parencite[Section~4.1]{garey1979computers}, is polynomial in~$n$.
   While this already brings the running time down to polynomial, we shall see in Section~\ref{sec:parameterized_complexity_theory}, that a far more efficient decision procedure is not hard to come by.
 \end{example}
 
@@ -258,6 +352,7 @@ Different decision procedures may favor different parameters.
 Note, though, that it is possible to combine the benefits that different parameters may provide through aggregating multiple decision procedures.
 
 \begin{example}
+  \indexkey{Clique@\pr{Clique}}%
   One way to decide membership in \pr{Clique} is by generating an exhaustive list of candidate sets of vertices and checking whether any is a clique of the desired size.
   Suppose we want to decide whether a given graph $G$ has a clique of $l$ elements.
   The simplest implementation of the aforementioned design pattern starts out by generating all possible sets of $l$ vertices of $G$.
@@ -269,41 +364,41 @@ Note, though, that it is possible to combine the benefits that different paramet
   Any clique of size $l$ is guaranteed to be generated this way.
 
   We can compare these two approaches by counting the number of candidate sets they consider.
-  Let $n$ be the number of vertices in $G$ and $m$ the number of its edges.
+  Let $n$ be the number of vertices in~$G$ and $m$ the number of edges in~$G$.
   There are $\binom{n}{l}$ sets of $l$ vertices and $\binom{m}{l / 2}$ sets of $\frac{l}{2}$ edges.
-  When either of these numbers is much smaller than the other, we expect the corresponding decision procedure to run much than the other.
+  When either of these numbers is much smaller than the other, we expect the corresponding decision procedure to run much faster than the other.
   Thus, it pays to construct an aggregate decision procedure.
   This decision procedure would first compute both numbers and then run the decision procedure that is expected to be the fastest.
 
   The computational complexity of the vertex-centric decision procedure is best expressed as a function of the parameters $n$ and $l$.
   On the other hand, the complexity of the edge-centric decision procedure is best expressed as a function of the parameters $m$ and $l$.
   Our aggregate decision procedure demonstrates that it pays off to take into account multiple parameters.
-  By we get a more detailed insight into the computational complexity of a set by taking into account more parameters.
+  By taking into account more parameters, we get a more detailed insight into the computational complexity of a set such as \pr{Clique}.
   For some instances of \pr{Clique}, the running time bound available in terms of $n$ and $l$ is better than that in terms of $m$ and $l$ and vice versa.
 \end{example}
 
 The algorithm we presented for our aggregate decision procedure for \pr{Clique} in the example above combines two other algorithms.
-Such algorithms are known as \emph{hybrid algorithms} \parencite{malek1994hybrid}.
+Such algorithms are known as \emph{hybrid algorithms}~\parencite{malek1994hybrid}.
 They offer a best-of-both-worlds alternative in situations where we have two algorithms without one being better than the other.
 From a parameterized point of view, hybrid algorithms combine the information of multiple input parameters and as such show how these parameters can interact.
-This is relevant not only when we use parameters to measure computational complexity, but also in the design of ever faster polynomial-time algorithms.
+This is relevant not only when we use parameters to measure computational complexity, but also in the design of ever-faster polynomial-time algorithms.
 
 \begin{example}
   \indexkey{example!sorting algorithms}%
-  As a showcase of hybrid algorithms in the absence of computational complexity, we shall take a look at sorting algorithms.
+  As a showcase of hybrid algorithms that do not face computational intractability, we shall take a look at sorting algorithms.
   Even naive sorting algorithms, such as repeatedly finding the least value, manage to have a running time bounded by a polynomial of the length of the input list.
   Because sorting is such a common operation in algorithmics, extensive research has been put into the development of fast sorting algorithms.
 
   The quicksort algorithm \parencite{cormen2009introduction} makes a number of comparisons that is at most quadratic as a function of the length, $n$, of the input list.
   However, worst-case inputs are very rare and on average the algorithm needs roughly $n \log n$ comparisons.
-  With in the order of $n \log n$ comparisons in the worst case, the heapsort algorithm \parencite{cormen2009introduction} appears at least as good as quicksort.
+  With a number of comparisons in the order of $n \log n$ in the worst case, the heapsort algorithm \parencite{cormen2009introduction} appears at least as good as quicksort.
   Nevertheless, it has a higher overhead and in practice it is often outperformed by quicksort.
   By combining both algorithms, we can construct a sorting algorithm that is about as fast as quicksort, yet has a worst-case running time in the order of $n \log n$.
   This hybrid algorithm is known as \emph{introsort} \parencite{musser1997introspective} and is used by some prominent implementations of the \Cpp{} standard library.
 
   The way introsort chooses between its constituent algorithms, quicksort and heapsort, is not as up-front as it was in our hybrid decision procedure for \pr{Clique}.
   This matters when we want to identify parameters that express structure favored by either of the constituent algorithms.
-  Instead of handing over the input to either quicksort or heapsort, the hybrid introsort hooks into the divide~and~conquer nature of quicksort.
+  Instead of handing over the input to either quicksort or heapsort, the hybrid introsort hooks into the divide-and-conquer nature of quicksort.
   The core of the quicksort algorithm is that it splits its input list into a list of low values and a list of high values.
   These sublists can be sorted independently and for that, quicksort recursively invokes itself.
   Because the splitting stage requires some $n$ comparisons for a list of $n$ elements, we do not want the recursion depth to exceed a constant multiple of $\log n$.
@@ -311,7 +406,7 @@ This is relevant not only when we use parameters to measure computational comple
   To mitigate this worst case behavior, introsort uses heapsort to sort the sublists when the recursion depth gets too high, say higher than $2 \log n$.
   Thus, we have found that the recursion depth reached by quicksort functions as a parameter of the input list.
   This parameter may appear somewhat unnatural and its specific value for a given list depends on the implementation of quicksort.
-  For all implementations, however, input lists that get high parameter values can be constructed \parencite{mcilroy1999killer}.
+  For all implementations, however, input lists that get high parameter values can be constructed~\parencite{mcilroy1999killer}.
 
   For short lists, insertion~sort \parencite{cormen2009introduction} is faster still than quicksort and heapsort.
   However, it makes a quadratic number of comparisons in the average case.
@@ -323,9 +418,9 @@ This is relevant not only when we use parameters to measure computational comple
   The architecture of introsort follows quicksort and only for the base case of the recursion it deviates from that.
   In this way, introsort is based on an algorithm that has a bad worst-case running time, but is  fast in practice.
   Another hybrid sorting algorithm, timsort \parencite{peters:timsort}, takes the opposite approach.
-  This algorithm was developed for for the Python programming language and is also used in the Java virtual machine and in the standard library of the Rust programming language.
+  This algorithm was developed for the Python programming language and is also used in the Java virtual machine and in the standard library of the Rust programming language.
   It is adapted from mergesort \parencite{cormen2009introduction}, which has a good worst-case running time, but fails to exploit patterns encountered in practice.
-  Like quicksort, mergesort is a divide~and~conquer algorithm.
+  Like quicksort, mergesort is a divide-and-conquer algorithm.
   Where introsort followed quicksort top-down and resorted to heapsort at high recursion depths, timsort follows a bottom-up implementation of mergesort.
   It uses insertion~sort to quickly prepare a base case that is as accommodating to mergesort as possible.
   Using insertion~sort for the base case is efficient, because insertion~sort is fast on short lists.
@@ -487,7 +582,7 @@ The medium is thus part of the message and information is context-dependent.
   As can be seen in Figure~\ref{fig:pinprobability}, the bulk of the distribution of PINs can be approximated by a straight line in a log--log plot.
   Therefore, our PINs are an example of a dataset that adheres to Zipf's law.
   This empirical law states that the frequency of a word in a corpus of natural language is inversely proportional to its rank.
-  Outside natural language, distributions of this kind have been observed in many real-world data encountered in the physical and social sciences \parencite{newman2005power}.
+  Outside natural language, distributions of this kind have been observed in many real-world data encountered in the physical and social sciences~\parencite{newman2005power}.
   \begin{figure}
     \centering
     \begin{tikzpicture}
@@ -563,11 +658,11 @@ The medium is thus part of the message and information is context-dependent.
 
   In Figure~\ref{fig:pinheatmap}, we can recognize many categories of PINs that occur frequently.
   Some of these categories are purely syntactical.
-  The prominent diagonal line, for instance, represents PINs of the form \code{abab}.
+  The prominent diagonal line, for instance, represents PINs of the form \code{xyxy}.
   Algorithmic complexity theory is well-suited to deal with such patterns.
   We may therefore expect the universal distribution~\parencite{li2008introduction}, though uncomputable, to be a good model for the distribution of PINs.
   For this to be true, all structure in Figure~\ref{fig:pinheatmap} must be essentially syntactical.
-  However, there is also a strong vertical line of PINs of the form \code{19ab}, continuing shortly into the \code{20ab} pattern.
+  However, there is also a strong vertical line of PINs of the form \code{19xy}, continuing shortly into the \code{20xy} pattern.
   The prevalence of such PINs can easily be explained as people choosing a year as they PIN and most emotionally meaningful years being in the recent past.
   This explanation is not a syntactical one.
   Of course, a model for algorithmic complexity can include this contextual information at the cost of only an additive constant.
@@ -602,7 +697,7 @@ Fortunately, it is possible to employ the methods of algorithmic statistics in a
 
 \subsection{Computational Redundancy}
 At the end of Moore's~law, advances in computer engineering are no longer visible as more powerful computation, but instead as more ubiquitous computation.
-With this shift, the choice of \emph{where} to perform computation, along with \emph{when} to perform \emph{how much} of it, become increasingly influential.
+With this shift, the choice of \emph{where} to perform computation, along with \emph{when} to perform \emph{how much} of it, becomes increasingly influential.
 
 \begin{example}
   There are many ways to store digital information, ranging from dynamic random access memory to magnetic tape and optical discs.
@@ -638,7 +733,7 @@ The converse is possible as well.
 In both cases, we may still want to minimize the cost of communication with the server.
 For this, it becomes necessary to recognize redundancy in our computational task and leave it out of transmission.
 \begin{example}
-  Suppose we want to render many frames of an animation on a so called `render farm'.
+  Suppose we want to render many frames of an animation on a so-called \enquote{render farm}.
   This requires the transmission of a description of the computational task for each frame.
   The animation may, however, contain duplicate frames.
   It is worthwhile to preprocess our data and remove all duplicate frames before invoking the render farm.
@@ -646,7 +741,7 @@ For this, it becomes necessary to recognize redundancy in our computational task
 
   Conversely, if we want to perform a computation on data stored in an external database, it may be beneficial for the database to preprocess the data.
   To accomplish this, we not only send the database a request for certain data, but also a description of the operation we want to perform on it.
-  The database may then analyze the data in terms of computational redundancy, and leave the redundant parts out of its reply.
+  The database may then spend a little time analyzing the data in terms of computational redundancy, and omit any identified redundancy from its reply.
   Again, this requires minimal computational effort from the database, yet may reduce the total amount of communication taking place.
 \end{example}
 
@@ -662,12 +757,12 @@ This power has, however, been increasing steadily, and the potential of these de
 We have seen that preprocessing can reduce traffic on the network connecting computers.
 Similarly, preprocessing can reduce traffic on the system bus connecting components inside a computer.
 
-For certain computational tasks, a useful separation into a computational redundant and a computational hard part may be possible.
-For others, it may be impossible to find such a clear cut separation that is of any practical value.
+For certain computational tasks, a useful separation into a computationally redundant and a computationally hard part may be possible.
+For others, it may be impossible to find such a clear-cut separation that is of any practical value.
 This does not mean that we cannot benefit from remote computational powers.
 Sometimes, a computational task is really a serialization of multiple subtasks, the specifics of each subtask depending on the outcome of the previous one.
-With such a task, we may be able to identify computational redundancy in each subtask as we get to it.
-In that case, making use of preprocessing for each subtasks requires a form of communication between the computational parties.
+With such a compound task, we may be able to identify computational redundancy in each subtask as we get to it.
+In that case, making use of preprocessing for each of the subtasks requires a form of communication between the computational parties.
 The party holding the data performs the preprocessing and communicates to the computationally powerful party the data relevant to the current subtask.
 The computationally powerful party in turn executes the subtask in order to find out the specifics of the next subtask.
 These specifics it then sends back, and the cycle repeats.
@@ -679,7 +774,335 @@ It is no longer possible to trace a computation and pinpoint where preprocessing
 Instead, the two types of computation are interwoven, and computation switches back and forth between harvesting redundancy and essential computing.
 Computational redundancy is thus a multifaceted notion, and an investigation of computational redundancy must be multifaceted too.
 In particular, an analysis of computational redundancy should consider how various aspects of preprocessing can be related to properties of data.
+As we have seen multiple times now, properties can be expressed by parameters.
+Thus the analysis of computational redundancy becomes a parameterized analysis.
 
 
-\section{Parameterized Complexity Theory}
+\bigsection{Parameterized Complexity Theory}
 \label{sec:parameterized_complexity_theory}%
+
+Of the many contexts in which complexity may be encountered, one context has featured parameters most prominently.
+This is the context of computational complexity.
+In the formal development of a parameterized computational complexity theory, two dominant schools have emerged around the turn of the century~\parencite{downey1999parameterized,flum2006parameterized}.
+However, the essential ingredients were already visible before that.
+We caught a glimpse of this in Section~\ref{sec:history:tractability}.
+Before we outline the two schools, their differences, and their similarities, we shall recapitulate some of the observations of \textcite{garey1979computers}.
+
+\subsubsection{\citeauthor{garey1979computers}}
+One of the classic \cl{NP}"~complete problems is the \pr{Partition} problem.
+Here, we are given a finite sequence of numbers $x_1, x_2, \ldots, x_m$, and are asked whether there exists a set $I \subseteq \{1, 2, \ldots, m\}$ such that we have
+\begin{equation*}
+  \sum_{i \in I} x_i = \sum_{i \notin I} x_i.
+\end{equation*}
+Equivalently, this set~$I$ is such that we have $\sum_{i \in I} x_i = \frac{1}{2} \sum_{i \le m} x_i$.
+Using dynamic programming, \textcite[Section~4.2]{garey1979computers} show that, for any constant~$c$, the existence of a set $I \subseteq \{1, 2, \ldots, m\}$ such that we have
+\begin{equation*}
+  \sum_{i \in I} x_i = c
+\end{equation*}
+can be determined within a time bound that is polynomial in $m$ and $c$.
+Noting that we have
+\begin{equation*}
+  \frac{1}{2} \sum_{i \le m} x_i \le m \cdot \max \{x_1, x_2, \ldots, x_m\},
+\end{equation*}
+they conclude that membership in \pr{Partition} can be decided in a time polynomial in $m$ and $\max \{x_1, x_2, \ldots, x_m\}$.
+Algorithms with running times behaving this way are called \emph{pseudo-polynomial time algorithms} by \citeauthor{garey1979computers}.
+It is also possible to express running times of pseudo-polynomial time algorithms in terms of input lengths.
+For this, we set $n$ to the combined input length $\length{x_1} + \length{x_2} + \cdots + \length{x_m}$, and $k$ to the maximum, $\max \{\length{x_1}, \length{x_2}, \ldots, \length{x_m}\}$.
+From the previous observations it now follows that membership in \pr{Partition} can be decided in a time that is polynomial in $n$ and exponential in $k$.
+As the specific polynomial in~$n$ is independent of~$k$, this is precisely the type of time bound that would later become known as \emph{fixed-parameter tractable}.
+
+Another problem \citeauthor{garey1979computers} look at is the \cl{NP}"~complete \pr{Clique} problem, which we encountered before in Example~\ref{ex:clique}.\indexkey{Clique@\pr{Clique}}
+Suppose we have a graph~$G$ that has $n$~vertices, none of which is connected to more than~$k$ others.
+As alluded to in Example~\ref{ex:clique}, it is possible to determine the size of the largest clique in~$G$ in a time bound in the order of~$n^{k + 1}$.
+For a fixed value of~$n$, this time bound is exponential in~$k$.
+Likewise, for a fixed value of~$k$, the time bound is polynomial in~$n$.
+However, contrary to what we saw with \pr{Partition}, the polynomial involved is not independent of~$k$.
+Indeed, from these observations we cannot conclude that \pr{Clique} is fixed-parameter tractable with respect to the maximum vertex degree parameter.
+Nevertheless, running times of the form $n^k$ are an object of study in modern parameterized computational complexity theory.
+We remark that \pr{Clique} \emph{is} in fact fixed-parameter tractable with respect to the maximum vertex degree parameter \parencite[10]{cygan2015parameterized}:
+We can go through all vertices and, for each vertex, consider all possible subsets of neighbors.
+There are at most $2^k$ such subsets to consider per vertex.
+
+Observations such as those about \pr{Partition} and \pr{Clique} show that not all is lost when there is no polynomial-time algorithm for a problem of interest.
+Hard instances for the problem may be rare or, at least, there may be special cases of the problem that \emph{can} be solved in polynomial time.
+Therefore, we want to include parameters in our analysis of computational complexity.
+The parameters we saw earlier, \enquote{maximum component length} and \enquote{maximum vertex degree}, were, however, selected in a rather ad~hoc fashion.
+While finding the right parameters may be an art \parencite[12]{cygan2015parameterized}, a proper parameterized computational complexity theory needs to formalize the place and role of parameters.
+
+\subsubsection{\citeauthor{downey1999parameterized}}
+The first framework for parameterized computational complexity was given by \textcite{downey1992fixed,downey1999parameterized}.
+In their framework, a parameter is an explicit component of a problem instance and the problems considered are inherently parameterized.
+More specifically, a \emph{parameterized decision problem} is a set of pairs~$\pair{x}{k}$, where $k$ is a number called the \emph{parameter}.
+A parameterized decision problem $A$ is said to be \emph{fixed-parameter tractable} if the time required to decide membership in~$A$ can be bounded like before.
+Specifically, for some function~$f$ and constant~$c$, membership in~$A$ of a pair~$\pair{x}{k}$, where $x$ is of length~$n$, must be decidable in time~$f(k) \cdot n^c$.
+
+A renowned example of a parameterized decision problem is \pr{VertexCover}.\indexkey{VertexCover@\pr{VertexCover}}
+A vertex cover of an $n$-vertex graph~$G$ is a collection,~$C$, of vertices from~$G$ such that every edge in~$G$ is incident to a vertex in~$C$.
+In the \pr{VertexCover} problem, we are given a pair~$\pair{G}{k}$ and are asked whether $G$ has a vertex cover of at most $k$ vertices.
+Like membership in \pr{Partition}, membership in \pr{VertexCover} can be decided in a time that is polynomial in~$n$ and exponential in~$k$.
+Thus, deciding membership in \pr{VertexCover} is fixed-parameter tractable.
+An easy way to see that this is the case is by considering the following recursive algorithm for deciding whether $G$ has a vertex cover of at most $k$ vertices.
+\begin{codelisting}
+\item
+  We \code{assert} that $k$ is nonnegative, for otherwise $G$ cannot possibly have a vertex cover of at most $k$ vertices.
+\item
+  \code{If} there are no edges in~$G$, then the empty set is a vertex cover of $G$ and it is guaranteed to contain at most $k$ vertices.
+\item
+  \code{Else}, \code{let} $v_1$ and $v_2$ be the endpoints of an edge in~$G$.
+  Any vertex cover of~$G$ must contain at least one of these vertices:
+  \begin{codelisting}
+  \item
+    \code{If} the graph obtained by removing $v_1$ from $G$ contains a vertex cover of at most $k - 1$ vertices, then $G$ contains a vertex cover of at most $k$ vertices.
+    This vertex cover of $G$ is obtained by adding $v_1$ to the vertex cover of the induced subgraph.
+  \item
+    \code{Else}, \code{if} the graph obtained by removing $v_2$ from $G$ contains a vertex cover of at most $k - 1$ vertices, then $G$ contains a vertex cover of at most $k$ vertices.
+  \item
+    \code{Else}, $G$ contains no vertex cover of at most $k$ vertices.
+  \end{codelisting}
+\end{codelisting}
+This algorithm makes at most two recursive calls to itself, each time reducing the value of $k$.
+Thus, no more than $2^k$ calls to this algorithm are made.
+As each individual call can be executed in a time polynomial in~$n$, we find that deciding membership in \pr{VertexCover} is fixed-parameter tractable.
+
+The parameter in the parameterized decision problem \pr{VertexCover} emerges naturally.
+We could say that we have parameterized the vertex cover problem by the solution size.
+Similarly, we could consider a parameterized version of the \pr{Clique} problem, where we parameterize by the solution size.
+That is, we are given a pair $\pair{G}{k}$ and are asked whether the graph~$G$ contains a clique of at least~$k$ vertices.
+If we let $n$ denote the number of vertices in $G$, we find that there are no more than $n^k$ subsets of $k$~vertices in $G$.
+From this, we immediately find that deciding membership in the parameterized version of \pr{Clique} is possible within a time bound of the form~$n^k$.
+At the same time, it is widely believed that deciding membership in \pr{Clique}, parameterized by the solution size, is not fixed-parameter tractable~\parencite{downey1999parameterized,cygan2015parameterized}.
+This is where things get interesting, because when parameterized differently, \pr{Clique} may well be fixed-parameter tractable.
+Recall the definition of \pr{Clique} from Example~\ref{ex:clique},
+\begin{align*}
+  \pr{Clique} \deq \{(G, l) \st &\text{there is a set of at least $l$ vertices of the graph $G$ in which} \\
+  	&\text{each pair of vertices is connected by an edge}\},
+\end{align*}
+and consider \pr{Clique} parameterized by the minimum vertex cover size,
+\begin{align*}
+  \pr{Clique}_\pr{VC} \deq \{\pair{(G, l)}{k} \st &(G, l) \in \pr{Clique} \reland \\
+  	&\text{$G$ has a vertex cover of at most $k$ vertices}\}.
+\end{align*}
+A fixed-parameter tractable decision algorithm for $\pr{Clique}_\pr{VC}$ may proceed as follows when given $G$, $l$, and $k$ as input, where $G$ has $n$ vertices \parencite[Section~15.2.4]{cygan2015parameterized}.
+\begin{codelisting}
+\item
+  \code{Use} the fixed-parameter tractable algorithm for \pr{VertexCover} to find a vertex cover, $C$, of~$G$ that contains at most $k$ vertices.
+\item
+  \code{If} no such vertex cover exists, our input instance is not a member of $\pr{Clique}_\pr{VC}$.
+\item
+  A clique in~$G$ contains at most one vertex outside~$C$, so there are no more than $2^k (n - k)$ sets of vertices to consider as potential cliques in~$G$.
+  \code{If} any of these sets is a clique of at least $l$ vertices, then our input instance is a member of $\pr{Clique}_\pr{VC}$.
+\end{codelisting}
+
+The parameterized decision problem $\pr{Clique}_\pr{VC}$ showcases some of the downsides of the framework of \citeauthor{downey1999parameterized}.
+Because the framework deals only with parameterized decision problems, it cannot be applied to a classical problem such as \pr{Clique}.
+Instead, the framework requires us to resort to derived parameterized problems such as $\pr{Clique}_\pr{VC}$.
+In doing so, the framework obstructs an analysis of the parameterized computational complexity of nonmembers.
+For example, there can be two reasons why some instance $\pair{(G, l)}{k}$ is not a member of $\pr{Clique}_\pr{VC}$.
+It may be because $(G, l)$ is not a member of \pr{Clique}, but it may also be that the parameter value~$k$ is too small.
+The latter possibility is particularly troublesome, as for some parameterized problems the least sufficient parameter value is the key point of interest.
+When we parameterize \pr{Clique} by the solution size, every graph~$G$ has a parameter value~$k$ such that $G$ contains a clique of at most $k$ vertices.
+On the other hand, there are tuples~$(G, l)$ for which there is no parameter value~$k$ such that $\pair{(G, l)}{k}$ is a member of $\pr{Clique}_\pr{VC}$.
+Thus, the \citeauthor{downey1999parameterized} framework cannot be used to inquire about the parameterized computational complexity of nonmembers of classical problems.
+
+\subsubsection{\citeauthor{flum2006parameterized}}
+An alternative framework for parameterized computational complexity was given by \textcite{flum2006parameterized}.
+In their framework, problems are analyzed in light of \emph{parameterization} functions.
+This way, there is no need to confine the analysis to a special type of parameterized decision problems.
+With \citeauthor{flum2006parameterized}, a \emph{parameterization} is a function~$\kappa$ that maps an instance~$x$ of a problem~$A$ to a numeric parameter value $\kappa(x)$.
+The function~$\kappa$ is required to be computable in polynomial time.
+With this, we mean that if $x$ has length $n$, the time required for computing $\kappa(x)$ can be bounded by a polynomial in~$n$.
+Of course, the polynomial must be independent of~$x$.
+The definition of fixed-parameter tractability of~$A$ with respect to~$\kappa$ is similar to the definition in the framework of \citeauthor{downey1999parameterized}.
+This time, however, the parameter value is not part of the input of a fixed-parameter tractable decision procedure for~$A$, but obtained using~$\kappa$.
+Specifically, for some function~$f$ and constant~$c$, membership in~$A$ of an instance~$x$ of length~$n$ must be decidable in time $f(\kappa(x)) \cdot n^c$.
+As this approach separates parameters from instances, the framework allows for a study of the parameterized computational complexity of nonmembers.
+In this regard, it is an improvement over the framework of \citeauthor{downey1999parameterized}.
+
+The parameters considered by \citeauthor{garey1979computers} are examples of parameters that can be modeled nicely in the \citeauthor{flum2006parameterized} framework.
+Recall that for the \pr{Partition} problem, an input instance~$x$ is a sequence of numbers $x_1, x_2, \ldots, x_m$.
+The \enquote{maximum component length} parameter for such inputs can be expressed as a function
+\begin{equation*}
+  \kappa(x) \deq \max \{\length{x_1}, \length{x_2}, \ldots, \length{x_m}\}.
+\end{equation*}
+Note that this function is computable in a time bounded polynomially in the length of the input, $\length{x_1} + \length{x_2} + \cdots + \length{x_m}$.
+Therefore, the above function $\kappa$ qualifies as a parameterization in the framework of \citeauthor{flum2006parameterized}.
+With \citeauthor{garey1979computers}, we saw that \pr{Partition} has a pseudo-polynomial time algorithm.
+In the parlance of \citeauthor{flum2006parameterized}, we would say that \pr{Partition} is fixed-parameter tractable with respect to the parameterization~$\kappa$.
+A similar observation can be made about the parameter with respect to which \citeauthor{garey1979computers} consider \pr{Clique}.
+This parameter is represented by a function that takes as input a graph~$x$, and computes the highest degree of any of the vertices of~$x$.
+The time required for this computation can be bounded polynomially in the number of vertices of the instance~$x$.
+Thus, this parameter too can be modeled in the \citeauthor{flum2006parameterized} framework.
+
+The minimum vertex cover size, as used with $\pr{Clique}_\pr{VC}$, is a more problematic parameter.
+Unless \cl{NP} equals \cl{P}, the minimum vertex cover size cannot be computed in polynomial time.
+Hence, it would not qualify as a parameterization in the sense of \citeauthor{flum2006parameterized}.
+A typical solution to this is to make the desired parameter value a part of the instance \parencite[for instance][Section~15.2.4]{cygan2015parameterized}.
+Instead of looking at \pr{Clique} with respect to a function that computes the minimum vertex cover size, we turn to $\pr{Clique}_\pr{VC}$.
+For this problem, an instance is of the form $\pair{(G, l)}{k}$, where $G$ is a graph and $l$ and $k$ are numbers.
+Indeed, a parameterization for instances of this form can be defined as
+\begin{equation*}
+  \kappa(\pair{(G, l)}{k}) \deq k.
+\end{equation*}
+We have already seen that with respect to this parameterization, the $\pr{Clique}_\pr{VC}$ problem is fixed-parameter tractable.
+However, we were once again unable to analyze the parameterized computational complexity of the unmodified classical \pr{Clique} problem.
+This objection can be responded to in two ways.
+We may hold the position that the minimum vertex cover size is not a proper parameter, as it cannot be computed in polynomial time.
+On the other hand, we should take into account that \pr{VertexCover} is fixed-parameter tractable with respect to the size of its solution.
+That is, it is fixed-parameter tractable with respect to the parameterization that maps an instance $\pair{G}{k}$ to $k$.
+For this reason, a fixed-parameter tractable algorithm for, say, \pr{Clique} does have sufficient time to compute the minimum vertex cover size.
+
+An important parameter of graphs that has a similar issue as the minimum vertex cover size is \emph{treewidth}~\parencite{robertson1986graph,bodlaender1998partial}.
+For many decision problems on graphs, it has been observed that the more an instance resembles a tree, the easier it is to decide membership.
+This is because information regarding the decision can be propagated along the branches of the tree.
+The resemblance to a tree can be formalized by considering ways in which a graph~$G$ can be decomposed into a tree that represents $G$.
+\begin{definition}
+  A \emph{tree decomposition} of a graph~$G$ is a tree~$T$ of which the vertices are subsets of vertices of~$G$, and that satisfies
+  \begin{itemize}
+  \item
+    each vertex of~$G$ occurs in at least one of the vertices of~$T$,
+  \item
+    of each edge of~$G$, the endpoints occur together in at least one of the vertices of~$T$, and
+  \item
+    if a vertex of~$G$ occurs in two vertices of~$T$, then it occurs in all vertices of~$T$ on the unique path between the two.
+  \end{itemize}
+\end{definition}
+
+Each graph~$G$ has a trivial tree decomposition consisting of a single vertex that contains all vertices of~$G$.
+However, as can be seen in Figure~\ref{fig:decomposition}, more sophisticated decompositions may be possible.
+\begin{figure}
+  \centering
+  \subcaptionbox{
+    The vertices of the cube graph can be put in two overlapping sets, indicated by the interrupted lines.
+    These sets define a tree decomposition of the graph.\label{fig:decomposition:graph}
+  }[0.5\textwidth]{
+    \begin{tikzpicture}[line join=round]
+      \draw
+        (0,0) node[below left] {g} -- (0,4) -- (1,3) node[below right] {c} -- (1,1) -- cycle
+        (0,4) node[above left] {a} -- (4,4) -- (3,3) node[below left] {d} -- (1,3) -- cycle
+        (4,4) node[above right] {b} -- (4,0) -- (3,1) node[above left] {f} -- (3,3) -- cycle
+        (4,0) node[below right] {h} -- (0,0) -- (1,1) node[above right] {e} -- (3,1) -- cycle;
+      \filldraw
+        (0,0) circle[] (1,3) circle[]
+        (0,4) circle[] (3,3) circle[]
+        (4,4) circle[] (3,1) circle[]
+        (4,0) circle[] (1,1) circle;
+      \draw[very thick, densely dashed, darkgray, rounded corners=5mm]
+        (-.7,-1.3) -- (-.7,4.7) -- (5.3,4.7) -- cycle;
+      \draw[very thick, densely dash dot dot, darkgray, rounded corners=5mm]
+        (-1.3,-.7) -- (4.7,-.7) -- (4.7,5.3) -- cycle;
+    \end{tikzpicture}
+  }
+  \qquad
+  \subcaptionbox{
+    The tree corresponding to the decomposition in Figure~\ref{fig:decomposition:graph} consists of two vertices.
+  }[0.3\textwidth]{
+    \begin{tikzpicture}[level distance=1.5cm]
+      \node {\{a, b, c, d, e, g\}}
+        child {node {\{b, d, e, f, g, h\}}};
+      \path (0,-4);  % For alignment
+    \end{tikzpicture}
+  }
+  \caption{
+    A tree decomposition of the cube graph of Figure~\ref{fig:graphs:cube}.
+  }
+  \label{fig:decomposition}
+\end{figure}
+As suggested by the name \enquote{tree decomposition}, trees have an especially interesting decomposition.
+In Figure~\ref{fig:decomposition_tree}, it is shown that a tree can be decomposed in such a way that the decomposition mimics the original tree.
+\begin{figure}
+  \centering
+  \subcaptionbox{
+    A tree.\label{fig:decomposition:tree}
+  }[0.4\textwidth]{
+    \begin{tikzpicture}
+      \draw[text height=2ex, text depth=.5ex]
+        (0,0) node[above] {a} -- (-2,-1) node[above left] {b} -- (-3,-2) node[below] {e}
+        (0,0) -- (0,-1) node[below] {c}
+        (0,0) -- (2,-1) node[below] {d}
+        (-2,-1) -- (-1,-2) node[below] {f};
+      \filldraw
+        (0,0) circle[]
+        (-2,-1) circle[] (0,-1) circle[] (2,-1) circle[]
+        (-3,-2) circle[] (-1,-2) circle;
+      \path (0,-5);  % For alignment
+    \end{tikzpicture}
+  }
+  \qquad
+  \subcaptionbox{
+    A tree decomposition of the tree in Figure~\ref{fig:decomposition:tree}.
+    Observe that the decomposition retains the essence of the structure of the original tree.
+    \label{fig:decomposition_tree:decomposition}
+  }[0.4\textwidth]{
+    \begin{tikzpicture}[sibling distance=4.25em, level distance=1.5cm]
+      \node {\{a\}}
+        child {
+          node {\{a, b\}}
+          child[sibling distance=3.75em] {
+            node {\{b\}}
+              child {
+                node {\{b, e\}} child { node {\{e\}}}
+              }
+              child {
+                node {\{b, f\}} child { node {\{f\}}}
+              }
+          }
+        }
+        child {
+          node {\{a, c\}} child { node {\{c\}}}
+        }
+        child {
+          node {\{a, d\}} child { node {\{d\}}}
+        };
+    \end{tikzpicture}
+  }
+  \caption{
+    A tree decomposition of a tree.
+  }
+  \label{fig:decomposition_tree}
+\end{figure}
+In the tree decomposition in Figure~\ref{fig:decomposition_tree:decomposition} no sets occur with more than two elements.
+By the definition of a tree decomposition, any tree decomposition of a graph with at least one edge has a set with at least two elements.
+In that sense, the tree decomposition in Figure~\ref{fig:decomposition_tree:decomposition} is optimal.
+This leads to the following measure of how much a graph is like a tree.
+\begin{definition}
+  The \emph{width} of a tree decomposition is one less than the number of elements in the largest set among the vertices of the decomposition.
+  The \defkey{treewidth} of a graph is the least width among the widths of its tree decompositions.
+\end{definition}
+
+Indeed, the idea behind the tree decomposition shown in Figure~\ref{fig:decomposition_tree} can be used to prove that the treewidth of any tree with at least one edge is one.
+It follows from Figure~\ref{fig:decomposition} that the treewidth of the cube graph is at most five.
+Yet, a tree decomposition of smaller width is possible, as shown in Figure~\ref{fig:decomposition_cube}.
+This decomposition happens to be optimal and the treewidth of the cube graph is three.
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}[sibling distance=8em, level distance=1.5cm]
+    \node {\{b, c, f, g\}}
+      child {node {\{a, b, c, g\}}}
+      child {node {\{d, b, c, f\}}}
+      child {node {\{e, c, f, g\}}}
+      child {node {\{h, b, f, g\}}};
+  \end{tikzpicture}
+  \caption{
+    An alternative tree decomposition of the cube graph as shown in Figure~\ref{fig:decomposition:graph}.
+  }
+  \label{fig:decomposition_cube}
+\end{figure}
+
+By a theorem known as Courcelle's theorem, many graph problems become fixed-parameter tractable once parameterized by treewidth in the \citeauthor{downey1999parameterized} framework~\parencite{downey1999parameterized}.
+This includes, for example, \pr{Clique} and \pr{VertexCover}~\parencite{bodlaender2008combinatorial}.
+However, the problem of deciding whether the treewidth of an arbitrary graph meets a given bound is itself \cl{NP}"~complete~\parencite{arnborg1987complexity}.
+Therefore, unless \cl{NP} equals \cl{P}, treewidth does not qualify as a parameterization in the framework of \citeauthor{flum2006parameterized}.
+At the same time, like with the minimum vertex cover size, computing treewith is fixed-parameter tractable with respect to itself \parencite[stated in terms of \enquote{branch-width}]{robertson1995graph}.
+It is noted by \citeauthor{flum2006parameterized} that large parts of the theory of parameterized complexity go through if we allow for such parameterizations \parencite[279]{flum2006parameterized}.
+
+It has also been recognized that there is little reason why a parameterization is restricted in that it may only map to a single number.
+A parameterization with a multidimensional image would represent multiple parameters at once.
+The interplay between parameters can, however, not be expressed in the \citeauthor{flum2006parameterized} framework.
+This is a consequence of modeling parameters by parameterizations, which assign a unique value to each instance.
+Suppose that we have identified two parameters such that some given problem is fixed-parameter tractable with respect to the sum of the two parameter values.
+In the \citeauthor{flum2006parameterized} framework, we could choose to have a parameterization that maps instances to the sum of the two parameter values.
+However, conceptually, this is somewhat backward.
+Instead of analyzing complexity based on parameterizations, we are now basing a parameterization on our complexity analysis.
+On the one hand, the \citeauthor{flum2006parameterized} framework improves on the \citeauthor{downey1999parameterized} framework by isolating parameterizations from problems.
+On the other, it requires parameter values to be unique for a given instance, which limits its use in analyzing the interplay between different parameters.

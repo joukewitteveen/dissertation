@@ -19,12 +19,17 @@
 
 \input{notation}
 
+
+\newcommand{\bigsection}[1]{\clearpage\section{#1}}
+
+
 \addbibresource{refs.bib}
 
+\DeclareDelimFormat{namelabeldelim}{\addnbspace}
+\DeclareFieldFormat{url}{\mkbibacro{URL}\addcolon\\*\url{#1}}
 \renewcommand*{\subtitlepunct}{\addcolon\space}
 %\SetCiteCommand{\textcite}
 %\renewcommand*{\mkccitation}[1]{ ---#1}
-
 
 \makeatletter
 \AtBeginDocument{
@@ -50,6 +55,7 @@
 }
 \makeatother
 
+
 \newcommand{\defkeyat}[2]{\index{#1}\emph{#2}}
 \newcommand{\defkey}[1]{\defkeyat{#1}{#1}}
 \newcommand{\indexkey}[1]{\index{#1}}
@@ -64,9 +70,6 @@
 \hypersetup{pdftitle=\@title,pdfauthor=\@author}
 \makeatother
 \pdfvariable suppressoptionalinfo \numexpr32+64+512\relax  % Reproducible builds
-
-\DeclareDelimFormat{namelabeldelim}{\addnbspace}
-\DeclareFieldFormat{url}{\mkbibacro{URL}\addcolon\\*\url{#1}}
 
 
 \begin{document}

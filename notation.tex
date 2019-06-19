@@ -4,7 +4,7 @@
 \defineshorthand{"~}{\babelhyphen{nobreak}}
 \AtBeginDocument{\useshorthands*{"}}
 
-\tikzset{>=latex}
+\tikzset{>=latex,radius=\pgfplotmarksize}
 \pgfkeys{/pgf/number format/set thousands separator={\,}}
 \pgfplotsset{compat=1.16,cycle list name=black white,colormap name=viridis}
 
@@ -65,6 +65,7 @@
 \newcommand{\pdash}{\textsl{p}\babelhyphen{nobreak}}	% Polynomial time functions
 \newcommand{\pr}[1]{\textnormal{\textsc{#1}}}	% Problems
 \newcommand{\quasile}{\preccurlyeq}
+\newcommand{\notquasile}{\npreccurlyeq}
 \newcommand{\quasilenu}{\quasile_\mathrm{nu}}
 \newcommand{\reland}{\;\text{ and }\;}	% Relating conditions conjunctively
 \newcommand{\st}[1][]{\;#1|\;}	% Such that (with optional size)

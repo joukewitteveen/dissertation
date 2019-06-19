@@ -1,13 +1,16 @@
-\section{as Computational Redundancy}
+\bigsection{as Computational Redundancy}
+\label{sec:redundancy}%
 
 We can picture a parameterization as an infinite stack of slices.
 So far, we have worked under the hypothesis that complexity increases as we ascend through this stack.
-However, when each slice represents a constant level of complexity, then, relative to their length, the complexity of instances decreases inside each slice.
-As the length of instances goes up, their relative complexity goes down.
+As such, parameter values represent levels of complexity.
+However, when each slice represents a level of constant complexity, then, relative to their length, the complexity of instances decreases inside each slice.
+As the length of instances in a given slice goes up, their relative complexity goes down.
 
 \begin{example}
 \label{ex:long_instances}%
-  If we think of \cl{FPT} as computational complexity up to computability in polynomial time, we can see the importance of the first elements of slices.
+  With \cl{FPT}, we consider decidability in polynomial time easy, and use parameter values to express computational complexity beyond polynomial time.
+  Thinking of \cl{FPT} as computational complexity up to computability in polynomial time, we can see the importance of the first elements of slices.
   Let~$A$ be a set that is in~\cl{FPT} with a parameterization~$\eta$.
   This means that, for some function~$f$ and polynomial~$p$, membership in~$A$ can be decided in $f(k) \cdot p(\length{x})$ time steps, whenever we have $x \in \eta_k$.
   Now, for those~$x$ and~$k$ that satisfy $\length{x} \ge f(k)$, we have
@@ -46,34 +49,67 @@ Put differently, we defined a reduction from the set~$A$ to itself that was well
 The reduction is akin to an \defkey{autoreduction} in the spirit of \textcite{trakhtenbrot1970autoreducibility}.
 Where the definition of an autoreduction excludes reducing to the input string, our reduction satisfies a condition that is in some sense stronger.
 Namely, our reduction meets a bound, as a function of the parameter value, on the length of the strings to which an input is reduced.
-In this light, our reduction can be compared to a more restrictive type of autoreduction, the \defkey{self-reduction} \parencite{meyer1979with}.
-In the textbook treatment by \textcite[][Section~4.5]{balcazar1995structural}, self-reducibility is defined as autoreducibility where all strings to which an input is reduced are shorter than the input.
+In this light, our reduction can be compared to a more restrictive type of autoreduction, the \defkey{self-reduction}~\parencite{meyer1979with}.
+In the textbook treatment by \textcite[Section~4.5]{balcazar1995structural}, self-reducibility is defined as autoreducibility where all strings to which an input is reduced are strictly shorter than the input.
 However, many of the results around self-reducibility extend to more general orders than the \enquote{shorter than}-order.
 Indeed, the definition of self-reducibility can be generalized to encompass such more general orders \parencite{ko1983self,orponen1986optimal,buhrman1996p-selective}.
-Unfortunately, even this generalized definition does not adequately capture the behavior of our reduction in Example~\ref{ex:cylinder-kernel} \parencite{chen2011lower}.
+Unfortunately, even this generalized definition does not adequately capture the behavior of our reduction in Example~\ref{ex:cylinder-kernel}~\parencite{chen2011lower}.
 Reductions of this type form a class of reductions of their own.
 
-One of the reasons this class is of interest is because of its relationship to \defkey{preprocessing}.
+One of the reasons this class of reductions is of interest is because of its relationship to \defkey{preprocessing}.
 The goal of preprocessing is to eliminate all computational redundancy from an input and identify its computationally hard part.
 In the case of Example~\ref{ex:cylinder-kernel}, we could throw away the second component in the image of the isomorphism~$g$.
 Crucially, doing so allowed us to reduce the input in polynomial time to an equivalent string of a length that was bounded by a function of the parameter value.
 Returning once more to Figure~\ref{fig:length_decomposed}, we see that essentially only the useful information was relevant for deciding membership.
 The algorithmic noise could be considered a form of computational redundancy.
 Generally, preprocessing may not be so powerful and the image of the reduction may be far longer than the parameter value.
-However, as long as the length of the image can be bounded by a function of the parameter value, the preprocessing has some guaranteed on its effectiveness.
+In other words, the length of the result of preprocessing a string~$x$ is not guaranteed to be at most that of~$x$.
+However, as long as the length of the result can be bounded by a function of a parameter value for~$x$, the preprocessing has some guarantee on its effectiveness.
 
 \subsubsection{Synopsis}
-Preprocessing procedures such as the one introduced in Example~\ref{ex:cylinder-kernel} are formally known as kernelizations.
-\todo[inline]{TODO}
-We introduce a technique for constructing sets that are kernelizable in one way but not another.
-This technique revolves around composing sets as the disjoint union of a hard part and a computationally redundant part that reduces to the hard part.
+Preprocessing procedures such as the one introduced in Example~\ref{ex:cylinder-kernel} are formally known as \emph{kernelizations}.
+Just like with other forms of reducibility, the definition of a kernelization allows for some variation.
+Varying the constraints we place on a kernelization, we can obtain anything from a many--one kernelization to a Turing kernelization.
+The spectrum of possible definitions is the topic of Section~\ref{sec:redundancy:types}.
+As far as the existence of a kernelization for a set is concerned, there is no difference between the various kinds of kernelization.
+We shall see that a set~$A$ has a kernelization of any kind with respect to some given parameterization precisely when $A$ is fixed-parameter tractable.
+However, a less constrained kind of kernelization may be able to reduce its inputs to shorter strings than a more constrained kind of kernelization could.
+In that sense, the various kinds of kernelization may differ in effectiveness.
 
-Most of the results in this section are the result of a joint work with Ralph Bottesch and Leen Torenvliet \parencite{witteveen2019hierarchy}.
+The difference between the length of an input string and that of the string to which it is reduced is a measure of the computational redundancy in the input.
+Thus, a kernelization is a way to identify a parameterization with the computational redundancy present in the inputs to a decision problem.
+A difference in the effectiveness of kernelizations can therefore be interpreted as a difference in the amount of computational redundancy that is recognized.
+Typically, a kernelization is considered to be reasonably effective if the length of the reduced strings is polynomial in the numeric parameter value.
+In Section~\ref{sec:redundancy:polynomial}, we go into detail about these \emph{polynomial} kernelizations.
+We consider the possibility of a relationship between the size of kernelizations and the running time of fixed-parameter tractable decision procedures.
+This relationship turns out to be very weak, thus we find that computational tractability and computational redundancy are distinct measures of complexity.
+
+Moreover, we find in Section~\ref{sec:redundancy:polynomial} that the existence of a polynomial kernelization depends on the kind of kernelization we target.
+For this finding, we introduce a technique for constructing sets that are kernelizable in one way but not another.
+This technique revolves around composing sets as the disjoint union of a hard part and a computationally redundant part that reduces to the hard part.
+The same technique is used in Section~\ref{sec:redundancy:hierarchy} to build a fine-grained hierarchy of polynomial kernelizability.
+We identify what additional constraints in the definition of a kernelization lead to a strictly smaller class of sets having polynomial kernelizations.
+Thus, the levels in our hierarchy correspond to different kinds of polynomial kernelization.
+Most of the results concerning the hierarchy are the outcome of a joint work with Ralph Bottesch and Leen Torenvliet~\parencite{witteveen2019hierarchy}.
+
+At one level of our hierarchy of kernelizability, we can reinterpret the computational redundancy identified by a kernelization as related to \enquote{advice}.
+With the corresponding definition of a kernelization, more computational redundancy is linked to less advice being needed by a decision procedure.
+Specifically, having a polynomial kernelization is conceptually the same as having a decision procedure that takes an advice string of polynomial length.
+In Section~\ref{sec:redundancy:advice}, we compare this notion of polynomial advice with the leading notion of polynomial advice in computational complexity theory.
+While the traditional notion is shown to have some strong ties with polynomial kernelizability, it is nevertheless different from our new notion of advice.
+Neither notion of polynomial advice is stronger than the other.
+
+The level of our hierarchy of kernelizability that represents a notion of advice appears again in Section~\ref{sec:redundancy:lower_bounds}.
+In that section, it is shown that an established technique for lower bounding the minimum size of a kernelization can be generalized.
+The lower bounding technique was originally used to lower bound the size of the most restrictive kind of kernelizations for certain decision problems.
+However, for less constrained kinds of kernelization, the technique works just as well.
+We shall see that it generalizes to the kind of polynomial kernelization that we related earlier to a notion of polynomial advice.
 
 \subsection{Types of Kernelization}
+\label{sec:redundancy:types}%
 In the \citeauthor{flum2006parameterized} framework, a \defkey{kernelization} can be defined as follows.
-Let $A$ be a set and $\kappa$ a parameterization in the sense of \citeauthor{flum2006parameterized}.
-A kernelization for~$A$ with respect to~$\kappa$ is a polytime computable function $\phi\colon \binary^+ \to \binary^+$ that satisfies two properties.
+Let $A$ be a set and $\kappa$ a parameterization in the sense of \citeauthor{flum2006parameterized} as we have seen in Section~\ref{sec:parameterized_complexity_theory}.
+A kernelization for~$A$ with respect to~$\kappa$ is a polytime-computable function $\phi\colon \binary^+ \to \binary^+$ that satisfies two properties.
 The first property it should satisfy is that for all strings~$x$, we have $x \in A \iff \phi(x) \in A$.
 The other property required is that there is some computable function $h\colon \binary^+ \to \bbN$ such that, for all strings~$x$, we have $\length{\phi(x)} \le h(\kappa(x))$.
 In other words, a kernelization is a polytime many--one reduction with a length bound on the image in terms of the parameter value of the input.
@@ -87,27 +123,39 @@ In our framework, this very general form of kernelization can be defined as foll
   Let $\phi$ be a parameterized procedure that can query an oracle about membership of strings in a set~$A$.
   The procedure~$\phi$ is a \defkeyat{kernelization!Turing}{Turing kernelization} for~$A$ with respect to a decidable parameterization~$\eta$ if
   \begin{itemize}
-  \item there is a polynomial~$p$ such that $\phi$ terminates on any input string~$x$ within $p(\length{x})$ steps, regardless the parameter value provided as the second argument to~$\phi$,
+  \item there is a polynomial~$p$ such that $\phi$ terminates on any input string~$x$ within $p(\length{x})$ steps, regardless of the parameter value provided as the second argument to~$\phi$,
   \item $\phi$ converges to~$A$ on~$\eta$, and
-  \item there is a computable function~$h\colon \binary^+ \to \bbN$ such that any query made by~$\phi$ on an input $(x, k)$ is of a length at most $h(k)$.
+  \item there is a computable function~$h\colon \binary^+ \to \bbN$ such that any query made by~$\phi$ on an input $(x, k)$ has a length of at most $h(k)$.
   \end{itemize}
 \end{definition}
 While the definition may seem daunting, the three items really codify the same properties that were required of traditional kernelizations.
 That is, a Turing kernelization runs in polynomial time, decides membership, and obeys a length bound on the queries it makes.
-Because the parameterization was required to be decidable, we can also bound the minimum length of a parameter value with which a queried string is in~$\eta$.
-In fact, the decidability requirement can be relaxed to the criterion that there exists a computable parameter estimator for~$\eta$.
+
+We remark that every Turing kernelization also has a computable upper bound on the minimum length of a parameter value with which a queried string is in~$\eta$.
+Because the parameterization~$\eta$ was required to be decidable, the minimization function~$\mu_\eta$ is computable.
+This makes the largest minimum length of a parameter value with which any queried string is in~$\eta$,
+\begin{equation*}
+  \max \{\mu_\eta(q) \st q \in \binary^+ \reland \length{q} \le h(x)\},
+\end{equation*}
+computable as a function of~$x$.
+In fact, the decidability requirement in the definition can be relaxed to the criterion that there exists a computable parameter estimator~$\kappa$ for~$\eta$.
+An upper bound to the minimum length of a parameter value for the queries is then found by replacing $\mu_\eta(q)$ by $\length{\kappa(q)}$ in the expression above.
 
 Besides the length bound, more restrictions on the queries made by a Turing kernelization can be put in place.
 We observe that in the execution of a Turing kernelization, which string is queried next may depend on the answers of the oracle to queries made previously.
 Because of this, a Turing kernelization is said to be \defkeyat{kernelization!adaptive}{adaptive}.
 We may restrict a Turing kernelization so that it must determine all the queries it will make at once, before knowing the feedback of any of them.
 With this addition of this restriction, we have defined a \defkeyat{kernelization!truth-table}{truth-table kernelization}.
-Note that, by the bound on its running time, a Turing kernelization can be made to terminate regardless the oracle it is provided with.
-In this regard, Turing kernelizations differ from Turing reductions in computability theory \parencite{rogers1967theory,odifreddi1992classical}, which may never stop querying their oracle.
+This type of kernelization is relevant in the context of parallelized computation.
+As observed by \textcite{weller2013aspects}, the independence of the queries makes it possible to compute their answers in parallel.
+This turns truth-table kernelization into a design pattern for parallel algorithms.
+
+Note that, by the bound on its running time, a Turing kernelization can be made to terminate regardless of the oracle it is provided with.
+In this regard, Turing kernelizations differ from Turing reductions in \emph{computability} theory \parencite{rogers1967theory,odifreddi1992classical}, which may never stop querying their oracle.
 Therefore, a Turing kernelization is really a \emph{bounded Turing kernelization}, or, equivalently, a \emph{weak truth-table kernelization} \parencite{odifreddi1992classical} \parencite[see also][Section~2.4.3]{downey2010algorithmic}.
 Even then, the names do not fully describe all properties, as a weak truth-table reduction need not terminate after it has received the answers to its queries.
 
-Examples of Turing kernelizations can be found in the works of \textcite{jansen2017turing,thomasse2017polynomial}, and in the textbook by \textcite[][Section~9.4]{cygan2015parameterized}.
+Examples of Turing kernelizations can be found in the works of \textcite{jansen2017turing,thomasse2017polynomial}, and in the textbook by \textcite[Section~9.4]{cygan2015parameterized}.
 While the kernelizations in the first two works are adaptive, the kernelization discussed in the textbook is non-adaptive and thus a truth-table kernelization.
 Further examples of both Turing and truth-table kernelizations can be found in the textbook by \textcite{fomin2019kernelization}.
 
@@ -116,11 +164,12 @@ Yet, even Turing kernelizations that only make at most one query can do somethin
 They can invert the answer they receive from the oracle in their membership decision.
 A further restriction we shall consider is related to this ability and was introduced by \textcite{jockusch1968semirecursive} in computability theory and, later, by \textcite{selman1982analogues} in complexity theory.
 \begin{definition}
-  Let $\phi$ be a parameterized decision procedure that can query an oracle and denote the set it decides when the oracle answers according to a set~$A$ by $\phi_A^{-1}(\bits{1})$.
+  Let $\phi$ be a parameterized decision procedure that can query an oracle.
+  Additionally, denote the set $\phi$ decides when the oracle answers according to a set~$A$ by $\phi_A^{-1}(\bits{1})$.
   The procedure~$\phi$ is \defkeyat{kernelization!positive}{positive} if, for all sets $A$ and $B$ that satisfy $A \subseteq B$, we have $\phi_A^{-1}(\bits{1}) \subseteq \phi_B^{-1}(\bits{1})$.
 \end{definition}
 
-The reason for calling kernelizations that behave as in the above definition positive can most easily be seen by looking at positive truth-table kernelizations.
+The reason for calling kernelizations that behave as in the above definition \enquote{positive} can most easily be seen by looking at positive truth-table kernelizations.
 As it turns out, the dependence on the oracle of a positive truth-table kernelization can be expressed as a Boolean formula that does not use negation.
 The disjunctive kernelizations and conjunctive kernelizations of \textcite{kratsch2014recent} are examples of positive truth-table kernelizations.
 
@@ -151,7 +200,7 @@ $\ref{enum:kernel:turing} \implies \ref{enum:kernel:fpt}$.
   Suppose we want to decide membership of a string~$x$ in~$A$ and are supplied with a parameter value~$k$ such that we have $x \in \eta_k$.
   We run $\phi$ on~$(x, k)$ and whenever~$\phi$ would pose a query to its oracle, instead we make it use~$\psi$ to figure out itself what the oracle would answer.
   Two things we know about the queries $\phi$ makes are that there are at most $p(\length{x})$ of them and that each is bounded in length by~$h(k)$.
-  Now if we denote the running time of~$\psi$ by~$t$, we thus find that the modification to~$\phi$ prolongs its running time by no more than $p(\length{x}) \cdot t(h(k))$ steps.
+  Now, if we denote the running time of~$\psi$ by~$t$, we thus find that the modification to~$\phi$ prolongs its running time by no more than an additional $p(\length{x}) \cdot t(h(k))$ steps.
   Thus, the modified~$\phi$ indeed witnesses that $A$ is in~\cl{FPT} with $\eta$.
 
 $\ref{enum:kernel:fpt} \implies \ref{enum:kernel:manyone}$.
@@ -163,10 +212,13 @@ $\ref{enum:kernel:fpt} \implies \ref{enum:kernel:manyone}$.
 \end{proof}
 
 The previous result urges us to look at even more restricted forms of kernelization.
-A closer look at Example~\ref{ex:long_instances} tells us that kernelizations really tell us that all computational complexity resides in initial segments of slices.
+A closer look at Example~\ref{ex:long_instances} tells us that kernelizations show us where the computational complexity in a decision problem resides.
+If a set~$A$ has a kernelization with respect to a parameterization~$\eta$, then all computational complexity of~$A$ resides in initial segments of the slices of~$\eta$.
 Of course, when we attempt to identify the computationally hard part of the set, we try to keep this hard part as small as possible.
-As with the length parameterization defined in Example~\ref{ex:length_parameterization}, we can relate parameter values to the lengths of instances.\indexkey{length parameterization}
-In this light it makes sense to think of the bound~$h$ in Definition~\ref{def:turing_kernelization} not as a function of a parameter value~$k$, but as a function of~$\asNat(k)$.
+The bound~$h$ in Definition~\ref{def:turing_kernelization} can be used to formalize what \enquote{small} should mean in this case.
+Because we are primarily interested in the limiting behavior of~$h$, we shall think of~$h$ not as a function of a parameter value~$k$, but as a function of~$\asNat(k)$.
+In many cases, this is quite natural.
+For example, with the parameterization defined in Example~\ref{ex:length_parameterization}, the values of~$\asNat(k)$ relate to the lengths of instances.
 We say that a Turing kernelization is a \defkeyat{kernelization!polynomial}{polynomial Turing kernelization} if the associated bound~$h$ can be a polynomial of~$\asNat(k)$.
 More generally, we refer to the bound as a function of $\asNat(k)$ as the \defkeyat{kernelization!size}{size} of the kernelization.
 \begin{example}[continued from Example~\ref{ex:cylinder-kernel}]
@@ -174,7 +226,7 @@ More generally, we refer to the bound as a function of $\asNat(k)$ as the \defke
   For the \pdash{}cylinder~$A$ with isomorphism~$g$ and parameterization~$\eta$, this kernelization would proceed as follows on an input~$(x, k)$.
   First, the procedure would compute $g_1(x)$ and verify that $\asNat(g_1(x)) \le \asNat(k)$ holds.
   If it does not, we do not have $x \in \eta_k$ and the procedure returns~\bits{?}.
-  Because $g$ is polytime computable, this can be done in a time that is bounded polynomially in~$\length{x}$.
+  Because $g$ is computable in polynomial time, this can be done in a time that is bounded polynomially in~$\length{x}$.
   When we do have $x \in \eta_k$, the next step of the procedure is to construct $x' = g^{-1}(g_1(x), \bits{0})$.
   As we had seen before, the length~$\length{x'}$ can be bounded by a polylogarithmic function of $\asNat(k)$.
   Finally, the procedure queries the oracle for membership of~$x'$ in~$A$ and returns the answer of the oracle.
@@ -183,23 +235,23 @@ More generally, we refer to the bound as a function of $\asNat(k)$ as the \defke
   Of course, it is also a polynomial many--one kernelization.
 \end{example}
 
-Most treatments of kernelization, among which the standard textbook of~\textcite{fomin2019kernelization}, require an additional property of the size of a kernelization.
+Most treatments of kernelization, including the standard textbook of~\textcite{fomin2019kernelization}, require an additional property of the size of a kernelization.
 With respect to a parameterization~$\eta$, this additional property is as follows for a kernelization~$\phi$ of size~$h$:
 For any query~$q$ that $\phi$ poses to its oracle, there must be a parameter value~$k'$ for which we have $q \in \eta_{k'}$ and $\asNat(k') \le h(\asNat(k))$.
 This is a technical restriction that codifies that the queries may not have an overly high complexity.
-It is not always imposed \parencite[e.g.][]{flum2006parameterized}, and sometimes relaxed to obtain a notion of \emph{compression} \parencite{bodlaender2014kernelization}.
+It is not always imposed \parencite[e.g.][]{flum2006parameterized}, and sometimes relaxed to obtain a notion of \emph{compression}~\parencite{bodlaender2014kernelization}.
 With the additional requirement in place, the kernelization in the previous example is no longer a polylogarithmic kernelization.
 However, it is still a polynomial kernelization, as each query is a member of the same slices as the instance of which membership is being decided.
 With respect to polynomial kernelizations, the additional requirement is often not much of an issue.
-A typical parameterization~$\eta$ is so that for all~$x$ there is a parameter value~$k$ such that we have $x \in \eta_k$ and $\asNat(k) \le \length{x}$.
+In a typical parameterization~$\eta$, each instance~$x$ has a parameter value~$k$ that satisfies $x \in \eta_k$ and $\asNat(k) \le \length{x}$.
 This subsumes the additional requirement.
 
-Ideally, the order on the lattice of parameterizations, $\calL_\cl{FPT}$, should preserve the size of kernelizations.
-Suppose we are working with a set~$A$ and we have two parameterizations, $\eta$~and~$\zeta$, that satisfy $\eta \quasile \zeta$.
+Ideally, the order on parameterizations as defined in Definition~\ref{def:uniform_order} should preserve the size of kernelizations.
+Suppose we are working with a set~$A$ and we have two parameterizations, $\eta$~and~$\zeta$, both members of~$\calL_\cl{FPT}$, that satisfy $\eta \quasile \zeta$.
 In Theorem~\ref{thm:filter}, we have seen that $\calF_\cl{FPT}(A)$ is upward closed, meaning that if $A$ is in \cl{FPT} with~$\eta$, it is also in \cl{FPT} with~$\zeta$.
 Unfortunately, it is not the case that if $A$ has a Turing kernelization of size~$h$ with respect to~$\eta$, it also has one of size~$h$ with respect to~$\zeta$.
-This is because the size of a kernelization is not well-defined with respect classes of parameterizations that are equivalent in the order on parameterizations.
-However, inside a class of equivalent parameterizations, suitable parameterizations may be found.
+This is because the size of a kernelization is not well-defined with respect to classes of parameterizations that are equivalent in the order on parameterizations.
+However, inside a class of equivalent parameterizations, suitable parameterizations can be found.
 \begin{theorem}
   Let $\eta$ and $\zeta$ be parameterizations such that $\eta$ is below $\zeta$ in the order on parameterizations.
   If a set~$A$ has a Turing kernelization of size~$h$ with respect to $\eta$, then there is a parameterization~$\zeta'$ such that
@@ -223,19 +275,29 @@ However, inside a class of equivalent parameterizations, suitable parameterizati
   By our earlier remarks, it follows that $A$ has a Turing kernelization of size~$h$ with respect to~$\zeta'$.
 \end{proof}
 
-The queries made by a \emph{polynomial} Turing kernelizations are generally considered to be reasonably small.
+Unfortunately, a similar argument can be used to shown that the size of a Turing kernelization does not mean much on an equivalence class of parameterizations.
+If a set~$A$ has a Turing kernelization of any computable size with respect to a parameterization~$\eta$, then there is a parameterization~$\eta'$ such that
+\begin{itemize}
+\item $\eta'$ is equivalent to $\eta$ in the order on parameterizations, and
+\item $A$ has a \emph{polynomial} Turing kernelization with respect to $\eta'$.
+\end{itemize}
+The choice of a specific parameterization is therefore important in the study of kernelizations.
+As there is no formal definition of what constitutes a \enquote{natural} parameterization, this will always be more of an art than a science.
+
+The queries made by a polynomial Turing kernelizations are generally considered to be reasonably small~\parencite{flum2006parameterized}.
 Indeed, finding polynomial Turing kernelizations for various sets has gained significant interest \parencite{guo2007invitation,cygan2015parameterized,fomin2019kernelization}.
 As we shall soon see, polynomial many--one kernelizations are strictly less powerful than polynomial Turing kernelizations.
 For polynomial kernelizations, a theorem like Theorem~\ref{thm:kernel_fpt} does not exist.
 
 \subsection{Polynomial Turing Kernelizations}
+\label{sec:redundancy:polynomial}%
 Given Theorem~\ref{thm:kernel_fpt}, we may wonder whether the length of queries made by a kernelization relates to the parameterized running time of a decision procedure.
 At least in one direction, such a relationship can be found.
 Let $A$ be a set that is decidable in exponential time and for which there is a polynomial Turing kernelization with respect to some parameterization~$\eta$.
 We consider the parameterized running time of the parameterized decision procedure for~$A$ that is constructed in the proof of Theorem~\ref{thm:kernel_fpt}.
 Deciding queries in exponential time, we find that there must exist a polynomial~$q$ such that the parameter dependence in this running time is of the form $2^{q(\asNat(k))}$.
 Of course, the factor in the running time that is dependent on the length of the instance can be bounded by a polynomial, say~$p$.
-To summarize, because $A$ is in~\cl{EXP} and has a polynomial Turing kernelization with respect to~$\eta$, it is decidable in time $p(\length{x}) \cdot 2^{q(\asNat(k))}$ with respect to~$\eta$.
+To summarize, because $A$ is in~\cl{EXP} and has a polynomial Turing kernelization with respect to~$\eta$, it is decidable in time $2^{q(\asNat(k))} \cdot p(\length{x})$ with respect to~$\eta$.
 
 That the converse of this observation fails to hold was proven by \textcite{bodlaender2009problems} for the restricted case of polynomial many--one kernelizations.
 Using a different proof technique, we can extend this result to polynomial Turing kernelizations in their full generality.
@@ -271,7 +333,7 @@ Using a different proof technique, we can extend this result to polynomial Turin
   Here, the term~$\length{x}$ serves only to allow for sufficient time to read the entire input.
   It remains to show that there exists such a set~$A$ that lacks a Turing kernelization of size~$h$ with respect to~$\eta$.
 
-  Equivalent to the fact that~$h(n)$ is in $2^{\littleo(n)}$, is the fact that~$t$ grows faster than any polynomial.
+  Equivalent to the fact that~$h(n)$ is in $2^{\littleo(n)}$, is the fact that~$h$ is superlogarithmic and thus that~$t$ grows faster than any polynomial.
   Suppose that time~$t$ is required  by any decision procedure for a set~$A$.
   Observe that a Turing kernelization for this set~$A$ is only given a polynomial amount of running time, hence it must make at least one query to its oracle.
   To see why a kernelization for~$A$ with respect to~$\eta$ cannot be of size~$h$, fix a kernelization and let~$p$ be the polynomial bounding its running time.
@@ -313,14 +375,14 @@ That is, it is a member of the class
 This is more or less by necessity, since sets that are too far removed from~\cl{E} cannot show the desired behavior.
 In fact, the relationship between kernelization size and computational complexity we found earlier can be reversed for sets that are bi"~immune for \cl{E}.
 Let $A$ be a set that is bi-immune for \cl{E}, let $\eta$ be a parameterization, and let~$p$ and~$q$ be polynomials.
-Furthermore, suppose there is a parameterized procedure that converges to~$A$ on~$\eta$ and, on input $(x, k)$, runs it time $p(\length{x}) \cdot 2^{q(\asNat(k))}$.
+Furthermore, suppose there is a parameterized procedure that converges to~$A$ on~$\eta$ and, on input $(x, k)$, runs in time $p(\length{x}) \cdot 2^{q(\asNat(k))}$.
 We claim that in this case, $A$ must have a polynomial many--one kernelization with respect to~$\eta$.
 To see why this is the case, observe that for almost all~$x$ and~$k$ with~$x \in \eta_k$, the expression $p(\length{x}) \cdot 2^{q(\asNat(k))}$ must be superexponential in~$\length{x}$.
 A consequence thereof is that $q(\asNat(k))$ must outgrow~$\length{x}$.
 Because of this, a procedure that simply queries the string it is given as input counts as a valid polynomial many--one kernelization for~$A$ with respect to $\eta$.
 
 By Theorem~\ref{thm:htop}, we cannot infer the existence of a polynomial Turing kernel by a glance at a parameterized running time.
-The theorem settle the unconditional existence of a certain set without a polynomial Turing kernelization.
+The theorem settles the unconditional existence of a certain set without a polynomial Turing kernelization.
 However, it provides no means to rule out polynomial Turing kernelizations for any particular set that we may be interested in.
 Methods for lower-bounding the size of kernelizations exist, but focus mostly on many--one kernelizations.
 The most fruitful program for delivering superpolynomial lower bounds on the size of many--one kernelizations was started by \textcite{bodlaender2009problems}.
@@ -364,13 +426,13 @@ First, we shall show that the adaptive powers of polynomial Turing kernelization
   With respect to this parameterization, a polynomial Turing kernelization may query its input when it is of the form $\bits{0}w$.
   For inputs of the form $\bits{1}x$, a polynomial Turing kernelization can compute the appropriate series of strings to query using the function~$s$.
   Note that it is important that the application of~$s$ in the definition of~$X$ is repeated $(\log\length{x})^2$ times and not just $\log\length{x}$ times.
-  If we would have repeated the application of~$s$ only $\log\length{x}$ times, the number of strings that would potentially be queried is only $2^{\log\length{x} + 1} = 2\length{x}$.
+  If we would have repeated the application of~$s$ only $\log\length{x}$ times, the number of strings that would potentially be queried is only $2^{\log\length{x} + 1} = 2 \cdot \length{x}$.
   This number is polynomial in~$\length{x}$, hence a truth-table kernelization could simply query all these strings.
   By repeating the application $(\log\length{x})^2$ we can define~$W$ so that a polynomial kernelization for~$A$ with respect to~$\eta$ is necessarily adaptive.
 
   \paragraph{Preventing the existence of a polynomial truth-table kernelization.}
   We construct the set~$W$ by diagonalizing against polynomial truth-table kernelizations.
-  To ease our task, we adopt a particularly convenient model of computation.
+  To ease our task, we adopt a particularly convenient model of computation in the presence of an oracle.
   Let $\phi_1, \phi_2, \phi_3, \ldots$ be an effective enumeration of procedures that make at most one call to an oracle, but may query any number of strings in that one call.
   We may assume that every truth-table kernelization occurs in this list infinitely often.
   To diagonalize against all polynomial truth-table kernelizations, we run each of these procedures for a limited time, allowing only queries of limited length.
@@ -382,7 +444,7 @@ First, we shall show that the adaptive powers of polynomial Turing kernelization
   \item\label{enum:ht:n}
     we have $n^i \le 2^n$ and $i < n$, and
   \item
-    no decisions about membership in~$W$ is made about any string of length at least~$n$.
+    no decision about membership in~$W$ is made about any string of length at least~$n$.
   \end{enumerate}
   Having thus set~$n$, we define $x \deq \bits{0}^{2^n}$, which is so that we have $n = \log\length{x}$.
   Next, we run~$\phi_i$ on input~$\bits{1}x$ for $\length{x}^i$ steps.
@@ -422,6 +484,7 @@ The running time of a kernelization is polynomial in the length of the input ins
 This observation can be used to further distinguish between different types of polynomial kernelizations.
 
 \subsection{A Hierarchy of Polynomial Kernelizations}
+\label{sec:redundancy:hierarchy}%
 The previous two theorems, Theorem~\ref{thm:htop} and Theorem~\ref{thm:ht}, are the beginning of a hierarchy below~\cl{FPT}.
 Depending on the ways a kernelization is allowed to access its oracle, a polynomial kernelization may or may not exist.
 For convenience, let us define some parameterized complexity classes indexed by various forms of oracle access.
@@ -461,7 +524,7 @@ By this, we mean that if we let $d(n)$ denote the number of elements in the set 
   For this purpose, we think of~$W$ as a string-indexed array, or characteristic sequence, to which we can assign values.
   Initially, we know nothing about~$W$ and we set it to $(\bits{?}, \bits{?}, \bits{?}, \ldots)$.
   Additionally, we keep track of the indices of procedures we have diagonalized against in a set~$I_\code{done}$ that is initially empty, $\emptyset$.
-  As a final bookkeeping device, we maintain, for each string, a maximum index of a procedure to consider for diagonalizing against.
+  As a final bookkeeping device, we maintain, for each string~$x$, the maximum index of a procedure that we may want to diagonalize against at~$x$.
   We codify this as another string-indexed array, $I_\code{max}$.
   By initializing~$I_\code{max}$ uniformly in~$x$ as~$I_\code{max}[x] = \log \log \length{x}$, we shall be able to realize the sparsity required of~$W$.
   Throughout our construction of~$W$, the set $I_\code{done}$ will be finite and both~$I_\code{max}$ and~$W$ will only differ from their initial value at finitely many places.
@@ -554,7 +617,7 @@ A first result we obtain is that the positive nature of many--one kernelizations
   From this, the theorem follows.
 
   Observe that, on any input of the form~$\bits{1}x$, the kernelization~$\phi$ does not query its oracle for a string~$\bits{0}w$ for which we have $w = \asStr(\length{x})$.
-  This is because if its eventual decision would depended on the answer to such a query, $\phi$ would either be incorrect or not positive.
+  This is because if its eventual decision would depend on the answer to such a query, $\phi$ would either be incorrect or not positive.
   Our approximation for~$W$ proceeds as follows on input~$w$.
   \begin{codelisting}
   \item
@@ -726,24 +789,25 @@ These kernelizations, we shall go into next.
 \end{figure}
 
 \subsection{Polynomial Advice}
+\label{sec:redundancy:advice}%
 Let us return for a moment to the interpretation of kernelization as preprocessing.
-Imagine we are interested in a set~$A$ and maintain a database of instances of which we may at some point want to know whether or not they are a member of~$A$.
-As we keep adding instances to our database, we may find that storage space becomes scarce.
-One way to save on storage space is to decide on membership in~$A$ as soon as we get a new instance to add to our database.
-If we record the membership status of the instance, we only need one bit of storage, instead of however many bits the instance itself is comprised of.
+Imagine we are interested in a set~$A$ and are somehow presented with an instance~$x$ of which we might later on need to know whether or not it is a member of~$A$.
+We may find that storage space is a scarce resource, so we seek for alternatives to recording the entire instance.
+One way to save on storage space is to decide on membership of~$x$ in~$A$ and only record the membership decision.
+This brings the storage cost down from however many bits $x$ is comprised of to just one bit.
 However, deciding membership in~$A$ may be a computationally costly affair.
 As we may never actually need to know whether the instance is in~$A$ or not, this computational cost is unacceptable.
 
 This is where a many--one kernelization comes in.
-If~$A$ has a many--one kernelization with respect to some parameterization~$\eta$, and $\eta$ has a polytime computable parameter estimator, we are in good shape.
-Running the many--one kernelization is a computationally manageable task and gets us an instance to store in our database that is equivalent to the input.
-The storage space required to store this equivalent instance can be bounded by a function of the parameter value associated with the input by the estimator.
+If~$A$ has a many--one kernelization with respect to some parameterization~$\eta$, and $\eta$ has a polytime-computable parameter estimator, we are in good shape.
+Running the many--one kernelization is a computationally manageable task and gets us an instance that is equivalent to~$x$ with regard to membership in~$A$.
+The storage space required to store this equivalent instance can be bounded by a function of the parameter value associated with~$x$ by the parameter estimator.
 Especially convenient is the situation where the many--one kernelization is a polynomial many--one kernelization.
-In that case, the storage space required to store an instance can be bounded by a polynomial of the numeric value of the parameter.
+In that case, the required storage space can be bounded by a polynomial of the numeric value of the parameter.
 
 The hierarchy of polynomial kernelizations, Figure~\ref{fig:kernel_hierarchy}, shows that there are sets for which no polynomial many--one kernelization exists.
 However, these sets may still have, for instance, a polynomial kernelization that makes at most one query.
-Such a kernelization could equally well be used for our database scenario.
+Such a kernelization could equally well be used in our scenario.
 All we have to do is record the query made by the kernelization and whether or not its membership decision is to be inverted.
 Doing so again comes with a guarantee on the required storage space that is polynomial in the numeric value of the parameter.
 
@@ -764,18 +828,32 @@ However, we can do better than that.
   Moreover, the circuits involved must be uniformly computable from the input instances in polynomial time.
 \end{definition}
 
-In our database scenario, a psize kernelization can be used to strike a balance between computational cost and storage cost.
+In our scenario where we might, at some point, want to know membership of~$x$ in~$A$, a psize kernelization offers a balance of computational cost and storage cost.
 On the one hand, the computational cost of running the kernelization algorithm is polynomial in the length of the instance.
 Assuming the thesis by Cobham and Edmonds, this is feasible.
 The storage cost, on the other hand, is polynomial in the numeric parameter value.
-Instead of recording the instance itself, we record which strings would be queried by the psize kernelization, along with the circuit that ties them together.
+Instead of recording $x$ itself, we record which strings are queried by the psize kernelization on input~$x$, along with the circuit that ties them together.
 This results in recording a polynomial number of strings of polynomial length, together with a circuit of polynomial size.
+
+Some interesting properties of psize kernelization were studied by \textcite[Chapter~5]{weller2013aspects}.
+In particular, \citeauthor{weller2013aspects} uncovered how the non-adaptive nature of psize kernelization influences the number of queries that are made.
+We highlight the main result, which presents a trade-off between being non-adaptive and making few queries.
+\begin{theorem}[{\textcite[Theorem~5.1]{weller2013aspects}}]
+  The following statements about an \cl{NP}"~complete set~$A$, a parameterization~$\eta$, and a polynomial~$p$ are equivalent.
+  \begin{itemize}
+  \item
+    $A$ has a psize kernelization with respect to~$\eta$ that, on any input~$(x, k)$, makes at most $p(\asNat(k))$ queries.
+  \item
+    $A$ has a polynomial Turing kernelization with respect to~$\eta$ that, on any input~$(x, k)$, makes at most $\log p(\asNat(k))$ queries.
+  \end{itemize}
+\end{theorem}
 
 Not every polynomial truth-table kernelization is a psize kernelization.
 Yet, all polynomial kernelizations that make a number of queries that can be bounded by a constant are psize kernelizations.
 Indeed, the psize kernelizations fit in between these levels of our hierarchy of polynomial kernelizations.
 
 \begin{theorem}
+\label{thm:htt_psize}%
   With respect to the parameterization~$\eta$ defined by~\eqref{eq:separation-parameterization}, there is a set that has a positive truth-table kernelization, but no psize kernelization.
 \end{theorem}
 \begin{proof}
@@ -824,18 +902,18 @@ Another adaptation of the proof of Theorem~\ref{thm:htt} can be used to separate
     This way, if $w$ is a member of~$W$, then $\bits{1}x$ is a member of $A$.
   \end{codelisting}
 
-  As~$A$ is a subset of the set used in the proof of Theorem~\ref{thm:htt}, the same reasoning as is used there rules certain kernelizations for~$A$ with respect to $\eta$.
+  As~$A$ is a subset of the set used in the proof of Theorem~\ref{thm:htt}, the same reasoning as used there rules out certain kernelizations for~$A$ with respect to $\eta$.
   Specifically, it follows that $A$ does not have a polynomial kernelizations that makes a  number of queries that can be bounded by a constant.
 \end{proof}
 
-Combined, the last two theorems isolate the psize~level in the our hierarchy, depicted in Figure~\ref{fig:kernel_hierarchy}.
+Combined, the last two theorems isolate the psize~level in our hierarchy, as depicted in Figure~\ref{fig:kernel_hierarchy}.
 
 So far, our main proof technique has been to create a set with a clear-cut distinction between its hard part and its computationally redundant part.
 We defined the redundant part of the set so that it could be reduced to the hard part in some specific way.
 With psize kernelizations, the amount of information about the hard part available to the kernelization could be said to be bounded polynomially.
 This information can be thought of as \defkey{advice} required for deciding the redundant part.
 In the study of computability with advice, the amount of advice is typically bounded by a function of the length of instances.
-Most prominently, this is the case with the complexity class \cladv{P}{poly} \parencite{arora2009computational}.
+Most prominently, this is the case with the complexity class \cladv{P}{poly}~\parencite{arora2009computational}.
 With psize kernelizations, however, the bound on the amount of advice is polynomial in the numeric parameter value.
 This in itself suggests that the two notions of polynomial advice, the complexity classes \cladv{P}{poly} and $\cl{PKER}_\textnormal{psize}$, need not have much in common.
 Of course, by Corollary~\ref{cor:decidable}, we already know that the two are different, since \cladv{P}{poly} contains undecidable sets, whereas all sets in \cl{FPT} are decidable.
@@ -857,7 +935,7 @@ Yet, with respect to the parameterization defined by~\eqref{eq:separation-parame
 \end{theorem}
 \begin{proof}
 $\ref{enum:advice:ppoly} \implies \ref{enum:advice:psize}$.
-  Let $\phi$ be a polytime decision procedure taking advice of polynomially bounded length that decides membership in~$X$ and consider the set
+  Let $\phi$ be a polytime decision procedure taking advice of polynomially bounded length that decides membership in~$X$ and consider the set of pairs of numbers
   \begin{equation*}
     W \deq \{\pair{n}{i} \st \text{the $i$th bit of the advice string for length~$n$ is \bits{1}}\}.
   \end{equation*}
@@ -866,7 +944,8 @@ $\ref{enum:advice:ppoly} \implies \ref{enum:advice:psize}$.
   It remains to show that the lengths of these queries can be bounded by a linear function in~$\log \length{\bits{1}x}$.
   Suppose that the number of queries made on an input of the form~$\bits{1}x$, where $x$ is of length~$n$, is at most~$n^c$.
   This means that the longest query that is made has length $\length{\pair{n}{n^c}}$.
-  Indeed, this length can be bounded by a function that is linear in $\log n$, and the bound on the lengths of the queries is proven.
+  Indeed, with the standard encoding of numbers as strings and our pairing function of Section~\ref{sec:preliminaries:binary}, this length can be bounded linearly in $\log n$.
+  With that, the bound on the lengths of the queries is proven.
 
 $\ref{enum:advice:psize} \implies \ref{enum:advice:ppoly}$.
   Suppose we have a linear truth-table kernelization for our disjoint union with respect to $\eta$.
@@ -880,8 +959,10 @@ We remark that the second part of the above proof also shows that we could have 
 A linear truth-table kernelization may query all strings that a linear Turing kernelization could potentially query.
 
 In the context of the above theorem, it is noteworthy that the set constructed in the proof of Theorem~\ref{thm:htt} has a linear truth-table kernelization.
-This points at a difference between the notions of polynomial advice represented by \cladv{P}{poly} and $\cl{PKER}_\textnormal{psize}$:
-There exists a set $X$ in \cladv{P}{poly} such that no set~$W$ exists such that
+Thus, the strengthening of that theorem, Theorem~\ref{thm:htt_psize}, can be strengthened further.
+It can be strengthened to read that there is a set that has a positive \emph{linear} truth-table kernelization, but no psize kernelization.
+This, in light of Theorem~\ref{thm:ppoly-tt}, points at a difference between the notions of polynomial advice represented by \cladv{P}{poly} and $\cl{PKER}_\textnormal{psize}$:
+There exists a decidable set $X$ in \cladv{P}{poly} such that no set~$W$ exists such that
 \begin{equation*}
   \{\bits{0}w \st w \in W\} \cup \{\bits{1}x \st x \in X\}
 \end{equation*}
@@ -890,7 +971,7 @@ However, this does not mean that the notion of advice associated with $\cl{PKER}
 \begin{theorem}
 \label{thm:ppoly-one}%
   Let $\eta$ be the parameterization defined by~\eqref{eq:separation-parameterization}.
-  There exist sets~$W$ and~$X$ such that
+  There exist decidable sets~$W$ and~$X$ such that
   \begin{itemize}
   \item $X$ is not in \cladv{P}{poly}, and
   \item $\{\bits{0}w \st w \in W\} \cup \{\bits{1}x \st x \in X\}$ has a polynomial many--one kernelization with respect to~$\eta$.
@@ -904,7 +985,7 @@ However, this does not mean that the notion of advice associated with $\cl{PKER}
   This definition ensures that $\{\bits{0}w \st w \in W\} \cup \{\bits{1}x \st x \in X\}$ has a polynomial many--one kernelization with respect to~$\eta$.
 
   Next, we construct $W$ in such a way that $X$ is not in~\cladv{P}{poly}.
-  The only instances of~$W$ that influence~$X$ are those of which the length is a square.
+  The only instances of~$W$ that influence~$X$ are those of which the length can be written as a square.
   Therefore, we may assume that $W$ only contains strings of which the length is a square.
   Suppose toward a contradiction that $X$ is in~\cladv{P}{poly} and let $\phi$ be a decision procedure for $X$ that takes an advice string as a second argument.
   Using $\phi$, we define a procedure for deciding membership in~$W$ that takes an instance and an advice string as inputs.
@@ -975,22 +1056,24 @@ Because of this, Theorem~\ref{thm:ppoly-tt} and Theorem~\ref{thm:ppoly-one} show
 Neither notion is more stringent than the other.
 
 \subsection{Lower Bounds}
+\label{sec:redundancy:lower_bounds}%
 An immediate consequence of our hierarchy, Figure~\ref{fig:kernel_hierarchy}, is that not all fixed-parameter tractable problems have polynomial kernelizations.
 However, with respect to a given parameterization, the (non-)existence of a polynomial kernelization for any particular set may not be easy to establish.
 The most fruitful program for deriving superpolynomial lower bounds on the size of many--one kernelizations was started by \textcite{bodlaender2009problems}.
 Building on this work, \textcite{dell2014satisfiability} were able to rule out certain improvements of existing polynomial kernelizations.
 They do so by establishing, under complexity theoretic assumptions, a minimum amount of communication that is needed with a generalized oracle.
-In particular, this means that there cannot be a Turing kernelization of which the sum of the lengths of the queries it makes exceeds this minimum.
-Thus, the lower bounds of \citeauthor{dell2014satisfiability} go beyond psize kernelizations in that the oracle access may be adaptive.
+In particular, this means that there cannot be a Turing kernelization of which the sum of the lengths of the queries it makes stays below this minimum.
+The lower bounds of \citeauthor{dell2014satisfiability} go beyond psize kernelizations in that the oracle access may be adaptive.
 
 The technique by \textcite{bodlaender2009problems} for obtaining lower bounds on the size of kernelizations does not generalize to Turing kernelizations.
 However, an extension to psize kernelizations is feasible.
-We shall adapt a later iteration of the technique, as laid out by \textcite[][Section~3]{bodlaender2014kernelization}.
+We shall adapt a later iteration of the technique, as laid out by \textcite[Section~3]{bodlaender2014kernelization}.
 For a more complete background of the technique, we refer to the survey by \textcite{kratsch2014recent}, and the textbook by \textcite{fomin2019kernelization}.
 
-Central to the lower bounds engine are two similar looking classifications of instance aggregation.
+Central to the lower bounds engine are two similar-looking classifications of instance aggregation.
 The first of these does not involve a parameterization.
 \begin{definition}
+\label{def:distillation}%
   A \emph{weak \pr{and}"~distillation} (\emph{weak \pr{or}"~distillation}) of a set~$A$ into a set~$B$ is a procedure that\indexkey{distillation}
   \begin{itemize}
   \item receives as input any finite sequence of strings $x_1, x_2, \ldots, x_t$,
@@ -1040,7 +1123,7 @@ We find that the same is true of psize kernelizations.
   If $B$ has a psize kernelization with respect to~$\eta$, then there is a set~$C$ into which $A$ has a weak \pr{and}"~distillation (weak \pr{or}"~distillation).
 \end{theorem}
 \begin{proof}
-  We shall track the proof of \textcite[][Theorem~3.4]{bodlaender2014kernelization}, which in turn follows the approach of \textcite[][Lemma~2]{bodlaender2009problems}.
+  We shall track the proof of \textcite[Theorem~3.4]{bodlaender2014kernelization}, which in turn follows the approach of \textcite[Lemma~2]{bodlaender2009problems}.
   Assuming $B$ has a psize kernelization, we shall define a weak distillation for~$A$.
   The target of this weak distillation shall be the set
   \begin{align*}
@@ -1065,7 +1148,7 @@ We find that the same is true of psize kernelizations.
   \item
     \code{Return} $\pair{\phi}{(q_i)_{i \le r}}$.
     By our previous observations, the length of this pair can be bounded by a polynomial in~$s$.
-    We remark that if we did take take a polynomial equivalence relation in the style of \textcite{bodlaender2014kernelization} into account, we would at this point have multiple circuits and inputs.
+    We remark that if we did take into account a polynomial equivalence relation in the style of \textcite{bodlaender2014kernelization}, we would at this point have multiple circuits and inputs.
     These circuits would then need to be combined in a way determined by the type of cross-composition.
   \end{codelisting}
 
@@ -1078,9 +1161,9 @@ In light of the work of \textcite{bodlaender2014kernelization}, we note two gene
 First, as mentioned before, the definition of a cross-composition can be weakened somewhat.
 It need not be possible to aggregate just any finite set of strings.
 Instead, it is sufficient if we can quickly partition strings $x_1, x_2, \ldots, x_t$ into a number of subsets that is polynomial in the length of the longest string.
-Each of these subsets is than aggregated separately.
+Each of these subsets is then aggregated separately.
 This generalization is formalized by means of \enquote{polynomial equivalence relations} by \textcite{bodlaender2014kernelization}.
-The second generalization of the above theorem that can be made is in the requirement of the existence of a psize kernelization.
+The second generalization of the above theorem that can be made, is in the requirement of the existence of a psize kernelization.
 In the proof, it is not necessary that the queries made by the psize kernelization are queries about membership in~$B$.
 Put differently, the psize kernelization may as well have been a reduction from~$B$ to a different set.
 Such a relaxed version of kernelization is called \emph{compression} by \textcite{bodlaender2014kernelization}.
@@ -1089,11 +1172,30 @@ The relevance of Theorem~\ref{thm:distillation} lies in its use in ruling out th
 When the framework behind Theorem~\ref{thm:distillation} was first published~\parencite{bodlaender2009problems}, it was already linked to the fact that \cl{NP}"~hard sets are unlikely to have weak distillations.
 It was quickly shown by \textcite{fortnow2011infeasibility} that, unless we have $\cl{NP} \subseteq \cladv{coNP}{poly}$, no \cl{NP}"~hard set admits a weak \pr{or}"~distillation.
 The conditional absence of weak \pr{and}"~distilations for \cl{NP}"~hard sets was initially left as a conjecture \parencite{bodlaender2009problems}, but eventually proven by \textcite{drucker2015new}.
-The inclusion of \cl{NP} in \cladv{coNP}{poly} is deemed unlikely, as it implies a collapse of the polynomial hierarchy to its third level \parencite{yap1983some}.
+The inclusion of \cl{NP} in \cladv{coNP}{poly} is deemed unlikely, as it implies a collapse of the polynomial hierarchy to its third level~\parencite{yap1983some}.
 These results translate into a technique for obtaining lower bounds on the size of kernelizations.
 \begin{corollary}
+\label{cor:lower_bound}%
   If an \cl{NP}"~hard language has an \pr{and}"~cross-composition or an \pr{or}"~cross-composition into a set~$A$ with respect to a parameterization~$\eta$, then $A$ does not have a psize kernelization with respect to~$\eta$ unless we have $\cl{NP} \subseteq \cladv{coNP}{poly}$.
 \end{corollary}
 
-Many \cl{NP}"~hard sets can be shown to have a cross-composition to themselves with respect to some natural parameterization \parencite{bodlaender2014kernelization,fomin2019kernelization}.
-Accordingly, our hierarchy of polynomial kernelization is not merely synthetic and the place of many natural problems in the hierarchy is lower bounded.
+Many \cl{NP}"~hard sets can be shown to have a cross-composition to themselves with respect to some natural parameterization~\parencite{bodlaender2014kernelization,fomin2019kernelization}.
+Accordingly, our hierarchy of polynomial kernelization is not merely relevant to synthetic problems such as the ones used in our proofs.
+Of many natural problems, the place in the hierarchy is lower bounded too, adding to the appeal of the hierarchy.
+
+Using the technique of \citeauthor{bodlaender2009problems}, we are unable to rule out any adaptive kernelizations.
+This is because of the dependence of the technique on distillations, which do not allow for any adaptive behavior.
+Sometimes, however, it is possible to sidestep distillations and directly derive $\cl{NP} \subseteq \cladv{coNP}{poly}$ from the assumed existence of some form of kernelization.
+This approach is taken by \citeauthor{dell2014satisfiability} in a stronger form of Corollary~\ref{cor:lower_bound} for \pr{or}"~cross-composition \parencite[Lemma~1]{dell2014satisfiability}.
+They too consider the situation where an \cl{NP}"~hard language has an \pr{or}"~cross-composition into a set~$A$ with respect to a parameterization~$\eta$.
+Assuming we have $\cl{NP} \subseteq \cladv{coNP}{poly}$, \citeauthor{dell2014satisfiability} rule out a more general class of parameterizations than ruled out by Corollary~\ref{cor:lower_bound}.
+In particular, $A$ does not have a polynomial kernelization with respect to~$\eta$ of which the number of queries made can be bounded by a polynomial in the numeric parameter value.
+Their proof only applies to \pr{or}"~cross-composition and a similar result for \pr{and}"~cross-composition remains open.
+
+It appears disjunctive instance aggregation has repeatedly yielded results more easily than conjunctive instance aggregation.
+Let us digress briefly and summarize the history of the result of \citeauthor{dell2014satisfiability}.
+This history can be traced back to results on \pdash{}selective sets by \textcite{ko1983self}.\indexkey{p-selective@\pdash{}selective}
+Comparing definitions, we see that having an \pr{or}"~distillation, Definition~\ref{def:distillation}, can be seen as a generalization of being \pdash{}selective, Definition~\ref{def:p-selective}.
+Nondeterminism was brought into play by \textcite{hemaspaandra1995nondeterministically}, who show that sets with nondeterministic selector functions are in~\cladv{coNP}{poly}.
+The generalization to weak \pr{or}"~distillations goes back to \textcite{fortnow2011infeasibility}.
+Finally, \textcite{dell2014satisfiability} add an adaptive character to the result.
