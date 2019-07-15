@@ -37,7 +37,7 @@ Therefore, the effect of the choice of an encoding on the instance complexity is
     t(\length{x}) \ge c \cdot \length{x} \implies \ic^t(x : A) \le \length{x} + c.
   \end{equation*}
   In other words, if $t$ is sufficiently large, the instance complexity is defined and can be bounded by the length of the instance plus an additive constant.
-  This is true because for each instance~$x$, an approximation taylored specifically for that~$x$ is available that meets the upper bound.
+  This is true because for each instance~$x$, an approximation tailored specifically for that~$x$ is available that meets the upper bound.
   This approximation contains a hardcoded copy of~$x$ and of whether or not $x$ is a member of~$A$.
   On an input~$y$, it compares $y$ to~$x$ and if they are equal, it outputs the hardcoded membership decision.
   If $y$ and~$x$ differ, the approximation outputs~\bits{?}.
@@ -53,7 +53,7 @@ Broadening the definition of instance complexity by allowing procedures that do 
 We shall not make use of this weaker notion and stick with the definition based on approximations.
 Even with this stronger notion, it is in general impossible to know whether a given procedure is an approximation for some specific set.
 It was for this reason that a provability requirement was necessary in Theorem~\ref{thm:xpprincipal}.
-The other way around, we can start out with a known collection of apprroximations for a set.
+The other way around, we can start out with a known collection of approximations for a set.
 Our parameterized framework provides a way to analyze the computational hardness of instances in relation to such a collection of approximations.
 Of course, in our analysis these collections will be parameterizations.
 
@@ -199,7 +199,7 @@ In the example, we constructed a procedure that compares its input to a hardcode
 The bound on the instance complexity that this construction resulted in can be improved slightly.
 This is done by not hardcoding~$x$, but instead including the specification of a procedure for reproducing~$x$.
 The procedure should of course be able to produce~$x$ within the time bound we place on the instance complexity.
-In this way, it can be shown that the bounded instance complexity is upper bounded by the similarly bounded Kolmogorov complexity~\parencite{orponen1994instance,li2008introduction}.
+In this way, it can be shown that the bounded instance complexity is bounded from above by the similarly bounded Kolmogorov complexity~\parencite{orponen1994instance,li2008introduction}.\indexkey{Kolmogorov complexity|(}
 For technical reasons, there is some slack required in the time bound.
 Let us make this known bound precise, denoting the $t$"~bounded Kolmogorov complexity of a string~$x$ by $\KC^t(x)$:
 There is a constant~$c$ such that, with $t'(n) \deq c \cdot t(n) \cdot \log t(n) + c$, for every set~$A$ and string~$x$, we have $\ic^{t'}(x : A) \le \KC^t(x) + c$.
@@ -211,7 +211,8 @@ A time-unbounded but uniform statement similar in spirit to the instance complex
 This statement once again uses the minimization with respect to a parameterization in place of instance complexity.
 Note that even parameterizations that are equivalent according to the uniform order on parameterizations may give rise to different minimization functions.
 Therefore, it makes little sense to directly compare the minimization function to Kolmogorov complexity.
-Instead, we look at the behavior of the minimization function \enquote{in the limit}, formalized by an auxiliary function with an unbounded limit inferior, Definition~\ref{def:liminf}.
+Instead, we look at the behavior of the minimization function \enquote{in the limit}.
+For this, we use an auxiliary function with an unbounded limit inferior, as defined on page~\pageref{def:liminf}.
 \begin{theorem}
 \label{thm:parameterizedicc}%
   Let $\eta$ be a decidable parameterization that does not include $\binary^+$, and let $f$ be any computable function with an unbounded limit inferior.
@@ -330,14 +331,14 @@ The above theorem asserts that the symmetric difference of two sets that share a
 However, it does not guarantee that this symmetric difference is in~\cl{P}.
 If this would be the case, a filter with respect to \clnu{FPT} would uniquely define a set up to variations in~\cl{P}.
 Of comparable flavor is the \defkey{Berman--Hartmanis conjecture} \parencite{berman1977isomorphisms}.
-This conjecture states that all \cl{NP}"~complete sets are related by polytime-computable isomorphsms.
+This conjecture states that all \cl{NP}"~complete sets are related by polytime-computable isomorphisms.
 In other words, it states that completeness for \cl{NP} uniquely defines a set up to isomorphisms computable in polynomial time.
 The existence of a polytime-computable isomorphism between two sets does not indicate that the sets have \emph{the same} distribution of complexity.
 Instead, it indicates that distributions of complexity in the two sets are \emph{comparable}.
 The observation that many of the known \cl{NP}"~complete sets are related by polytime-computable isomorphisms makes this viewpoint valuable \parencite{berman1977isomorphisms,goldsmith1996scalability}.
 However appealing, the conjecture is generally believed to be untrue.
 This is because it is widely believed that \emph{one"~way functions}, polytime-computable functions with an inverse that is not computable in polynomial time, exist.
-Using such functions, it is possible to construct \cl{NP}"~complete sets between which no polytime-computable isomorphism exists \parencite{young1983some,agrawal2009one}.
+Using particularly strong functions of this kind, it is possible to construct \cl{NP}"~complete sets between which no polytime-computable isomorphism exists \parencite{young1983some,kurtz1989isomorphism,hartmanis1991one,agrawal2009one}.
 
 Nonetheless, we note that isomorphic sets have isomorphic filters with respect to \clnu{FPT}.
 To see why, first note that a permutation~$f$ of~$\binary^+$, a bijection from $\binary^+$ to itself, can be lifted to a function on parameterizations via
@@ -463,7 +464,7 @@ At the very least, we find that the converse is true since Theorem~\ref{thm:nufp
   First, given an instance~$x$ and parameter value~$k$, the parameterized procedure simulates~$\phi$ to completion on input $(x, k)$.
   If $\phi(x, k)$ yielded~\bits{?}, our procedure does so as well.
   Otherwise, it also computes $\psi(x)$ and outputs the exclusive disjunction of $\phi(x, k)$ and $\psi(x)$.
-  The parameterized procedure thus defined meets the running time requirements of the definition of \cl{FPT} and converges to $A \symdiff X$.
+  The parameterized procedure thus defined meets the running-time requirements of the definition of \cl{FPT} and converges to $A \symdiff X$.
   Finally, the corresponding parameterization is~$\eta$, as desired.
 \end{proof}
 
@@ -520,7 +521,7 @@ Using parameterizations, we can analyze to what extent high algorithmic complexi
 For algorithmic complexity, characterizing high complexity is routine \parencite[Theorem~3.3.1]{li2008introduction}.
 \begin{definition}
 \label{def:random}%
-  A set of strings~$X$ is \defkey{random} if there is a constant~$r$ such that, for all~$n$ and all $x \in X$ of length~$n$, we have
+  A set of strings~$X$ is \defkeyat{random set}{random} if there is a constant~$r$ such that, for all~$n$ and all $x \in X$ of length~$n$, we have
   \begin{equation*}
     \KC(x) \ge n + \KC(n) - r.
   \end{equation*}
@@ -769,7 +770,7 @@ Firstly, a set on which the Kolmogorov complexity is bounded is necessarily fini
 Since the range of any function is bounded on a finite set, the proposed definition would be too demanding to be of use.
 Secondly, Kolmogorov complexity disregards the computational cost of producing a particular string.
 With random sets, the time required for decoding a compressed representation was of no concern.
-The Kolmogorov complexity of a member of a random set can be realized by a literatim specification and such a specification can be decoded in linear time.
+The Kolmogorov complexity of a member of a random set can be realized by a bit-for-bit specification, and such a specification can be decoded in linear time.
 The same is not true of strings with substantial redundancy in their descriptions.
 This is a drawback of the proposed definition as compressibility can only be taken advantage of if the redundant part of a string can be generated quickly.
 
@@ -796,7 +797,7 @@ The class we get was first identified by \textcite{hartmanis1984computation}.
 
 The equivalence of the class of \pdash{}printable sets and the class of sets in~\cl{P} with small generalized Kolmogorov complexity was shown independently by \textcite{balcazar1986sets}, and \textcite{rubinstein1986note}.
 Shortly after, \textcite{allender1988p-printable} identified two more ways of characterizing the \pdash{}printable sets.
-They observed that a set is \pdash{}printable precisely when it is polynomial-time isomorphic to some tally set in~\cl{P}.
+They observed that a set is \pdash{}printable precisely when it is polynomial-time isomorphic to some \emph{tally set}, any subset of $\{\bits{0}\}^+$, in~\cl{P}.
 Consequently, they showed that a set is polynomial-time isomorphic to a tally set in~\cl{P} precisely when it is sparse and \pdash{}rankable\indexkey{p-rankable@\pdash{}rankable} \parencite[see also][]{goldsmith1996scalability}.
 Whether or not all sparse sets in~\cl{P} are \pdash{}rankable and thus \pdash{}printable is an open problem.
 Yet, oracles are known relative to which not all sparse sets in~\cl{P} are \pdash{}printable~\parencite{hartmanis1983generalized}.

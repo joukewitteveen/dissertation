@@ -2,7 +2,7 @@
 \label{sec:computability}%
 
 Computability theory \parencite{rogers1967theory} is one of the pillars of mathematical logic.
-In formal systems, and in particular in proof calculi, questions regarding the decidability of the set of theorems are of central importance \parencite{kleene1967mathematical}.
+In formal systems, and in particular in proof calculi, questions regarding the decidability of the set of theorems are of central importance \parencite{kleene1967mathematical,troelstra2000basic}.\indexkey{formal system}
 At the same time, computability theory can be seen as a theory of computational complexity with complete disregard for resource usage.
 
 A parameterized study of decidability was started already in 1965 \parencite{putnam1965trial,gold1965limiting}, some thirty years before a parameterized investigation of computational complexity took off.
@@ -112,11 +112,11 @@ $\ref{enum:decidable:semidecidable} \implies \ref{enum:decidable:decidable}$.
 \end{proof}
 
 The parameterization corresponding to a direct parameterized procedure is necessarily decidable and cannot be merely semidecidable.
-This is a consequence of the fact that parameterized procedures are total.
-While they may output \bits{?} instead of either \bits{1} or \bits{0}, they are not permitted to run forever on any input.
+This is a consequence of the fact that direct parameterized procedures are total.
+While they may output~\bits{?} instead of either \bits{1} or~\bits{0}, they are not permitted to run forever on any input.
 It follows that classes of sets in parameterized complexity theory must be closed under taking complements.
 For every parameterized procedure that converges to a set on some parameterization, there is a parameterized procedure that converges to the complement of that set on the same parameterization.
-The derived procedure simply retains the output if it is \bits{?} and flips it if it is either \bits{1} or \bits{0}.
+The derived procedure simply retains the output if it is~\bits{?} and flips it if it is either \bits{1} or~\bits{0}.
 
 Furthermore, it is possible to bound the number of steps taken by a parameterized procedure by a function of the parameter value alone.
 That is, restricting to bounded parameterized procedures does not affect the class of sets that occur as limits with respect to decidable parameterizations.
@@ -128,7 +128,7 @@ That is, restricting to bounded parameterized procedures does not affect the cla
 \end{theorem}
 \begin{proof}
   Let $A$ be a decidable set and $\phi$ a decision procedure for~$A$.
-  We define a direct parameterized procedure that converges to~$A$ and meets the running time requirement of the theorem.
+  We define a direct parameterized procedure that converges to~$A$ and meets the running-time requirement of the theorem.
   On input $(x, k)$, the procedure simulates $\phi$ for up to $\length{k}$ steps.
   If the simulation terminates, the procedure outputs the result of the simulation.
   Otherwise, it outputs \bits{?}.
@@ -233,9 +233,9 @@ Note that in this definition, we have imposed a linear order on the parameter va
 In the presence of a parameterization, this imposed order need not be related to the inclusion order on the slices of the parameterization.
 
 Extending Lemma~\ref{lem:convergent_finite}, the convergent parameterized procedures can be characterized in yet another way.
-A parameterized procedure is convergent if it is $f$"~alternating and for every instance~$x$ it outputs \bits{?} for only finitely many parameter values.
+A parameterized procedure is convergent if, for some~$f$, it is $f$"~alternating and for every instance~$x$ it outputs \bits{?} for only finitely many parameter values.
 The limit set of a convergent parameterized procedure is said to be \emph{limit computable}.
-When the function $f$ maps its inputs to a constant, $n$, the limit set of an $f$"~alternating parameterized procedure is said to be \emph{weakly $n$"~computably enumerable} \parencite{odifreddi1992classical,epstein1981hierarchies}.
+When the function~$f$ maps its inputs to a constant~$n$, the limit set of an $f$"~alternating parameterized procedure is said to be \emph{weakly $n$"~computably enumerable} \parencite{odifreddi1992classical,epstein1981hierarchies}.
 Such sets are encountered in the study of the difference hierarchy~\parencite{downey2010algorithmic}, which discussed briefly in the introductory Section~\ref{sec:history:computability}.\indexkey{difference hierarchy}
 In fact, the weakly $n$"~computably enumerable sets constitute the $\Delta^{-1}_n$ level of that hierarchy.
 Recall that the class $\Delta^{-1}_n$ is defined as the intersection of $\Sigma^{-1}_n$ and $\Pi^{-1}_n$.
@@ -247,7 +247,7 @@ Indeed, the difference hierarchy is strict.
 Already in the standard proofs thereof \parencite{arslanov1997degree,ershov1968hierarchyi,putnam1965trial}, we can see a parameterized line of reasoning at work.
 We shall give a different and more general proof, exposing a fine-grained structure among the limits of $f$"~alternating sets.
 Central to this proof is the ability to bound the running time of an $f$"~alternating parameterized procedure as a function of the parameter value exclusively.
-This bounding of the number of steps taken comes at the cost of an increase in the number of alternations of at most $1$.
+This bounding of the number of steps taken comes at the cost of an increase in the number of alternations of at most~$1$.
 \begin{theorem}
 \label{thm:slow_convergence}%
   Let $\phi$ be an $f$"~alternating parameterized procedure that converges to a set $A$.
@@ -262,7 +262,7 @@ This bounding of the number of steps taken comes at the cost of an increase in t
   \label{eq:slow_convergence}
     \big(\phi(x, \asStr(1)),\quad \phi(x, \asStr(2)),\quad \phi(x, \asStr(3)), \quad \ldots\big).
   \end{equation}
-  After spending $\length{k}$ steps doing so, $\phi'$ yields the output of the last completed simulation, or \bits{?} if no simulation finished.
+  After spending $\length{k}$~steps doing so, $\phi'$ yields the output of the last completed simulation, or~\bits{?} if no simulation finished.
 
   Observe that arbitrarily long initial segments of the sequence \eqref{eq:slow_convergence} are computed by $\phi'$.
   The length of the initial segment that can be computed in $\length{k}$ steps is unbounded as a function of the length of $k$.
@@ -325,7 +325,7 @@ appears as early as is possible in the hierarchy of limits of $f$"~alternating p
   From this, it follows that $\phi$ is $1$"~alternating.
 \end{proof}
 
-As it turns out, the class of limits of $f$"~alternating parameterized procedures where $f$ is computable is closed under truth-table reducibility as defined in Definition~\ref{def:reduction:truth-table}.
+As it turns out, the class of limits of $f$"~alternating parameterized procedures where $f$ is computable is closed under truth-table reducibility as defined in Definition~\ref{def:reduction:truth-table}.\indexkey{reduction!truth-table}
 The halting set is complete for this class \parencite{epstein1981hierarchies,arslanov1997degree,downey2010algorithmic}.
 \begin{theorem}
 \label{thm:truthtable_halt}%
@@ -381,7 +381,7 @@ For larger, yet constructible \parencite{rogers1967theory}, ordinals $\alpha$, t
 By Post's theorem \parencite{post1948degrees,rogers1967theory}, we can fit this class of sets in the arithmetical hierarchy.\indexkey{arithmetical hierarchy}
 A set is Turing reducible to the halting set precisely when it sits at the $\Delta^0_2$ level of the arithmetical hierarchy.
 
-In essence, it was recognized by \textcite{shoenfield1959degrees} that a set is Turing reducible to \pr{Halt} precisely when a parameterized procedure converges to it.
+In essence, it was recognized by \textcite{shoenfield1959degrees} that a set is Turing reducible to \pr{Halt} precisely when a parameterized procedure converges to it.\indexkey{reduction!Turing}
 This characterization is known as the \defkey{limit lemma} \parencite{odifreddi1992classical,downey2010algorithmic}.
 The original framing of the lemma was around approximations that could change only finitely often for any instance.
 In terms of $f$"~alternating parameterized procedures, the characterization forgoes any computability requirements on $f$ and augments Theorem~\ref{thm:truthtable_halt}.
@@ -440,7 +440,7 @@ To illustrate this corollary, we turn to fixed-parameter tractability in the \ci
 
 \begin{example}
   The \citeauthor{downey1999parameterized} framework deals with parameterized sets, so we first need to settle on a way to deal with classical sets in this framework.
-  First, observe that what we call a parameterized procedure can be thought of as a decision procedure for a parameterized set in the sense of \citeauthor{downey1999parameterized}.
+  First, observe that a decision procedure for a parameterized set in the sense of \citeauthor{downey1999parameterized} can be thought of as a parameterized procedure.
   We shall only consider parameterized sets that can be decided by convergent parameterized procedures.
   The motivation for this is that, conceptually, we model resource bounds as a function of the parameter value.
   For sufficiently large parameter values, we ought to have enough of a computational resource at our disposal to be able to decide membership.
@@ -535,7 +535,7 @@ We can even force the subset of the index set corresponding to a subparameteriza
 The subset can be made so that it nor its complement contains an infinite semidecidable set.
 In other words, there is a parameterization such that the set of parameter values corresponding to a particular subparameterization is bi-immune in accordance with Definition~\ref{def:bi-immune}.\indexkey{bi-immune}
 
-For this, it is helpful to have a linear ordering on the subsets of $\binary^+$.
+For this, it is helpful to have a linear order on the subsets of $\binary^+$.
 Most conveniently, this order comes about when we map a set $A \subseteq \binary^+$ to the real number
 \begin{equation*}
   \asReal(A) \deq \sum_{x \in A} 2^{-\asNat(x)}.

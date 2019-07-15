@@ -112,7 +112,7 @@ Therefore, a notion of length is only available for objects after we have decide
 This lets us conclude that an \emph{object} can only be incompressible if it has a truly canonical encoding, which is only the case if the object is already a string.
 
 In Section~\ref{sec:statistics:estimation}, we get to see how the inclusion of quasiparameterizations makes the theory of algorithmic statistics more fine-grained.
-The section places sophistication in the context of three well-known strategies for model selection in statistics: Occom's razor, the maximum likelihood principle, and the minimum description length principle.
+The section places sophistication in the context of three well-known strategies for model selection in statistics: Occam's razor, the maximum likelihood principle, and the minimum description length principle.
 Additionally, in this section we find that most strings have simple models, also in parameterized algorithmic statistics.
 These simple models would even pass as good simple models in traditional algorithmic statistics for infinitely many objects.
 Thus, for infinitely many objects, the useful information reflected by a quasiparameterization is really all the useful information there is.
@@ -288,7 +288,7 @@ For a decidable set~$A$, let $\KC(A)$ denote the least length among the lengths 
   Additionally, $A$ was constructed from $P$, $i$, and $j$, so we also have $\KC(A) \le \length{P} + \bigO(\log \length{x})$.
 \end{proof}
 
-The message of Theorem~\ref{thm:rankmodels} is that, up to terms logarithmic in the length of a string~$x$, we may restrict our attention to distributions in accordance with Elias~delta coding.
+The message of Theorem~\ref{thm:rankmodels} is that, up to terms logarithmic in the length of a string~$x$, we may restrict our attention to distributions in accordance with Elias~delta coding.\indexkey{Elias~delta coding}
 This allows us to focus on decidable sets as models, and on quasiparameterizations with decidable slices as model classes.
 \begin{definition}
   A \defkeyat{parameterized!model}{parameterized model} is a slice of a quasiparameterization, represented by its corresponding parameter value.
@@ -424,7 +424,7 @@ This is a form of sufficiency, as used in parametric probabilistic statistics \p
   As $n$ is fixed, this class is indexed by~$p$.
 
   Given a data sample of the outcomes of~$n$ trials, we can make a prediction about the value of~$p$ that was used in generating the sample.
-  The only property of the sample that is relevant for our judgement turns out to be the number of successes.
+  The only property of the sample that is relevant for our judgment turns out to be the number of successes.
   If there are $i$ successes in our sample, our best guess for the parameter~$p$ is $\frac{i}{n}$.
   Indeed, the mapping from the sample to the number of successes is a sufficient statistic.
 
@@ -487,9 +487,10 @@ In particular, for every parameterized model class~$\eta$ and every string~$x$, 
 By this, we are able to carry out statistical inference on samples of only a single object, the string~$x$.
 The singleton samples are events in a probability theory derived from quasiparameterizations.
 Via the Kraft~inequality, this theory assigns a prior probability to each slice as a function of the length of the corresponding parameter value.\indexkey{Kraft~inequality}
+This highlights a similarity between two-part codes and Bayesian statistical inference~\parencite{grunwald2007minimum}.
 The probability of the event is then similarly assigned using the Kraft~inequality and the length of the rank in the slice, encoded using Elias~delta coding.
 If we use $\ell(z)$ to denote the length of the Elias~delta encoding of the string~$z$, we can express these probabilities precisely.
-The prior probability of a slice corresponding to a parameter value~$k$ becomes $2^{-\ell(k)}$.
+The prior probability of a slice corresponding to a parameter value~$k$ becomes~$2^{-\ell(k)}$.
 Likewise, given an $\eta$"~model~$k$ for a string~$x$, the probability of~$x$ in this model becomes $2^{-\ell(\asStr(\rank(x : \eta_k)))}$.
 These two probability distributions enable statistical inference.
 
@@ -764,7 +765,7 @@ The parameterization defined by~\eqref{eq:quasi_decision} is not decidable and t
 One approach to the computability of estimators is to place an upper bound on the model complexity and consider each estimator as a function of this bound~\parencite{gacs2001algorithmic,vereshchagin2004kolmogorov} \parencite[in the presence of resource bounds,][]{milovanov2017algorithmic}.
 Specifically, we consider ML and MDL relative to a quasiparameterization consisting of a selection of the slices of~\eqref{eq:quasi_decision}.
 The selection is obtained by including only those models of which the corresponding parameter value has a length shorter than the anticipated bound.
-As mentioned before, OR is not interesting in the traditional context because it can be upper bounded by a constant.
+As mentioned before, OR is not interesting in the traditional context because it can be bounded from above by a constant.
 On the other hand, ML and MDL are interesting, but, while the length of their estimates can be approximated from above, they are not computable~\parencite{vereshchagin2004kolmogorov}.
 Of the two estimators, MDL is easier to approximate and therefore more convenient to work with in practice \parencite[Section~V.B]{vereshchagin2004kolmogorov}.
 Additionally, as a function of a bound on the model complexity, MDL selects a sufficient statistic precisely when ML does \parencite[Lemma~IV.2]{vereshchagin2004kolmogorov}.
@@ -1094,7 +1095,7 @@ We would then find
 \end{equation*}
 If, for some $\epsilon < 1$ and all but finitely many strings~$k$, we have $\log f(k) \le \epsilon \asNat(k)$, then even a simple unary encoding of~$k$,
 \begin{equation*}
-  \ell_1(k) = \asNat(k) + 1,
+  \ell_1(k) = \asNat(k),
 \end{equation*}
 would suffice.
 Note that, in practice, the function~$f$ commonly looks something like $f(k) = 2^{\bigO(1) \cdot \asNat(k)}$.
@@ -1284,7 +1285,7 @@ Following our observations at the end of Section~\ref{sec:algorithmic:randomness
 In that way, the fixed-parameter \pdash{}rankable quasiparameterizations provide yet another way of combining algorithmic complexity and computational complexity.
 The slices of such a quasiparameterization are a model for non-random sets, and at the same time, they are easy in the sense of Definition~\ref{def:easy}.
 
-Being fixed-parameter \pdash{}rankable is a property of a quasiparameterization in isolation.
+Being fixed-parameter \pdash{}rankable is a property of a quasiparameterization in isolation.\indexkey{parameterization!fixed-parameter p-rankable@fixed-parameter \pdash{}rankable}\indexkey{p-rankable@\pdash{}rankable}
 This means that such rankable quasiparameterizations can be considered also in relation to sets that are themselves in no way \pdash{}rankable.
 Indeed, a slice of a fixed-parameter \pdash{}rankable quasiparameterization may contain both members and nonmembers of the set at hand.
 In this context, it is worthwhile to note that it is not even expected that every set in \cl{P} is \pdash{}rankable.
@@ -1294,8 +1295,8 @@ This result hinges on the fact that the class of rankable sets is not closed und
 If we broaden our scope to include such isomorphisms, we are looking at \emph{scalable} sets instead of at rankable sets~\parencite{goldsmith1996scalability}.
 The difference between fixed-parameter scalable and fixed-parameter \pdash{}rankable sets can conveniently be pointed out in Example~\ref{ex:fp-rankable}.
 For the scalable variant, we would not need to require that the polytime-isomorphism is increasing in its second component.
-Regarding the existence of non-scalable sets in~\cl{P}, we know little more than a result of \textcite{allender1986complexity} on sparse sets and one-way functions:
-A sparse non-scalable set in~\cl{P} exists if and only if there is an honest, polynomial--to--one, polytime-function without a polytime-inverse on $\{\bits{0}\}^+$.
+Regarding the existence of non-scalable sets in~\cl{P}, we know little more than a result of \textcite{allender1986complexity} on sparse sets and one"~way functions:
+A sparse non-scalable set in~\cl{P} exists if and only if there is an honest, polynomial-to-one, polytime-function without a polytime-inverse on $\{\bits{0}\}^+$.
 
 With respect to a quasiparameterization~$\eta$, it may be hard to find a two-part encoding of a string~$x$, let alone one that uses $\pc_\eta(x)$ bits.
 Note, however, that two-part encodings that are suboptimal in that they do not realize $\pc_\eta(x)$ may be worthwhile too.

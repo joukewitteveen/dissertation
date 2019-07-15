@@ -112,11 +112,11 @@ Let $A$ be a set and $\kappa$ a parameterization in the sense of \citeauthor{flu
 A kernelization for~$A$ with respect to~$\kappa$ is a polytime-computable function $\phi\colon \binary^+ \to \binary^+$ that satisfies two properties.
 The first property it should satisfy is that for all strings~$x$, we have $x \in A \iff \phi(x) \in A$.
 The other property required is that there is some computable function $h\colon \binary^+ \to \bbN$ such that, for all strings~$x$, we have $\length{\phi(x)} \le h(\kappa(x))$.
-In other words, a kernelization is a polytime many--one reduction with a length bound on the image in terms of the parameter value of the input.
+In other words, a kernelization is a polytime many--one reduction with a length bound on the image in terms of the parameter value of the input.\indexkey{reduction!many--one}
 
 As we shall soon see, kernelizations are closely related to fixed-parameter tractability.
 However, there is no reason we should restrict ourselves to many--one reducibility.
-This was first observed by \textcite{lokshtanov2009new}, who introduced the more general \emph{Turing kernelization}, where the type of reductibility at play is Turing reducibility.
+This was first observed by \textcite{lokshtanov2009new}, who introduced the more general \emph{Turing kernelization}, where the type of reducibility at play is Turing reducibility.\indexkey{reduction!Turing}
 In our framework, this very general form of kernelization can be defined as follows.
 \begin{definition}
 \label{def:turing_kernelization}%
@@ -145,7 +145,7 @@ Besides the length bound, more restrictions on the queries made by a Turing kern
 We observe that in the execution of a Turing kernelization, which string is queried next may depend on the answers of the oracle to queries made previously.
 Because of this, a Turing kernelization is said to be \defkeyat{kernelization!adaptive}{adaptive}.
 We may restrict a Turing kernelization so that it must determine all the queries it will make at once, before knowing the feedback of any of them.
-With this addition of this restriction, we have defined a \defkeyat{kernelization!truth-table}{truth-table kernelization}.
+With this addition of this restriction, we have defined a \defkeyat{kernelization!truth-table}{truth-table kernelization}.\indexkey{reduction!truth-table}
 This type of kernelization is relevant in the context of parallelized computation.
 As observed by \textcite{weller2013aspects}, the independence of the queries makes it possible to compute their answers in parallel.
 This turns truth-table kernelization into a design pattern for parallel algorithms.
@@ -261,7 +261,7 @@ However, inside a class of equivalent parameterizations, suitable parameterizati
   \end{itemize}
 \end{theorem}
 \begin{proof}
-  Let~$f$ be a computable function upper bounding $\gap_{\eta, \zeta}$.
+  Let~$f$ be a computable function bounding $\gap_{\eta, \zeta}$ from above.
   If $f$ does not grow faster than the identity function, a Turing kernelization of size~$h$ with respect to $\eta$ would also be a one of size~$h$ with respect to $\zeta$.
   In that case, the theorem is proven by taking $\zeta' \deq \zeta$.
   Assume, therefore, that $f$ does grow faster than the identity function.
@@ -269,9 +269,9 @@ However, inside a class of equivalent parameterizations, suitable parameterizati
   \begin{equation*}
     \zeta' \deq (\{x \st x \in \zeta_{\prefix(f^{-1}(\length{k}), k)}\})_{k \in \binary^+}.
   \end{equation*}
-  This definition ensures that $\gap_{\zeta', \zeta}$ is upper bounded by~$f$ and that $\gap_{\zeta, \zeta'}$ is upper bounded by~$f$.
+  This definition ensures that $\gap_{\zeta', \zeta}$ is bounded from above by~$f$ and that $\gap_{\zeta, \zeta'}$ is bounded from above by~$f$.
   Hence, $\zeta'$ is equivalent to~$\zeta$ in the order on parameterizations.
-  Moreover, the definition is so that $\gap_{\eta, \zeta'}$ is upper bounded by the identity function.
+  Moreover, the definition is so that $\gap_{\eta, \zeta'}$ is bounded from above by the identity function.
   By our earlier remarks, it follows that $A$ has a Turing kernelization of size~$h$ with respect to~$\zeta'$.
 \end{proof}
 
@@ -436,7 +436,7 @@ First, we shall show that the adaptive powers of polynomial Turing kernelization
   Let $\phi_1, \phi_2, \phi_3, \ldots$ be an effective enumeration of procedures that make at most one call to an oracle, but may query any number of strings in that one call.
   We may assume that every truth-table kernelization occurs in this list infinitely often.
   To diagonalize against all polynomial truth-table kernelizations, we run each of these procedures for a limited time, allowing only queries of limited length.
-  When running some procedure $\phi_i$, the running time and query size restriction we employ shall be a polynomial of degree~$i$.
+  When running some procedure $\phi_i$, the running-time and query-size restriction we employ shall be a polynomial of degree~$i$.
 
   The set~$W$ is constructed in stages.
   At stage $i \in \bbN$, we set~$n$ to a value that satisfies a few constraints, namely
@@ -789,7 +789,7 @@ These kernelizations, we shall go into next.
 \end{figure}
 
 \subsection{Polynomial Advice}
-\label{sec:redundancy:advice}%
+\label{sec:redundancy:advice}\indexkey{advice|(}%
 Let us return for a moment to the interpretation of kernelization as preprocessing.
 Imagine we are interested in a set~$A$ and are somehow presented with an instance~$x$ of which we might later on need to know whether or not it is a member of~$A$.
 We may find that storage space is a scarce resource, so we seek for alternatives to recording the entire instance.
@@ -837,7 +837,7 @@ This results in recording a polynomial number of strings of polynomial length, t
 
 Some interesting properties of psize kernelization were studied by \textcite[Chapter~5]{weller2013aspects}.
 In particular, \citeauthor{weller2013aspects} uncovered how the non-adaptive nature of psize kernelization influences the number of queries that are made.
-We highlight the main result, which presents a trade-off between being non-adaptive and making few queries.
+We highlight the main result, which presents a trade-off between being non-adaptive and making few queries.\indexkey{kernelization!adaptive}
 \begin{theorem}[{\textcite[Theorem~5.1]{weller2013aspects}}]
   The following statements about an \cl{NP}"~complete set~$A$, a parameterization~$\eta$, and a polynomial~$p$ are equivalent.
   \begin{itemize}
@@ -1054,6 +1054,7 @@ However, this does not mean that the notion of advice associated with $\cl{PKER}
 Note that a polynomial many--one kernelization is also a psize kernelization.
 Because of this, Theorem~\ref{thm:ppoly-tt} and Theorem~\ref{thm:ppoly-one} show that the notions of polynomial advice represented by \cladv{P}{poly} and $\cl{PKER}_\textnormal{psize}$ are different.
 Neither notion is more stringent than the other.
+\indexkey{advice|)}%
 
 \subsection{Lower Bounds}
 \label{sec:redundancy:lower_bounds}%
@@ -1171,7 +1172,7 @@ Such a relaxed version of kernelization is called \emph{compression} by \textcit
 The relevance of Theorem~\ref{thm:distillation} lies in its use in ruling out the existence of a psize kernelization for certain sets and parameterizations.
 When the framework behind Theorem~\ref{thm:distillation} was first published~\parencite{bodlaender2009problems}, it was already linked to the fact that \cl{NP}"~hard sets are unlikely to have weak distillations.
 It was quickly shown by \textcite{fortnow2011infeasibility} that, unless we have $\cl{NP} \subseteq \cladv{coNP}{poly}$, no \cl{NP}"~hard set admits a weak \pr{or}"~distillation.
-The conditional absence of weak \pr{and}"~distilations for \cl{NP}"~hard sets was initially left as a conjecture \parencite{bodlaender2009problems}, but eventually proven by \textcite{drucker2015new}.
+The conditional absence of weak \pr{and}"~distillations for \cl{NP}"~hard sets was initially left as a conjecture \parencite{bodlaender2009problems}, but eventually proven by \textcite{drucker2015new}.
 The inclusion of \cl{NP} in \cladv{coNP}{poly} is deemed unlikely, as it implies a collapse of the polynomial hierarchy to its third level~\parencite{yap1983some}.
 These results translate into a technique for obtaining lower bounds on the size of kernelizations.
 \begin{corollary}

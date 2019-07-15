@@ -1,7 +1,6 @@
 \chapter{Parameterizations}
 \label{ch:parameterizations}%
 
-
 In the following sections, we seek to analyze a selection of notions of complexity in a unified, parameterized, way.
 We look at complexity as it is used in \emph{computability theory}, in \emph{computational complexity theory}, in \emph{algorithmic complexity theory}, in \emph{algorithmic statistics}, and in the study of \emph{computational redundancy}.
 In the first four of these fields, complexity expresses a distance from some reference notion of \enquote{simplicity}.
@@ -17,11 +16,11 @@ We find an answer to the question: \emph{what sets are fixed-parameter tractable
 More precisely, we characterize the sets for which a parameterization exists with respect to which they have a fixed-parameter tractable decision procedure.
 
 Like computability theory, computational complexity theory deals with decision problems modeled as sets.
-Easiness in computational complexity theory is routinely identified with decidability in polynomial time.
+Simplicity in computational complexity theory is routinely identified with decidability in polynomial time.
 Parameterized computational complexity theory is thus a way to assess how far a set is removed from being decidable in polynomial time.
 In effect, parameterized computational complexity theory offers a way to assess the computational complexity of individual problem instances.
 However, the current literature on parameterized computational complexity offers little in the way of a comparison of parameterizations.
-Given two parameterizations with respect to which some fixed set is fixed-parameter tractable, we may want to know which of the two is \enquote{better}.
+Given two parameterizations with respect to which some specific set is fixed-parameter tractable, we may want to know which of the two is \enquote{better}.
 An order on parameterizations is developed in Section~\ref{sec:tractability}.
 This order is rich in structure.
 Moreover, we are able to show that for most sets, there is no \enquote{best} parameterization with respect to which they are fixed-parameter tractable.
@@ -59,7 +58,7 @@ How much computational redundancy can be extracted from the description of an ob
 \begin{table}
   \centering
   \begin{tabular}{p{4cm}p{3cm}p{6.266cm}}
-    \multicolumn{1}{c}{\emph{Field}, \emph{\S}} & \multicolumn{1}{c}{\emph{Reference}} & \multicolumn{1}{c}{\emph{Question}} \\
+    \multicolumn{1}{l}{\hfill\emph{Field}\rlap{,}\hfill\llap{\emph{\S}}} & \multicolumn{1}{c}{\emph{Reference}} & \multicolumn{1}{c}{\emph{Question}} \\
     \hline\noalign{\vspace{2ex}}
     Computability Theory, \hspace*{\fill}\ref{sec:computability} & Decidability & What sets are fixed-parameter tractable? \\[2ex]
     Computational Complexity Theory, \hspace*{\fill}\ref{sec:tractability} & Decidability in Polynomial Time & Is there a best parameterization?\newline \\[2ex]

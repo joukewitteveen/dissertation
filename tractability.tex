@@ -32,7 +32,7 @@ We show that this structure doubles as a ranking of parameterizations.
 Having established a way to rank parameterizations, we ask under what circumstances optimal parameterizations exist.
 This question is addressed for a nonuniform parameterized complexity theory in Section~\ref{sec:tractability:optimalnu}.
 The uniform version is the subject of Section~\ref{sec:tractability:optimal}.
-As it turns out, for most problems that arise naturally, there are no optimal paramerizations among those that make the problem fixed-parameter tractable.
+As it turns out, for most problems that arise naturally, there are no optimal parameterizations among those that make the problem fixed-parameter tractable.
 
 Previously, for a given problem we looked at whether parameterizations exist that make the problem fixed-parameter tractable.
 We found that this was not sensitive to variations in parameterized computational tractability.
@@ -121,7 +121,8 @@ We can order a collection of cores by inclusion up to \emph{finite variations}, 
 \item $D \setminus C$ has infinitely many elements, and
 \item $C \setminus D$ has finitely many elements.
 \end{itemize}
-For some sets the collection of polytime-cores contains a maximal element with respect to inclusion up to finite variations.
+This order is a partial order.
+For some sets the collection of polytime-cores contains a maximal element, as discussed on page~\pageref{def:maximal}, with respect to inclusion up to finite variations.
 If this is the case, the set is split into an easy part and a hard part.
 \begin{theorem}
 \label{thm:maximal}%
@@ -286,7 +287,7 @@ In that way, fixed-parameter tractability is a successful notion of efficient co
 \begin{example}
 \label{ex:p-cylinder}%
   \indexkey{example!p-cylinder@\pdash{}cylinder}%
-  A less practically motivated way to obtain sets and parameterizations that are in \cl{FPT} is available for \pdash{cylinders}.
+  A less practically motivated way to obtain sets and parameterizations that are in \cl{FPT} is available for \pdash{cylinders} as defined in Definition~\ref{def:p-cylinder}.
   Given a decidable \pdash{}cylinder~$A$ and a corresponding isomorphism~$g\colon \binary^+ \to \binary^+ \times \binary^+$, denote by~$g_1$ the first component of the image of~$g$.
   Thus, if $g$ maps $x$ to~$(y, z)$, then $g_1$ maps $x$ to~$y$.
   Now, consider the parameterization based on $g_1$ that is given by
@@ -387,7 +388,7 @@ By Theorem~\ref{thm:decidable}, the uniform variant of the order on parameteriza
 
 \begin{definition}
 \label{def:uniform_order}%
-  A parameterization~$\eta$ is below a parameterization~$\zeta$ in the \emph{uniform} order \defkeyat{<@$\quasile$}{$\quasile$} if there is a computable function upper bounding $\gap_{\eta, \zeta}$.
+  A parameterization~$\eta$ is below a parameterization~$\zeta$ in the \emph{uniform} order \defkeyat{<@$\quasile$}{$\quasile$} if there is a computable function bounding $\gap_{\eta, \zeta}$ from above.
 \end{definition}
 
 We observe the relationship $\quasile \subset \quasilenu$ between these orders.
@@ -443,6 +444,7 @@ This, in turn, provides an abstract way to compare the computational power requi
 When we look at $\calL_\clXnu{P}$ or $\calL_\clnu{FPT}$ in terms of equivalence classes ordered by~$\quasilenu$, we recognize a familiar \parencite{davey2002introduction} structure.
 \begin{theorem}
 \label{thm:nulattice}%
+  \indexkey{lattice}%
   Ordered by~$\quasilenu$, the equivalence classes in~$\calL_\clXnu{P}$ and~$\calL_\clnu{FPT}$ form bounded distributive lattices.
 \end{theorem}
 \begin{proof}
@@ -454,7 +456,7 @@ When we look at $\calL_\clXnu{P}$ or $\calL_\clnu{FPT}$ in terms of equivalence 
   For the current proof we shall focus on $\calL_\clnu{FPT}$.
   The proof for $\calL_\clXnu{P}$ is slightly less involved.
 
-  \paragraph{$\calL_\clnu{FPT}$ is bounded.}
+  \paragraph{$\calL_\clnu{FPT}$ is bounded.}\indexkey{lattice!bounded}
   A least element of~$\calL_\clnu{FPT}$ is present in the form of the parameterization consisting of `full' slices only, $(\binary^+)_{k \in \binary^+}$.
   Indeed, any constant bounds the gap from this parameterization to another and thus this parameterization is below any other with respect to~$\quasilenu$.
 
@@ -509,7 +511,7 @@ When we look at $\calL_\clXnu{P}$ or $\calL_\clnu{FPT}$ in terms of equivalence 
   Since the right-hand side of this equation is finite, we can conclude that we have $\zeta \quasilenu \zeta'$.
   Accordingly, $\zeta$ is a least upper bound for~$\eta$ and~$\eta'$ with respect to~$\quasilenu$.
 
-  \paragraph{$\calL_\clnu{FPT}$ is distributive.}
+  \paragraph{$\calL_\clnu{FPT}$ is distributive.}\indexkey{lattice!distributive}
   Let $\eta$ and~$\eta'$ be two parameterizations in~$\calL_\clnu{FPT}$.
   As is customary, we denote their greatest lower bound by $\eta \land \eta'$ and their least upper bound by $\eta \lor \eta'$.
   Beware that in the above construction, $\eta \land \eta'$ was based on a disjunction $x \in \eta_k \lor x \in \eta'_{k'}$ and vice versa for $\eta \lor \eta'$.
@@ -557,6 +559,7 @@ It is meaningful to the extent that, for every set~$A$, it also provides structu
 The structure it provides these collections with relates nicely to the overarching structure of $\calL_\clXnu{P}$ and $\calL_\clnu{FPT}$, respectively \parencite[see also][]{davey2002introduction,abramsky1994domain}.
 \begin{theorem}
 \label{thm:nufilter}%
+  \indexkey{filter}%
   Let $A$ be a set.
   Ordered by~$\quasilenu$, the collections $\calF_\clXnu{P}(A)$ and $\calF_\clnu{FPT}(A)$ are filters in~$\calL_\clXnu{P}$ and~$\calL_\clnu{FPT}$, respectively.
 \end{theorem}
@@ -605,6 +608,7 @@ While the absence of uniformity constraints may be accommodating to certain proo
 Luckily, we can also characterize the structure of parameterizations in relation to uniform parameterized complexity.
 \begin{theorem}
 \label{thm:lattice}%
+  \indexkey{lattice}%
   Ordered by~$\quasile$, the equivalence classes in~$\calL_\clX{P}$ and~$\calL_\cl{FPT}$ form bounded distributive lattices.
 \end{theorem}
 \begin{proof}
@@ -614,7 +618,7 @@ Luckily, we can also characterize the structure of parameterizations in relation
   Despite these extra elements to consider, a proof of the current theorem may proceed largely along the same lines as the proof of Theorem~\ref{thm:nulattice}.
   For starters, a proof concerning $\calL_\clX{P}$ is again subsumed in one concerning $\calL_\cl{FPT}$ and we shall therefore present only the latter.
 
-  \paragraph{$\calL_\cl{FPT}$ is bounded.}
+  \paragraph{$\calL_\cl{FPT}$ is bounded.}\indexkey{lattice!bounded}
   The parameterization $(\binary^+)_{k \in \binary^+}$ consisting of full slices is also a least element of~$\calL_\cl{FPT}$ with respect to~$\quasile$.
   Any constant function acts as a computable upper bound to the gap from this parameterization to any other.
   As, for instance, the empty set is put in \cl{FPT} by this parameterization, it is indeed a member of~$\calL_\cl{FPT}$.
@@ -654,7 +658,7 @@ Luckily, we can also characterize the structure of parameterizations in relation
   The difference with the case for greatest lower bounds is that our derived  procedure now returns \bits{?} if $\phi$ \emph{or} $\phi'$ produces \bits{?}.
   Corresponding to this parameterized procedure, we find the parameterization~$\zeta$, which is hence a member of~$\calL_\cl{FPT}$.
 
-  \paragraph{$\calL_\cl{FPT}$ is distributive.}
+  \paragraph{$\calL_\cl{FPT}$ is distributive.}\indexkey{lattice!distributive}
   The proof of distributivity of the nonuniform lattice is concerned only with obtaining bounds on the gap function.
   As all these bounds in the proof of Theorem~\ref{thm:nulattice} are computable, the proof works equally well for distributivity of the uniform lattice.
 \end{proof}
@@ -664,6 +668,7 @@ Contrary to the nonuniform case, the sets need to be decidable for otherwise the
 This is implied by Theorem~\ref{thm:decidable}, which says that direct parameterized procedures can only converge to decidable sets.
 \begin{theorem}
 \label{thm:filter}%
+  \indexkey{filter}%
   Let $A$ be a decidable set.
   Ordered by~$\quasile$, the collections $\calF_\clX{P}(A)$ and $\calF_\cl{FPT}(A)$ are filters in~$\calL_\clX{P}$ and~$\calL_\cl{FPT}$, respectively.
 \end{theorem}
@@ -737,7 +742,7 @@ These races seek improvements within a single parameterization \parencite{komusi
   \item for all $k'$ such that we have $x \in \zeta_{k'}$, we have $f(k) < f'(k')$.
   \end{itemize}
   If this were not the case, then for all but finitely many $x$ and $k$ with $x \in \eta_k$, there would be a $k'$ such that we have $x \in \zeta_{k'}$ and $f'(k') \le f(k)$.
-  This would mean that $f$ and $f'$ could be used to construct a computable function upper bounding the function $\gap_{\zeta, \eta}$.
+  This would mean that $f$ and $f'$ could be used to construct a computable function bounding the function $\gap_{\zeta, \eta}$ from above.
   Such an upper bound cannot exist, because it would imply that we had $\zeta \quasile \eta$.
 \end{example}
 
@@ -834,6 +839,7 @@ This overview is depicted in Figure~\ref{fig:nuprincipal}.
     For \levelable{\cl{FPT}} sets, no results are available.
   }
   \label{fig:nuprincipal}
+  \indexkey{filter!principal}
 \end{figure}
 
 Of course, Theorem~\ref{thm:nufptnonprincipal} is only meaningful if there are \levelable{\cl{P}} sets that are not \levelable{\cl{FPT}}.
@@ -885,7 +891,7 @@ This is the case.
         \itemcont \code{return} $\bits{1} - \phi_i(\pair{u}{x})$.
       \end{codelisting}
     \item
-      Else, as no procedure could be made inconsistent, \code{return}~\bits{0}.
+      \code{Else}, as no procedure could be made inconsistent, \code{return}~\bits{0}.
     \end{codelisting}
   \end{codelisting}
 
@@ -951,7 +957,7 @@ The existence of \levelable{\cl{FPT}} sets now follows from the existence of set
   There are sets outside \cl{P} that have a linearly-length-increasing reduction to itself.
 \end{lemma}
 \begin{proof}
-  Let $X$ be a set outside \cl{P} and consider its cylindrification \parencite{balcazar1990structural}
+  Let $X$ be a set outside \cl{P} and consider its cylindrification \parencite[see][Section~5.3]{balcazar1990structural}
   \begin{equation*}
     A \deq \{\pair{x}{y} \st x \in X \reland y \in \binary^+\}.
   \end{equation*}
@@ -963,12 +969,8 @@ The existence of \levelable{\cl{FPT}} sets now follows from the existence of set
   is a linearly-length-increasing reduction from $A$ to itself.
 \end{proof}
 
-It should be noted that certain padding functions give rise to linearly-length-increasing reductions.
-There are padding functions, $\pad$, for which there exists a constant~$c$ such that for all~$x, y$ we have
-\begin{equation*}
-  \frac{1}{c} \cdot (\length{x} + \length{y}) \le \length{\pad(x, y)} \le c \cdot (\length{x} + \length{y}).
-\end{equation*}
-Padding functions that meet this enhanced \enquote{honesty} criterion \parencite[see][]{balcazar1995structural,balcazar1990structural} can be turned into linearly-length-increasing reductions by mapping $x$ to $\pad(x, \bits{0}^{c \cdot \length{x}})$.
+We remark that the cylindrification of a set is always a \pdash{}cylinder, because there exists a polytime-computable bijection between~$\binary^+$ and~$\binary^+ \times \binary^+$.
+\indexkey{omni-levelable!for FPT@for \cl{FPT}|)}
 
 \subsection{Optimal Uniform Parameterizations}
 \label{sec:tractability:optimal}%
@@ -979,7 +981,7 @@ Therefore, the proof cannot guarantee the existence of a procedure that meets th
 Additionally, being a principal parameterization with respect to a uniform complexity class requires a bound on the gap to any other parameterization to be computable.
 
 We regain something akin to Theorem~\ref{thm:nuxpprincipal} by also taking into account provability of membership of a set in \clX{P}.
-To make this precise, let $\mathfrak{F}$ be a formal system capable of expressing statements about computation.
+To make this precise, let $\mathfrak{F}$ be a formal system capable of expressing statements about computation.\indexkey{formal system}
 A proof in $\mathfrak{F}$ is thus a syntactic derivation of a theorem on computation.
 For convenience, we stretch this notion slightly.
 \begin{definition}
@@ -997,7 +999,7 @@ It is necessary to fix a decision procedure in the above definition in order to 
 If we did not fix a decision procedure, it would not be possible to formulate the second of the required statements in the language of~$\mathfrak{F}$.
 This would make it impossible for it to have a proof in~$\mathfrak{F}$.
 
-We remark that the proofs that are at play in the previous definition are not required to be computable from the parameter value~$k$.
+The proofs that are at play in the previous definition are not required to be computable from the parameter value~$k$.
 Even without such a uniformity constraint, the following theorem, similar in spirit to Theorem~\ref{thm:nuxpprincipal}, holds.
 In the following theorem, we make an additional assumption about the strength of~$\mathfrak{F}$.
 Namely, we assume that some of the reasoning performed in the proof of the theorem can be formalized in~$\mathfrak{F}$.
@@ -1144,12 +1146,12 @@ Though, where the time hierarchy theorem constitutes a hierarchy of \emph{sets},
   \end{codelisting}
 
   Let $\zeta$ be the parameterization corresponding to this direct parameterized procedure.
-  The dependence on the parameter value in the self-imposed running time bound ensures that $\zeta$ is in fact a parameterization.
+  The dependence on the parameter value in the self-imposed running-time bound ensures that $\zeta$ is in fact a parameterization.
   Because the dependence on the length of the instance is a polynomial of which the degree does not depend on the parameter value, $A$ is in \cl{FPT} with $\zeta$.
 
   It remains to show that we have $\eta \notquasile \zeta$.
   Observe that our procedure computes values of $\bigO(p)$"~approximations for~$A$ until it encounters an approximation of which $x$ is in the domain.
-  By merit of the $\length{x}^2$ factor in the running time bound, the number of approximations that our procedure can compute increases as a function of~$\length{x}$.
+  By merit of the $\length{x}^2$ factor in the running-time bound, the number of approximations that our procedure can compute increases as a function of~$\length{x}$.
   In fact, this number increases without a bound for any constant value of~$k$.
   From Lemma~\ref{lem:fptimix}, it follows that $\eta$ must have imix.
   Therefore, even for a fixed value of~$k$, our procedure is able to decide membership of instances $x$ for which $\mu_\eta(x)$ is arbitrarily high.
@@ -1161,7 +1163,7 @@ Recall that the class of \levelable{\cl{P}} sets includes many natural sets \par
 The theorem tells us that these sets have no optimal parameterizations with respect to \cl{FPT}.
 For sets that do have optimal parameterizations, the parameterizations are not very promising from an applications point of view.
 In light of Lemma~\ref{lem:fptimix}, we get from the above theorem that no principal parameterization in a filter of the form $\calF_\cl{FPT}(A)$ has imix.
-However, only parameterizations with imix are indicative of a succesfull parameterized attack on the complexity of a set.
+However, only parameterizations with imix are indicative of a successful parameterized attack on the complexity of a set.
 Only parameterized algorithms that converge on parameterizations with imix could be called \emph{attractive}.
 Thus, we get the following.
 \indexkey{imix|)}%
@@ -1207,4 +1209,5 @@ In Figure~\ref{fig:principal}, this characterization, a combination of Theorem~\
     For \immune{\cl{P}} sets outside \cl{P}, no results regarding the principality of filters with respect to \cl{FPT} are available.
   }
   \label{fig:principal}
+  \indexkey{filter!principal}
 \end{figure}
