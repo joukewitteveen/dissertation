@@ -4,7 +4,14 @@
 \bigsection{The Size of a Cube}
 \label{sec:size_of_a_cube}%
 
-\begin{figure}
+Shown in Figure~\ref{fig:shapes} are three different shapes.
+When we ask which of these three shapes is the largest, we start a journey down a deep rabbit hole.
+In this thesis, that rabbit hole is explored.
+As an indication of what is to come, we briefly consider a comparable question:
+What is the largest species of snakes?
+The heaviest snakes are anacondas, but the longest snakes are pythons.
+Thus, the answer to this question depends on what is meant by \enquote{the largest}.
+\begin{figure}[bp]
   % Unit vectors using azimuth a and elevation e:
   % x = ( cos(a), sin(a)sin(e) )
   % y = ( -sin(a), cos(a)sin(e) )
@@ -12,7 +19,7 @@
   % We use an azimuth of 30 degrees and an elevation of 15 degrees.
   % Additionally, we scale the first two figures by 1/cos(a).
   \centering
-  \subcaptionbox{??tetrahedron\label{fig:tetrahedron}}[0.3\textwidth]{
+  \subcaptionbox{A tetrahedron\label{fig:tetrahedron}}[0.3\textwidth]{
     \begin{tikzpicture}[line join=round,x={(1cm, .1494cm)},y={(-.5774cm, .2588cm)},z={(0cm, 1.1154cm)}]
       \draw[every edge/.append style={densely dashed, opacity=.5}]
         (-1,1,-1) edge (1,1,1)
@@ -21,7 +28,7 @@
     \end{tikzpicture}
   }
   \quad
-  \subcaptionbox{??cube\label{fig:cube}}[0.3\textwidth]{
+  \subcaptionbox{A cube\label{fig:cube}}[0.3\textwidth]{
     \begin{tikzpicture}[line join=round,x={(1cm, .1494cm)},y={(-.5774cm, .2588cm)},z={(0cm, 1.1154cm)}]
       \draw[every edge/.append style={densely dashed, opacity=.5}]
         (1,1,1) edge coordinate[at end] (obscured) (1,1,-1)
@@ -33,7 +40,7 @@
     \end{tikzpicture}
   }
   \quad
-  \subcaptionbox{??dodecahedron\label{fig:dodecahedron}}[0.3\textwidth]{
+  \subcaptionbox{A dodecahedron\label{fig:dodecahedron}}[0.3\textwidth]{
     \begin{tikzpicture}[line join=round,x={(.8660cm, .1294cm)},y={(-.5cm, .2241cm)},z={(0cm, .9659cm)},declare function={phi()=(1 + sqrt(5)) / 2;}]
       \draw[densely dashed, opacity=.5]
         (1, 1, 1) -- (0, phi, 1/phi) -- (0, phi, -1/phi) -- (1, 1, -1) -- (phi, 1/phi, 0) -- cycle;
@@ -52,14 +59,54 @@
     \end{tikzpicture}
   }
   \caption{
-    ??
+    Three shapes
   }
+  \label{fig:shapes}
 \end{figure}
+
+For our shapes, the situation is no better.
+Especially since the figure only shows the abstract essence of a tetrahedron, a cube, and a dodecahedron.
+Were the figure to show any particular physical instances of these shapes, then at least we could have compared masses and lengths.
+However, abstract shapes can be measured too.
+The number of corners, the number of edges, and the number of faces are a few of the metrics we can look at.
+In all of these measures, a cube, Figure~\ref{fig:cube}, is larger than a tetrahedron, Figure~\ref{fig:tetrahedron}, and smaller than a dodecahedron, Figure~\ref{fig:dodecahedron}.
+\begin{center}
+  \begin{tabular}{r|p{2em}rp{1em}p{2em}rp{1em}p{2em}rp{1em}}
+    &	\multicolumn{3}{c}{\emph{tetrahedron}}	& \multicolumn{3}{c}{\emph{cube}}	& \multicolumn{3}{c}{\emph{dodecahedron}} \\
+    \hline
+    \emph{corners}	&& $4$	&&& $8$	&&& $20$ \\
+    \emph{edges}	&& $\phantom{0}6$	&&& $12$	&&& $30$	& \hspace{0pt} \\
+    \emph{faces}	&& $4$	&&& $6$	&&& $12$
+  \end{tabular}
+\end{center}
+
+None of these ways of measuring a shape, by the number of corners, edges, or faces, is clearly more fundamental than the others.
+Besides, these ways of measuring are by no means all ways there are of measuring a shape.
+Another metric looks at the number of edges that need to be traversed in order to get from one corner to another.
+Let us consider this metric for the cube.
+From each corner of the cube, only $3$~others are directly reachable.
+Sometimes, traversing $2$ or even $3$~edges may be necessary.
+Since we never need to go over more than $3$~edges, we say that the \emph{diameter} of a cube, in an abstract sense, is $3$~edges.
+The diameter of a shape is another metric that may be used to measure a shape.
+
+Yet another metric is defined by the minimum number of corners we need to mark so that every edge connects to a marked corner at one or both of its ends.
+Such a collection of marked vertices is said to \emph{cover} the edges.
+For a cube, it is possible to cover the edges using $4$~corners.
+It is not possible to cover all the edges with fewer corners, thus $4$ is the minimum number of corners that is required to cover the edges.
+Like our previous metrics, this minimum number of corners that is required to cover the edges of a shape may be used to measure a shape.
+
+Which metric is the most relevant depends on what uses of our shape we are most interested in.
+Our previous two metrics looked specifically at corners and edges.
+In such cases, we are really only interested in the connection structure of a shape.
+Its three-dimensional nature is of lesser interest and the cube may as well be represented as in Figure~\ref{fig:graphs:cube}.
 
 \begin{figure}
   \centering
-  \begin{subfigure}{0.4\textwidth}
-    \centering
+  \subcaptionbox{
+    The abstract cube visualized as a graph.
+    Corners of the cube are shown as dots and dots are connected by a line whenever the corners they represent are connected by an edge of the cube.
+    \label{fig:graphs:cube}
+  }[0.4\textwidth]{
     \begin{tikzpicture}[line join=round]
       \draw
         (0,0) -- (0,4) -- (1,3) -- (1,1) -- cycle
@@ -72,12 +119,13 @@
         (4,4) circle[] (3,1) circle[]
         (4,0) circle[] (1,1) circle;
     \end{tikzpicture}
-    \caption{??cube graph}
-    \label{fig:graphs:cube}
-  \end{subfigure}
+  }
   \qquad
-  \begin{subfigure}{0.4\textwidth}
-    \centering
+  \subcaptionbox{
+    The Wagner graph.
+    Note that this graph can be obtained from the cube graph, Figure~\ref{fig:graphs:cube}, by exchanging two endpoints of two edges.
+    \label{fig:graphs:wagner}
+  }[0.4\textwidth]{
     \begin{tikzpicture}[line join=round]
       \draw
         (0,0) -- (0,4) -- (4,4) -- (4,0) --
@@ -88,53 +136,52 @@
         (4,4) circle[] -- (3,3) circle[]
         (4,0) circle -- (3,1) circle;
     \end{tikzpicture}
-    \caption{??wagner graph}
-  \end{subfigure}
+  }
   \caption{
-    ??
+    Structures of possibly connected objects can be represented as graphs.
+    The dots in the above graphs represent the objects and are called \emph{vertices}.
+    The lines connecting vertices are called \emph{edges}.
   }
 \end{figure}
-\todo[inline]{
-  \footnotesize
-  A picture of a cube (and a tetrahedron and dodecahedron).
-  \\- What is the size of this cube?
-  \\- Impossible to answer, since the picture only shows the abstract essence of a cube and not any physical cube in particular.
-%also: an abstract cube has no defined mass
-  \\- However, there are still ways to measure the cube as an abstraction.
-  \\- A cube has 8 corners, 12 edges, and 6 faces.
-  \\- In that sense, it is larger than a tetrahedron (picture) and smaller than a dodecahedron (picture).
-  \\- Is any of these measures --- corners, edges, faces --- more fundamental than another?
-  \\- This depends on what aspects of our object we are most interested in.
-  \\- We may be interested in how many edges are between any two corners.
-  \\- If we start at any corner, how many edges do we need to slide our finger across at most before we could reach any other corner?
-  \\- In this context, we are really only interested in the connection structure, more than the geometrical object and a cube may as well be represented as in Figure~??.
-  \\ A picture of a (planar) cubical graph (and a Wagner graph).
-  \\- Having reduced our cube to a collection of dots and lines, we may notice an asymmetry between the number of each.
-  \\- The number of dots can grow arbitrarily large without influencing the number of lines.
-  \\- By contrast, the number of lines is bounded by approximately half the square of the number of dots.
-  \\- \ldots
-  \\- Introduce the Wagner graph.
-  \\- This graph is not planar and hence it is not clear what its number of faces would be.
-  \\- Still, it is very similar to the cubic graph.
-  \\- Is it as large?
-  \\- It has the same number of vertices (points) and edges (lines).
-  \\- Other metrics are different, though.
-  \\- Its diameter is 2, whereas that of the cube was 3.
-  \\- We may envision actions on a graph that are easier on graphs with smaller diameter.
-  \\- Does this make the diameter a good candidate for the size?
-  \\- There are other structural properties, too, such as the size of a minimum vertex cover, and the chromatic number.
-  \\- Both also differ from the cubical graph to the Wagner graph, the size of a minimum vertex cover being lower on the cubical graph, while the Wagner graph has a lower chromatic number.
-  \\- \ldots
-  \\- Where the size of a physical cube determines how large a pocket/box/hangar needs to be in order to contain the cube, the size of an abstract cube is determined by how long a description of its properties needs to be.
-  \\- Example: description based on vertices (adjacency matrix) and on edges (edge list) --- which is shorter differs from the tetrahedron to the dodecahedron.
-  \\- Some ways of describing a graph are more accommodating to answering a given question about a graph than others.
-  \\- Amassing all possible ways to describe a graph (also, for instance, as a circuit for deciding edges), we obtain notion of size that is as good as any other.
-  \\- Essentially, we have defined Kolmogorov complexity.
-  \\- Careful counting reveals that whatever way to describe a graph we choose, there is a graph for which it is the best we can do (i.e.~a graph described by an incompressible string).
-  \\- Therefore, no structural property is more `blessed' than any other.
-  \\- It follows that the best way to describe a graph, and consequently the best way to measure its size, is dependent on what we want to do with the graph.
-  \\- This is not only true of graphs but of any class of object we may consider to work with in a systematic way.
-}
+
+Note that for graphs in general, there is a maximum to the number of edges as a function of the number of vertices.
+Once all vertices in a graph are connected to each other, we cannot add any new edges to the graph.
+On the other hand, if we allow for vertices that are not connected to any other vertex, then the number of vertices can be far greater than the number of edges.
+In particular, there is then no maximum to the number of vertices as a function of the number of edges.
+Moreover, there are only finitely many graphs with any given number of vertices, whereas there are infinitely many for any given number of edges.
+For this reason, we may consider the number of vertices to be a more fundamental metric than the number of edges.
+However, calling a graph with very many vertices but hardly any edges \enquote{large} may conflict with our intuitive notion of size.
+
+Again, what graphs are large depends on what is meant by \enquote{large}.
+In each context the appropriate notion of size may be different.
+Roughly speaking, the size of an object relates to how difficult it is to work with.
+The more extreme the dimensions or masses of objects are, the more inconvenient processing them will likely be.
+
+Returning to graphs, some actions on graphs may conceivably be easier on graphs with a smaller diameter.
+In the context of such actions, the diameter of a graph may be a good measure of the size of a graph.
+Other contexts may favor graphs in which the edges can be covered by a smaller number of vertices.
+A set of vertices that cover the edges of a graph is called a \emph{vertex cover}.
+In contexts that favor small vertex covers, the minimum size of a vertex cover may be a good measure of the size of a graph.
+
+As a demonstration of the possible disagreement between all these measures of the size of a graph, consider the graph in Figure~\ref{fig:graphs:wagner}.
+This graph is known as the \emph{Wagner graph}.
+Because it cannot be drawn without some edges crossing each other, there is no meaningful way we can assign a value to the number of faces of this graph.
+Of course, there are also no corners in the way that our shapes had them, but the Wagner graph does have vertices, which can be counted just as well.
+As far as the number of vertices or the number of edges are concerned, the Wagner graph, Figure~\ref{fig:graphs:wagner}, has the same size as the graph of the cube, Figure~\ref{fig:graphs:cube}.
+\begin{center}
+  \begin{tabular}{r|p{2em}rp{1em}p{2em}rp{1em}}
+    &	\multicolumn{3}{c}{\emph{cube graph}}	& \multicolumn{3}{c}{\emph{Wagner graph}} \\
+    \hline
+    \emph{vertices}	&& $8$	&&& $8$ \\
+    \emph{edges}	&& $12$	&&& $12$	& \hspace{0pt} \\
+    \emph{diameter}	&& $3$	&&& $2$ \\
+    \emph{vertex cover}	&& $4$	&&& $5$
+  \end{tabular}
+\end{center}
+On our other two metrics, the graphs differ.
+The Wagner graph has a smaller diameter than the cube graph.
+By contrast, the minimum size of a vertex cover, listed simply as \emph{vertex cover} in the table above, is smaller for the cube graph.
+Thus, we see that which of the two graphs is larger depends on the metric that is used and hence on the context in which we compare the two graphs.
 
 
 \bigsection{Historical Encounters}
@@ -209,7 +256,7 @@ Visually, the arithmetical hierarchy thus looks like depicted in Figure~\ref{fig
     \end{tikzpicture}
     \caption{
       The arithmetical hierarchy
-      \\\hspace{0pt} \\\hspace{0pt} % For alignment
+      \\\hspace{0pt}\\\hspace{0pt} % For alignment
     }
     \label{fig:arithmetical_hierarchy}
   \end{subfigure}
@@ -322,6 +369,16 @@ When restricting to inputs on which such \emph{natural parameters} assume small 
 As inputs with low parameter values may be abundant, it may be that large subsets of the input space are easy to digest for some decision procedure.
 In addition, \citeauthor{garey1979computers} note that inputs encountered in practice may tend to have low parameter values:
 \enquote{\textelp{} in practice it is often the subproblem, rather than the general problem, that we are called upon to solve.}
+
+\begin{example}
+\label{ex:type_inference}%
+  The standard compilers for the Rust programming language and the Haskell programming language are able to infer data types of variables and functions.
+  The algorithm they use for this has a worst-case running-time that scales exponential as a function of the length of its input.
+  However, such exponential running times are experienced very rarely in practice~\parencite{kanellakis1989polymorphic}.
+  Thus, some property of the expressions that this algorithm operates on behaves in a special way for inputs that are encountered in practice.
+  Indeed, the origin of the exponential running time of the algorithm can be traced back to the nesting depth of a certain pattern in the expressions.
+  In practice, this nesting depth is almost always low.
+\end{example}
 
 \begin{example}
 \label{ex:clique}%
@@ -851,6 +908,7 @@ In the \pr{VertexCover} problem, we are given a pair~$\pair{G}{k}$ and are asked
 Like membership in \pr{Partition}, membership in \pr{VertexCover} can be decided in a time that is polynomial in~$n$ and exponential in~$k$.
 Thus, deciding membership in \pr{VertexCover} is fixed-parameter tractable.
 An easy way to see that this is the case is by considering the following recursive algorithm for deciding whether $G$ has a vertex cover of at most $k$ vertices.
+%TODO: \pagebreak
 \begin{codelisting}
 \item
   We \code{assert} that $k$ is nonnegative, for otherwise $G$ cannot possibly have a vertex cover of at most $k$ vertices.
@@ -1089,7 +1147,7 @@ It follows from Figure~\ref{fig:decomposition} that the treewidth of the cube gr
 Yet, a tree decomposition of smaller width is possible, as shown in Figure~\ref{fig:decomposition_cube}.
 This decomposition happens to be optimal and the treewidth of the cube graph is three.
 
-\begin{figure}
+\begin{figure}[p]
   \centering
   \begin{tikzpicture}[sibling distance=8em, level distance=1.5cm]
     \node {\{b, c, f, g\}}
