@@ -11,14 +11,14 @@
 \usepackage{subcaption}
 \usepackage{tikz,pgfplots}
 \usepackage[hidelinks]{hyperref}
-
-\usepackage{todonotes} %TODO: get rid of all TODO items
+\usepackage[section]{placeins}
 
 \usetikzlibrary{babel,decorations.pathreplacing,graphs,graphdrawing,patterns,quotes}
 \usegdlibrary{layered}
 
 \input{notation}
 
+\renewcommand{\bottomfraction}{.45}
 
 \newcommand{\bigsection}[1]{\clearpage\section{#1}}
 
@@ -49,8 +49,11 @@
 \end{@slogan}}
 \newcommand{\l@slogan}{\@dottedtocline{1}{0em}{3.8em}}
 \newcommand{\listofslogans}{%
+  \newcommand{\listsloganname}{List of Slogans}%
   \renewcommand{\@tocrmarg}{3.8em}%
-  \chapter*{List of Slogans}%
+  \chapter*{\phantomsection\pdfbookmark{\listsloganname}{@listofslogans}%
+    \listsloganname%
+    \@mkboth{\listsloganname}{\listsloganname}}% Headings not uppercased
   \@starttoc{los}%
 }
 \makeatother

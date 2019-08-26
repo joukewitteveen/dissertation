@@ -1,4 +1,5 @@
 \chapter{Conclusion}
+\label{ch:conclusion}%
 
 The main results of this thesis were presented not only as formal theorems, but also as informal slogans.
 A listing of all the slogans is provided at the front of this thesis.
@@ -109,7 +110,7 @@ The framework offers five levels of abstraction for the analysis of complexity.
 In this thesis, we have looked at various forms of complexity and analyzed them at various levels of abstraction.
 At the same time, these analyses provided insight into the details of the framework, and in particular into the class of fixed-parameter tractable sets.
 Section~\ref{sec:computability}, where we studied computability as a notion of complexity, revealed to what sets a notion of fixed-parameter tractability may apply.
-In particular, fixed-parameter tractability is concerned with decidable sets, or, if we stretch our definitions, with sets at the $\Delta^0_2$ level of the arithmetical hierarchy.
+In particular, fixed-parameter tractability is concerned with decidable sets, or, if we stretch our definitions, with sets at the $\Delta^0_2$~level of the arithmetical hierarchy.
 Next, in Section~\ref{sec:tractability}, we found that most sets that interest us have no optimal parameterizations in relation to fixed-parameter tractability.
 In Section~\ref{sec:algorithmic}, we obtained results on two levels of abstraction.
 On the level of filters, plural, we  looked at sets with the same complexity profile from a fixed-parameter tractability point of view.
@@ -119,20 +120,29 @@ We found that the measure of complexity embodied by a parameterization is more s
 More so than these two measures of algorithmic complexity, parameterizations offer opportunities for the consideration of uniformity constraints.
 Another comparison with an existing framework was made in Section~\ref{sec:statistics}.
 Here, parameterizations were related to statistical model classes.
-As it turns out, parameter estimation can be interpreted either in the context of computational complexity, of in the context of statistics.
+As it turns out, parameter estimation can be interpreted both in the context of computational complexity, and in the context of statistics.
 These two different interpretation allow insights from both contexts to be shared.
 Lastly, in Section~\ref{sec:redundancy}, we returned to a complexity-theoretic study of the complexity class of fixed-parameter tractability,~\cl{FPT}.
 This class is closed under several related notions of reducibility known collectively as kernelization.
-By looking at refined version of these reducibilities, polynomial kernelization, we uncovered a proper hierarchy inside~\cl{FPT}.
+By looking at refined version of these reducibilities, polynomial kernelization, we uncovered a proper hierarchy inside~\cl{FPT}, shown in Figure~\ref{fig:kernel_hierarchy}.
 
 \medbreak
 What, then, is the size of a cube?
 If the size of a cube relates to how convenient it is to work with compared to other shapes, the size necessarily depends on what we try to do with the cube.
 However, even if we have a specific application in mind, there may be multiple ways to measure the cube.
+
 Our goal may be to decide membership in a given set and convenience may be determined purely by the time needed to do so.
-In that case, the ways to measure the cube are the parameterizations with which our decision problem is in~\cl{FPT}.
+In that case, the ways to measure the cube are given by the parameterizations with which our decision problem is in~\cl{FPT}.
+As we have seen in Section~\ref{sec:tractability}, there may thus be no definitive way to measure the cube.
 Perhaps the best we can do, mathematically, is to consider the filter of all these parameterizations.
-At the very least, this filter holds information on all the ways the complexity of the cube can relate to the complexity of other shapes.
+At least, this filter holds information on all the ways the complexity of the cube can relate to the complexity of other shapes.
+
+Convenience could be determined by more than the time needed to decide membership in a given set.
+It could be that our use case desires that a certain polynomial kernelization exists for our decision problem.
+In that case, following Section~\ref{sec:redundancy}, the ways to measure the cube are given by a subset of the parameterizations with which our decision problem is in~\cl{FPT}.
+
+Whatever parameterization we end up with to measure the cube, we know from Section~\ref{sec:statistics} that we are not measuring only computational complexity.
+Every measure given by a parameterization is also a measure of useful information.
 
 
 \bigsection{Historical Encounters}

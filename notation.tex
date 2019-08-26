@@ -4,8 +4,13 @@
 \defineshorthand{"~}{\babelhyphen{nobreak}}
 \AtBeginDocument{\useshorthands*{"}}
 
-\tikzset{>=latex,radius=\pgfplotmarksize}
-\pgfkeys{/pgf/number format/set thousands separator={\,}}
+\tikzset{
+  >=latex,
+  help lines/.append style={line width=0.3pt},
+  radius=\pgfplotmarksize,
+  /pgf/number format/1000 sep={\,},
+  /pgf/number format/min exponent for 1000 sep=4
+}
 \pgfplotsset{compat=1.16,cycle list name=black white,colormap name=viridis}
 
 
@@ -73,6 +78,6 @@
 \newcommand{\symdiff}{\bigtriangleup}	% Symmetric difference
 
 \newcommand{\immune}[1]{almost #1\babelhyphen{nobreak}bi-immune}
-\newcommand{\levelable}[1]{#1\babelhyphen{nobreak}omni-levelable}
+\newcommand{\levelable}[1]{#1\babelhyphen{nobreak}semi-levelable}
 
 % vim:ts=50

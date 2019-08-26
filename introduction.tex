@@ -1,5 +1,31 @@
 \chapter{Introduction}
 
+No matter how powerful a machine, it may not be powerful enough.
+This is true of machines that do physical work, but also of machines that compute, as every computer will struggle on some workloads.
+When a computational task gets challenging, it is said to be complex.
+This is not very precise and indeed, the word \emph{complexity} is used to indicate a wide variety of phenomena.
+
+This thesis introduces a unified framework for the analysis of a multitude of forms of complexity.
+A unifying theory need not be better than any of the specific theories it tries to include.
+However, it may open the door to new ways of thinking about old concepts and thus enable future developments.
+
+We begin this introductory chapter with an informal section, arguing that there is really no single form of complexity.
+This section, Section~\ref{sec:size_of_a_cube}, is intended to be readable by a broad audience and is centered around intuition more than around mathematics.
+In Section~\ref{sec:history}, we take a more in-depth look at some of the ways complexity pops up in mathematics and computer science.
+The notions of complexity that emerge shall each be subject to an analysis in our unified framework in Chapter~\ref{ch:parameterizations}.
+Our unified framework offers a mathematical model of complexity rooted in a branch of computer science called \emph{parameterized complexity theory}.
+We shall review the existing formalisms in parameterized complexity theory in Section~\ref{sec:parameterized_complexity_theory}.
+A short overview of the contributions presented in this thesis is given in Section~\ref{sec:contributions}.
+
+Following this introductory chapter is a chapter that contains the background theory required for our analysis of multiple forms of complexity.
+This background chapter contains two parts.
+The first part, Section~\ref{sec:established_theory}, deals with established theory and serves to make this thesis self-contained.
+In the second part, Section~\ref{sec:framework}, our new framework for the analysis of complexity is laid out.
+
+The body of this thesis is formed by Chapter~\ref{ch:parameterizations}, which contains all of our results.
+It is split into five parts, each dealing with a different form of complexity.
+A high-level overview of our results in a shared context is given in Chapter~\ref{ch:conclusion}.
+
 
 \bigsection{The Size of a Cube}
 \label{sec:size_of_a_cube}%
@@ -67,7 +93,7 @@ Thus, the answer to this question depends on what is meant by \enquote{the large
 For our shapes, the situation is no better.
 Especially since the figure only shows the abstract essence of a tetrahedron, a cube, and a dodecahedron.
 Were the figure to show any particular physical instances of these shapes, then at least we could have compared masses and lengths.
-However, abstract shapes can be measured too.
+Luckily, abstract shapes can be measured too.
 The number of corners, the number of edges, and the number of faces are a few of the metrics we can look at.
 In all of these measures, a cube, Figure~\ref{fig:cube}, is larger than a tetrahedron, Figure~\ref{fig:tetrahedron}, and smaller than a dodecahedron, Figure~\ref{fig:dodecahedron}.
 \begin{center}
@@ -144,7 +170,7 @@ Its three-dimensional nature is of lesser interest and the cube may as well be r
   }
 \end{figure}
 
-Note that for graphs in general, there is a maximum to the number of edges as a function of the number of vertices.
+Note that for all simple graphs, there is a maximum to the number of edges as a function of the number of vertices.
 Once all vertices in a graph are connected to each other, we cannot add any new edges to the graph.
 On the other hand, if we allow for vertices that are not connected to any other vertex, then the number of vertices can be far greater than the number of edges.
 In particular, there is then no maximum to the number of vertices as a function of the number of edges.
@@ -156,6 +182,8 @@ Again, what graphs are large depends on what is meant by \enquote{large}.
 In each context the appropriate notion of size may be different.
 Roughly speaking, the size of an object relates to how difficult it is to work with.
 The more extreme the dimensions or masses of objects are, the more inconvenient processing them will likely be.
+This is true for the physical processing of physical objects, but also for processing abstract objects computationally.
+It is the latter kind of processing that this thesis is concerned with.
 
 Returning to graphs, some actions on graphs may conceivably be easier on graphs with a smaller diameter.
 In the context of such actions, the diameter of a graph may be a good measure of the size of a graph.
@@ -180,8 +208,13 @@ As far as the number of vertices or the number of edges are concerned, the Wagne
 \end{center}
 On our other two metrics, the graphs differ.
 The Wagner graph has a smaller diameter than the cube graph.
-By contrast, the minimum size of a vertex cover, listed simply as \emph{vertex cover} in the table above, is smaller for the cube graph.
+By contrast, the minimum size of a vertex cover, listed simply as \enquote{\emph{vertex cover}} in the table above, is smaller for the cube graph.
 Thus, we see that which of the two graphs is larger depends on the metric that is used and hence on the context in which we compare the two graphs.
+
+\medbreak
+In the next section of this chapter, Section~\ref{sec:history}, several more examples of the multifaceted nature of complexity are discussed more formally.
+The remainder of this thesis then works towards a unified analysis of complexity that works for each of the forms of complexity we identify in Section~\ref{sec:history}.
+Finally, in Section~\ref{sec:conclusion:size_of_a_cube}, we shall return briefly to measuring a cube, and summarize our findings.
 
 
 \bigsection{Historical Encounters}
@@ -193,6 +226,7 @@ In this thesis, we put forward a mathematical formalization of the notion of com
 First, let us review some of the ways we may encounter complexity and what structural properties these many forms of complexity are involved with.
 In relation to their notions of complexity, each of these structural properties points at a line of thinking that is essentially parameterized.
 In Chapter~\ref{ch:parameterizations}, this parameterized nature is made explicit by rephrasing the corresponding results in a unified parameterized framework.
+A historical overview of the theoretical side of parameterized reasoning can be found in Section~\ref{sec:conclusion:history}.
 
 \subsection{Computability}
 \label{sec:history:computability}%
@@ -275,7 +309,7 @@ Visually, the arithmetical hierarchy thus looks like depicted in Figure~\ref{fig
       };
     \end{tikzpicture}
     \caption{
-      The difference hierarchy lies below the $\Delta^0_2$ level of the arithmetical hierarchy.
+      The difference hierarchy lies below the $\Delta^0_2$~level of the arithmetical hierarchy.
     }
     \label{fig:difference_hierarchy}
   \end{subfigure}
@@ -357,7 +391,7 @@ The running time of a decision procedure is therefore traditionally expressed as
 As we saw in Section~\ref{sec:size_of_a_cube}, the notion of input size is heavily reliant on the choice of an encoding scheme for inputs.
 No computable encoding scheme reflects all possible structural aspects an input may have.
 This is especially visible in contexts that offer some \enquote{standard} encoding.
-For instance, in graph theory, graphs are often thought of as encoded by an adjacency matrix.
+For instance, in graph theory~\parencite{diestel2017graph}, graphs are often thought of as encoded by an adjacency matrix.
 In that case, the size of a graph is determined by the number of its vertices.
 However, certain structural properties other than the number of vertices may be exploitable by a decision procedure for a set of graphs.
 Regarding sets that are intractable because the running time of a decision procedure is at least exponential as a function of the input size, \citeauthor{garey1979computers} remark the following.
@@ -383,7 +417,7 @@ In addition, \citeauthor{garey1979computers} note that inputs encountered in pra
 \begin{example}
 \label{ex:clique}%
   We can model a social network by a graph, representing persons by vertices and connecting two vertices when the persons they represent know each other.
-  Given a graph that models mutual acquaintance, we may ask how large a subset of people there exists that all know each other.
+  Given a graph that models mutual acquaintance, we may ask how large a subset of people there exists that all know each other~\parencite[a \emph{clique}, see][]{diestel2017graph}.
   This is formalized by the set
   \begin{align*}
     \defkeyat{Clique@\pr{Clique}}{\pr{Clique}} \deq \{(G, l) \st &\text{there is a set of at least $l$ vertices of the graph~$G$ in which} \\
@@ -493,6 +527,7 @@ These parameters need not be independent of one another, and their interactions 
 Parameterized computational complexity theorists are tasked with gaining insight in these interactions.
 
 \subsection{Algorithmic Complexity}
+\label{sec:history:algorithmic}%
 Complexity, in whatever incarnation, can often be traced back to a lack of structure.
 Objects that are evidently highly structured are easy to analyze and an unlikely cause of complexity.
 But what makes an object structured?
@@ -524,6 +559,7 @@ Often, we can identify a value inside a structural property that can be generali
 The property can then be seen as an instantiation of an underlying property schema.
 This is most apparent when the structural property has an element of counting in it, such as is the case with our \enquote{has $9$~edges} property in the example above.
 \begin{example}[continued]
+\label{ex:edges}%
   Replacing the value~$9$ in the property \enquote{has $9$~edges} by the variable $e$, we obtain the property schema \enquote{has $e$~edges}.
 \end{example}
 
@@ -622,6 +658,7 @@ For a more thorough treatment of informativeness, we need a formal description o
 Typically, we link information to \emph{entropy}~\parencite{cover2006elements}, thus bringing statistics on board the study of informativeness.
 Information, then, relates to a property of a data source that expresses how unpredictable the data source is.
 In other words, information is what breaks the mold, as it defies our expectation.
+We remark that there is more to information than entropy alone, but refer the interested reader to the philosophical overview by~\textcite{adriaans2008philosophy}.
 
 Different kinds of data come with different expectations.
 Some patters are more clearly presented in certain modes of presentation, and conversely some modes of presentation make us expect certain patterns.
@@ -903,12 +940,12 @@ A parameterized decision problem $A$ is said to be \emph{fixed-parameter tractab
 Specifically, for some function~$f$ and constant~$c$, membership in~$A$ of a pair~$\pair{x}{k}$, where $x$ is of length~$n$, must be decidable in time~$f(k) \cdot n^c$.
 
 A renowned example of a parameterized decision problem is \pr{VertexCover}.\indexkey{VertexCover@\pr{VertexCover}}
-A vertex cover of an $n$-vertex graph~$G$ is a collection,~$C$, of vertices from~$G$ such that every edge in~$G$ is incident to a vertex in~$C$.
-In the \pr{VertexCover} problem, we are given a pair~$\pair{G}{k}$ and are asked whether $G$ has a vertex cover of at most $k$ vertices.
+A vertex cover of an $n$-vertex graph~$G$ is a collection,~$C$, of vertices from~$G$ such that every edge in~$G$ is incident to a vertex in~$C$~\parencite{diestel2017graph}.
+In the \pr{VertexCover} problem, we are given a graph~$G$ and a number~$k$, and are asked whether $G$ has a vertex cover of at most $k$ vertices.
 Like membership in \pr{Partition}, membership in \pr{VertexCover} can be decided in a time that is polynomial in~$n$ and exponential in~$k$.
 Thus, deciding membership in \pr{VertexCover} is fixed-parameter tractable.
 An easy way to see that this is the case is by considering the following recursive algorithm for deciding whether $G$ has a vertex cover of at most $k$ vertices.
-%TODO: \pagebreak
+\pagebreak%
 \begin{codelisting}
 \item
   We \code{assert} that $k$ is nonnegative, for otherwise $G$ cannot possibly have a vertex cover of at most $k$ vertices.
@@ -933,9 +970,9 @@ As each individual call can be executed in a time polynomial in~$n$, we find tha
 
 The parameter in the parameterized decision problem \pr{VertexCover} emerges naturally.
 We could say that we have parameterized the vertex cover problem by the solution size.
-Similarly, we could consider a parameterized version of the \pr{Clique} problem, where we parameterize by the solution size.
-That is, we are given a pair $\pair{G}{k}$ and are asked whether the graph~$G$ contains a clique of at least~$k$ vertices.
-If we let $n$ denote the number of vertices in $G$, we find that there are no more than $n^k$ subsets of $k$~vertices in $G$.
+Similarly, we could consider a parameterized version of the \pr{Clique} problem, where we parameterize by the solution size.\indexkey{Clique@\pr{Clique}}
+That is, we are given a graph~$G$ and a number~$k$, and are asked whether the graph~$G$ contains a clique of at least~$k$ vertices.
+If we let $n$ denote the number of vertices in $G$, we find that there are no more than $n^k$ subsets of $k$~vertices of $G$.
 From this, we immediately find that deciding membership in the parameterized version of \pr{Clique} is possible within a time bound of the form~$n^k$.
 At the same time, it is widely believed that deciding membership in \pr{Clique}, parameterized by the solution size, is not fixed-parameter tractable~\parencite{downey1999parameterized,cygan2015parameterized}.
 This is where things get interesting, because when parameterized differently, \pr{Clique} may well be fixed-parameter tractable.
@@ -949,10 +986,11 @@ and consider \pr{Clique} parameterized by the minimum vertex cover size,
   \pr{Clique}_\pr{VC} \deq \{\pair{(G, l)}{k} \st &(G, l) \in \pr{Clique} \reland \\
   	&\text{$G$ has a vertex cover of at most $k$ vertices}\}.
 \end{align*}
-A fixed-parameter tractable decision algorithm for $\pr{Clique}_\pr{VC}$ may proceed as follows when given $G$, $l$, and $k$ as input, where $G$ has $n$ vertices \parencite[Section~15.2.4]{cygan2015parameterized}.
+An algorithm witnessing that $\pr{Clique}_\pr{VC}$ is fixed-parameter tractable may proceed as follows when given $G$, $l$, and $k$ as input, where $G$ has $n$ vertices \parencite[Section~15.2.4]{cygan2015parameterized}.
 \begin{codelisting}
 \item
-  \code{Use} the fixed-parameter tractable algorithm for \pr{VertexCover} to find a vertex cover, $C$, of~$G$ that contains at most $k$ vertices.
+  \code{Use} our earlier algorithm for \pr{VertexCover} to find a vertex cover,~$C$, of~$G$ that contains at most $k$ vertices.
+  Note that the running time of this algorithm is as required for showing that \pr{VertexCover} is fixed-parameter tractable.
 \item
   \code{If} no such vertex cover exists, our input instance is not a member of $\pr{Clique}_\pr{VC}$.
 \item
@@ -980,7 +1018,7 @@ The function~$\kappa$ is required to be computable in polynomial time.
 With this, we mean that if $x$ has length $n$, the time required for computing $\kappa(x)$ can be bounded by a polynomial in~$n$.
 Of course, the polynomial must be independent of~$x$.
 The definition of fixed-parameter tractability of~$A$ with respect to~$\kappa$ is similar to the definition in the framework of \citeauthor{downey1999parameterized}.
-This time, however, the parameter value is not part of the input of a fixed-parameter tractable decision procedure for~$A$, but obtained using~$\kappa$.
+This time, however, the parameter value is not part of the input of a decision procedure for~$A$, but obtained using~$\kappa$.
 Specifically, for some function~$f$ and constant~$c$, membership in~$A$ of an instance~$x$ of length~$n$ must be decidable in time $f(\kappa(x)) \cdot n^c$.
 As this approach separates parameters from instances, the framework allows for a study of the parameterized computational complexity of nonmembers.
 In this regard, it is an improvement over the framework of \citeauthor{downey1999parameterized}.
@@ -998,7 +1036,7 @@ With \citeauthor{garey1979computers}, we saw that \pr{Partition} has a pseudo-po
 In the parlance of \citeauthor{flum2006parameterized}, we would say that \pr{Partition} is fixed-parameter tractable with respect to the parameterization~$\kappa$.
 A similar observation can be made about the parameter with respect to which \citeauthor{garey1979computers} consider \pr{Clique}.
 This parameter is represented by a function that takes as input a graph~$x$, and computes the highest degree of any of the vertices of~$x$.
-The time required for this computation can be bounded polynomially in the number of vertices of the instance~$x$.
+The time required for this computation can be bounded polynomially in the number of vertices in the instance~$x$.
 Thus, this parameter too can be modeled in the \citeauthor{flum2006parameterized} framework.
 
 The minimum vertex cover size, as used with $\pr{Clique}_\pr{VC}$, is a more problematic parameter.
@@ -1007,7 +1045,7 @@ Hence, it would not qualify as a parameterization in the sense of \citeauthor{fl
 A typical solution to this is to make the desired parameter value a part of the instance \parencite[for instance][Section~15.2.4]{cygan2015parameterized}.
 Instead of looking at \pr{Clique} with respect to a function that computes the minimum vertex cover size, we turn to $\pr{Clique}_\pr{VC}$.
 In general, we can define a parameterization in the style of \citeauthor{flum2006parameterized} for parameterized decision problems in the style of \citeauthor{downey1999parameterized}.
-For a set of pairs~$\pair{x}{k}$, where $k$ is the parameter, the appropriate parameterization is defined as
+For a set of pairs~$\pair{x}{k}$, where $k$ is the parameter value, the appropriate parameterization is defined as
 \begin{equation}
 \label{eq:parameterization}
   \kappa(\pair{x}{k}) \deq k.
@@ -1017,12 +1055,13 @@ We have already seen that $\pr{Clique}_\pr{VC}$ is fixed-parameter tractable in 
 From that, we can conclude that $\pr{Clique}_\pr{VC}$ is also fixed-parameter tractable with respect to~\eqref{eq:parameterization} in the \citeauthor{flum2006parameterized} framework.
 However, we are still unable to analyze the computational complexity of the unmodified classical \pr{Clique} problem with respect to the minimum vertex cover size.
 This objection can be responded to in two ways.
-We may hold the position that the minimum vertex cover size is not a proper parameter, as it cannot be computed in polynomial time.
+\phantomsection\label{p:computing_parameters}%
+We may hold the position that the minimum vertex cover size is not a proper parameter, as it cannot be computed in polynomial time, assuming \cl{NP} differs from~\cl{P}.
 On the other hand, we should take into account that \pr{VertexCover} is fixed-parameter tractable with respect to the size of its solution.
-That is, it is fixed-parameter tractable with respect to the parameterization that maps an instance $\pair{G}{k}$ to $k$.
-For this reason, a fixed-parameter tractable algorithm for, say, \pr{Clique} does have sufficient time to compute the minimum vertex cover size.
+That is, it is fixed-parameter tractable with respect to the parameterization that maps an instance $(G, k)$ to $k$.
+For this reason, an algorithm for $\pr{Clique}_\pr{VC}$ with a running time as required by fixed-parameter tractability has sufficient time to compute the minimum vertex cover size.
 
-An important parameter of graphs that has a similar issue as the minimum vertex cover size is \emph{treewidth}~\parencite{robertson1986graph,bodlaender1998partial}.
+An important parameter of graphs that has a similar issue as the minimum vertex cover size is \emph{treewidth}~\parencite{robertson1986graph,bodlaender1998partial,diestel2017graph}.
 For many decision problems on graphs, it has been observed that the more an instance resembles a tree, the easier it is to decide membership.
 This is because information regarding the decision can be propagated along the branches of the tree.
 The resemblance to a tree can be formalized by considering ways in which a graph~$G$ can be decomposed into a tree that represents $G$.
@@ -1147,7 +1186,7 @@ It follows from Figure~\ref{fig:decomposition} that the treewidth of the cube gr
 Yet, a tree decomposition of smaller width is possible, as shown in Figure~\ref{fig:decomposition_cube}.
 This decomposition happens to be optimal and the treewidth of the cube graph is three.
 
-\begin{figure}[p]
+\begin{figure}[hp]
   \centering
   \begin{tikzpicture}[sibling distance=8em, level distance=1.5cm]
     \node {\{b, c, f, g\}}
@@ -1183,3 +1222,32 @@ However, this goes against the spirit of fixed-parameter tractability analysis, 
 On the one hand, the \citeauthor{flum2006parameterized} framework improves on the \citeauthor{downey1999parameterized} framework by separating parameterizations from problems.
 It isolates parameterizations as independent objects of study.
 On the other, it requires parameter values to be unique for a given instance, which limits its use in analyzing the interplay between different parameters.
+
+
+\bigsection{Contributions}
+\label{sec:contributions}%
+
+This thesis, in Section~\ref{sec:framework}, Section~\ref{sec:tractability:stratified}, and Section~\ref{sec:tractability:order_theory}, introduces a novel take on parameterized complexity theory, rooted firmly in mathematics.
+In this new framework, the shortcomings of the two existing frameworks are addressed.
+Our contributions are obtained in the five sections of Chapter~\ref{ch:parameterizations}.
+
+We begin an investigation into the extent to which parameterizations can be used as a measure of complexity of individual instances.
+A comparison with an older notion of \emph{instance complexity} from algorithmic complexity theory is made in Section~\ref{sec:algorithmic:ic}.
+In Section~\ref{sec:algorithmic:randomness_hardness}, a further comparison between instance-based measures of algorithmic and computational complexity is carried out.
+A comparison with the notion of \emph{sophistication} from algorithmic statistics is made in Section~\ref{sec:statistics}.
+
+There may be many parameterizations that are of interest for a given problem, so we might hope for the existence of a parameterization that is somehow \emph{optimal}.
+In Section~\ref{sec:tractability:optimal} and Section~\ref{sec:tractability:optimalnu}, we provide a near-complete characterization of the problems for which there is an optimal parameterization with respect to fixed-parameter tractability.
+We find that there is often no optimal parameterization among those with which a problem is fixed-parameter tractable.
+
+More generally, this thesis furthers our understanding of the class of fixed-parameter tractable problems.
+We explore what it means for a problem to be fixed-parameter tractable.
+Results of this kind are obtained as a by-product of a more general study of parameterized computability in Section~\ref{sec:computability}.
+
+An alternative characterization of the class of fixed-parameter tractable problems that does not mention parameterizations is suggested in Section~\ref{sec:algorithmic:equivalent_filters}.
+In that section, we find out what the parameterizations with respect to which a problem is fixed-parameter tractable tell us about the problem.
+We conjecture that the notion of complexity put forth by fixed-parameter tractability is characterized by the quotient group $\Delta^0_1 / \cl{P}$ with respect to symmetric difference.
+Here, $\Delta^0_1$ is the class of decidable sets, the first intersection level of the arithmetical hierarchy.
+
+Lastly, in Section~\ref{sec:redundancy}, we uncover a hierarchy inside the class of fixed-parameter tractable problems.
+This hierarchy is based on polynomial kernelization, which is a form of reducibility.

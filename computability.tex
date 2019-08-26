@@ -7,9 +7,9 @@ At the same time, computability theory can be seen as a theory of computational 
 
 A parameterized study of decidability was started already in 1965 \parencite{putnam1965trial,gold1965limiting}, some thirty years before a parameterized investigation of computational complexity took off.
 In this section, we shall recast some of the classical results in an explicitly parameterized framework, noting the new insights thus obtained.
-The central idea is that a hierarchy of undecidability, the difference hierarchy, can be be used to characterize the structure of undecidability inside sets.
-Not all instances of an undecidable set are equally responsible for the severity of the sets undecidability.
-To no surprise, the use of parameters for the analysis of undecidability leads to questions surrounding the computability of the parameters themselves.
+The central idea is that a hierarchy of undecidability, the difference hierarchy, can be used to characterize the structure of undecidability inside sets.
+Not all instances of an undecidable set are equally responsible for the severity of the set's undecidability.
+Unsurprisingly, the use of parameters for the analysis of undecidability leads to questions surrounding the computability of the parameters themselves.
 Some of our insights on this front will be relevant to forms of complexity other than decidability.
 
 \subsubsection{Synopsis}
@@ -19,7 +19,7 @@ Ideally, a parameterized analysis of computability would allow us to distinguish
 We find that unless some undecidability is permitted in the parameterizations that we take into account, our framework can only deal with decidable sets.
 In fact, even when we allow for semidecidability in our parameterizations, our framework still only handles decidable sets.
 
-In Section~\ref{sec:computability:bounded}, we shift our focus to the behavior of convergent parameterized procedures that do not converge on a decidable parameterization.
+In Section~\ref{sec:computability:bounded}, we shift our focus to the behavior of convergent parameterized procedures that do not converge on any \emph{decidable} point-cofinite parameterization.
 The type of behavior we look at generalizes semidecidability and makes a parameterized study of computability possible also for sets that are not decidable.
 The measure of complexity that arises is shown to be closely related to the difference hierarchy and, more generally, to computability in the limit.
 
@@ -33,9 +33,11 @@ This provides a new perspective on these frameworks, and shows precisely how tha
 
 The different degrees of undecidability of parameterizations is exploited in Section~\ref{sec:computability:subparameterizations}.
 They are used to show the existence of a set that is far from semidecidable, yet at the same time exhibits some structure.
-Given two instances, it is easy to decide which of them is more likely to be a member of the set.
+Given two instances, it is easy to decide which of the two is more likely to be a member of the set.
 This result is not new, but our parameterized framework enables a proof that is much more transparent than the known proof.
 
+Most of the results in this entire section are refinements of the work by~\textcite{witteveen2016fixed}.
+Their early versions of the ideas on a parameterized exploration of computability were not yet part of an overarching theory, as is the case in this thesis.
 Broadly, we can conclude from our parameterized exploration of computability that parameterized complexity needs to explicitly keep track of parameterizations.
 We must not try to classify sets based on whether or not a parameterization \emph{exists} with respect to which the set has certain properties.
 Otherwise, we would find that the properties are irrelevant:
@@ -45,7 +47,7 @@ The entire classification would depend solely on the undecidability allowed of p
 \subsection{Decidable and Semidecidable Parameterizations}
 \label{sec:computability:decidable}%
 Arguably the most elementary parameterizations are decidable parameterizations.
-With \defkeyat{parameterization!decidable}{decidable}, we mean that there is a procedure that, when given some input $(x, k) \in \binary^+ \times \binary^+$, decides whether the $k$th slice of the parameterization includes $x$.
+With \defkeyat{parameterization!decidable}{decidable}, we mean that there is a procedure that, when given some input $(x, k) \in \binary^+ \times \binary^+$, decides whether slice~$k$ of the parameterization includes $x$.
 From a computability perspective, such parameterizations are fairly uninteresting.
 \begin{theorem}
 \label{thm:decidable}%
@@ -72,7 +74,7 @@ $\ref{enum:decidable:converging} \implies \ref{enum:decidable:converging_on}$.
   If the procedure outputs \bits{?}, then slice $k$ of the parameterization does not include $x$, otherwise it does.
 
 $\ref{enum:decidable:converging_on} \implies \ref{enum:decidable:decidable}$.
-  Because a parameterization is a cover, for every instance $x$, there is a parameter value $k$ such that the $k$th slice of the parameterization includes $x$.
+  Because a parameterization is a cover, for every instance $x$, there is a parameter value $k$ such that slice~$k$ of the parameterization includes $x$.
   Given an instance $x$, such a $k$ can be found by running the decision procedure for the parameterization on $(x, \asStr(1))$, $(x, \asStr(2))$, $(x, \asStr(3))$, and so on, until we find an accepted pair.
   Membership of $x$ in $A$ can then be decided by running the parameterized procedure on the pair thus found.
 \end{proof}
@@ -80,11 +82,11 @@ $\ref{enum:decidable:converging_on} \implies \ref{enum:decidable:decidable}$.
 In other words, with respect to parameterized procedures, the decidable parameterizations characterize the decidable sets.
 Note that the decidability requirement for decidable parameterizations is uniform in the parameter $k$:
 A single decision procedure has to be available that works for all values of $k$.
-Therefore, the only class we could reasonably call \emph{uniformly fixed-parameter decidable} is the class of decidable problems.
+Therefore, the only class we could reasonably call \emph{uniformly fixed-parameter decidable} is the class of decidable sets.
 As far as our parameterized analysis of decidability is concerned, this is not very interesting yet.
 
 A naive broadening of our scope does not get us anywhere new.
-Calling a parameterization semidecidable when its slices are semidecidable uniformly in the parameter value only leads to an extension of Theorem~\ref{thm:decidable}.
+Calling a parameterization \emph{semidecidable} when its slices are semidecidable uniformly in the parameter value only leads to an extension of Theorem~\ref{thm:decidable}.
 Recall that \enquote{uniformly in the parameter value} means that the semidecidability of the slices is witnessed by a single procedure that takes two arguments.
 The partial application of this procedure to a given parameter value yields a witness of the semidecidability of the corresponding slice.
 \begin{theorem}
@@ -99,7 +101,7 @@ $\ref{enum:decidable:converging_on} \implies \ref{enum:decidable:semidecidable}$
   Since a decidable parameterization is also a semidecidable parameterization, this is immediate.
 
 $\ref{enum:decidable:semidecidable} \implies \ref{enum:decidable:decidable}$.
-  As in the proof of ($\ref{enum:decidable:converging_on} \implies \ref{enum:decidable:decidable}$), it suffices to show that a parameter value $k$ can be found such that the $k$th slice of the parameterization includes $x$.
+  As in the proof of ($\ref{enum:decidable:converging_on} \implies \ref{enum:decidable:decidable}$), it suffices to show that a parameter value $k$ can be found such that slice~$k$ of the parameterization includes~$x$.
   To see that this is indeed the case, let $\eta$ be a semidecidable parameterization and consider the set
   \begin{equation*}
     \{(x, k) \st x \in \eta_k\}.
@@ -108,18 +110,19 @@ $\ref{enum:decidable:semidecidable} \implies \ref{enum:decidable:decidable}$.
   Equivalently, there is a procedure that enumerates this set.
   As in the proof of ($\ref{enum:decidable:converging_on} \implies \ref{enum:decidable:decidable}$), the key insight is now that $\eta$ is a cover.
   This means that we can run the enumeration and simply wait until a pair $(x_i, k_i),\ i \in \bbN$ comes along for which we have $x_i = x$.
-  The corresponding parameter value $k_i$ is such that the $k_i$th slice of $\eta$ includes $x$.
+  The corresponding parameter value~$k_i$ is such that the slice of~$\eta$ that is associated with~$k_i$ includes~$x$.
 \end{proof}
 
 The parameterization corresponding to a direct parameterized procedure is necessarily decidable and cannot be merely semidecidable.
-This is a consequence of the fact that direct parameterized procedures are total.
+This is a consequence of the fact that parameterized procedures are total.
 While they may output~\bits{?} instead of either \bits{1} or~\bits{0}, they are not permitted to run forever on any input.
 It follows that classes of sets in parameterized complexity theory must be closed under taking complements.
 For every parameterized procedure that converges to a set on some parameterization, there is a parameterized procedure that converges to the complement of that set on the same parameterization.
 The derived procedure simply retains the output if it is~\bits{?} and flips it if it is either \bits{1} or~\bits{0}.
 
 Furthermore, it is possible to bound the number of steps taken by a parameterized procedure by a function of the parameter value alone.
-That is, restricting to bounded parameterized procedures does not affect the class of sets that occur as limits with respect to decidable parameterizations.
+That is, restricting to resource-bounded parameterized procedures does not affect the class of sets that occur as limits with respect to decidable parameterizations.
+The following theorem is stated in terms of a specific running time bound, but can be modified for other types of resources and for slower-growing bounds.
 
 \begin{theorem}
 \label{thm:slow_decidable}%
@@ -138,17 +141,19 @@ That is, restricting to bounded parameterized procedures does not affect the cla
   Also, for every instance $x$, the number of steps needed by the decision procedure is finite.
   Therefore, for every instance $x$ there will be a parameter value $k$ such that $x$ is included in slice $\eta_k$.
   Hence, our procedure meets the requirements of the theorem.
+  We remark that $\eta$ is point-cofinite.
+  Our parameterized procedure is therefore not only direct, but also convergent.
 \end{proof}
 
-This theorem can be modified for other types of resources and for slower-growing bounds in a straightforward way.
 When resource bounds are of interest, it may be natural to restrict attention to decidable parameterizations.
 Indeed, parameterized complexity theory as developed by \textcite{flum2006parameterized} demands decidability of parameterizations.
-We could call such parameterizations \emph{properties}, since it is knowable whether a given parameter value `belongs' to a given instance.
+More specifically, in their framework, parameter values must be computable.
+By Theorem~\ref{thm:slow_decidable}, the existence of a decidable parameterization with which a set~$A$ is in a given parameterized complexity class tells us very little about~$A$.
 \begin{corollary}
 \label{cor:decidable}%
-  Suppose we are working in a parameterized framework that revolves around properties.
+  Suppose we are working in a parameterized framework where parameter values must be computable.
   Let \cl{\itshape C} be a class of sets that are decidable in some given parameterized time bound.
-  There is a parameterization with respect to which a given set $A$ is in~\cl{\itshape C} if and only if $A$ is decidable.
+  A set~$A$ is in~\cl{\itshape C} with respect to some parameterization if and only if $A$ is decidable.
 \end{corollary}
 
 This rather informal corollary follows from Theorem~\ref{thm:slow_decidable} because of the way complexity classes in parameterized complexity theory are constructed.
@@ -162,38 +167,34 @@ Typically, resource bounds in parameterized complexity theory allow for arbitrar
   \end{equation*}
   where $t$ is the number of steps $\phi$ uses in deciding membership of~$x$ in~$A$.
   By construction, $A$ is fixed-parameter tractable with respect to this parameterization in the framework of \citeauthor{flum2006parameterized}.
+  Note that a computing~$\kappa(x)$ is possible in roughly~$\kappa(x)$ steps.
   Since $A$ was an arbitrary decidable set, it follows that every decidable set is fixed-parameter tractable with respect to some parameterization.
 \end{example}
 
 This example reflects the idea behind Corollary~\ref{cor:decidable}, and can be summarized as follows.
-\slogan{When parameters are properties, a set can be fixed-parameter tractable precisely if it is decidable.}
+\slogan[\label{slo:decidable}]{When parameter values must be computable, a set can be fixed-parameter tractable precisely if it is decidable.}
 
 More broadly, Corollary~\ref{cor:decidable} tells us that parameterized analysis of computational complexity is at least as much about parameterizations as it is about sets.
 
 \subsection{Bounded Undecidability}
 \label{sec:computability:bounded}%
-Our classifications of a parameterization, as decidable or semidecidable, are based on the decidability of elements of the parameterization.
-They are horizontal classifications, in the sense that we kept the second component, the parameter value, of the set
-\begin{equation*}
-  \{(x, k) \st x \in \eta_k\}.
-\end{equation*}
-fixed.
-Granted, by our uniformity constraints we could equally well have kept the first component fixed, but that would not work in a nonuniform theory.
-
-A truly vertical aspect of parameterizations is the point-cofinite property that distinguishes a parameterization from a quasiparameterization.
-It allows a characterization of parameterized procedures that converge.
+With Corollary~\ref{cor:decidable}, we have identified the sets that can be analyzed in a parameterized framework where parameterizations are decidable or semidecidable.
+We seek to extend this result and classify the sets that can be analyzed in a parameterized framework with parameterizations of varying degrees of undecidability.
+Before an extended classification can be obtained in Section~\ref{sec:computability:halt}, we must gain control over the undecidability of parameterizations.
+Therefore, we take a closer look at the nature of convergence in convergent parameterized procedures.
+Recall from Definition~\ref{def:convergent} that a parameterized procedure is convergent if it converges to some set on some point-cofinite parameterization.
 \begin{lemma}
 \label{lem:convergent_finite}%
-  A parameterized procedure $\phi$ converges to some set on some parameterization if and only if, for all $x$, the sets
+  A parameterized procedure~$\phi$ is convergent if and only if, for all $x$, the sets
   \begin{align*}
-    &\{\mathrlap{i}\phantom{k} \st \phi(x, \asStr(i)) \neq \phi(x, \asStr(i + 1))\}\text{ and} \\
+    &\{\mathrlap{i}\hphantom{k} \st \phi(x, \asStr(i)) \neq \phi(x, \asStr(i + 1))\}\text{ and} \\
     &\{k \st \phi(x, k) = \bits{?}\}
   \end{align*}
   are finite.
 \end{lemma}
 \begin{proof}
   $\Longrightarrow$.
-  Suppose $\phi$ converges to a set $A$ on a parameterization $\eta$.
+  Suppose $\phi$ converges to a set~$A$ on a point-cofinite parameterization~$\eta$.
   For every $(x, k)$, the output of $\phi(x, k)$ can only differ from $A(x)$ when $x$ is not included in $\eta_k$.
   Because $x$ is included in all but finitely many slices of $\eta$, the set of parameter values where $\phi$ changes its decision must hence be finite.
   In particular, $\phi$ cannot output \bits{?} infinitely often for any fixed~$x$ and varying~$k$.
@@ -206,7 +207,7 @@ It allows a characterization of parameterized procedures that converge.
   \end{equation*}
   Each element of this family is a finite set.
   Because $\phi$ cannot output \bits{?} infinitely often, every instance $x$ is included in all but finitely many elements of this family.
-  Hence, this family is a parameterization and $\phi$ converges to $A$ on it.
+  Hence, this family is a point-cofinite parameterization and $\phi$ converges to $A$ on it.
 \end{proof}
 
 Observe that in the right-to-left direction of the above proof, the finiteness of the elements of the family of sets matters.
@@ -214,12 +215,12 @@ While a family like
 \begin{equation*}
   (\{x \st x \neq k\})_{k \in \binary^+}
 \end{equation*}
-is a point-cofinite cover of $\binary^+$, it is not directed and therefore not a parameterization.
+is a point-cofinite cover of $\binary^+$, it is not directed and therefore not a point-cofinite parameterization.
 Making the sets in the family finite the way we did, is a fittingly technical solution to this troublesome technicality.
 
-A direct parameterized procedure is one where the only changes on some instance $x$ are from \bits{?} to a `correct' decision or vice versa.
-As we have seen, the limit sets of convergent direct parameterized procedures were decidable.
-A parameterized investigation of sets that are not necessarily decidable starts with parameterized procedures that are not necessarily direct.
+A direct parameterized procedure is one where the only changes on some instance~$x$ are from \bits{?} to a `correct' decision or vice versa.
+As we have seen, the limit sets of direct parameterized procedures were decidable.
+A parameterized investigation of sets that are not necessarily decidable starts with parameterized procedures that are convergent, but not necessarily direct.
 We shall look at parameterized procedures that are allowed to \enquote{change their mind} multiple times, but not indefinitely.
 \begin{definition}
   Let $f$ be a function from $\binary^+$ to $\bbN$.
@@ -232,11 +233,11 @@ We shall look at parameterized procedures that are allowed to \enquote{change th
 Note that in this definition, we have imposed a linear order on the parameter values.
 In the presence of a parameterization, this imposed order need not be related to the inclusion order on the slices of the parameterization.
 
-Extending Lemma~\ref{lem:convergent_finite}, the convergent parameterized procedures can be characterized in yet another way.
+Extending Lemma~\ref{lem:convergent_finite}, the convergent parameterized procedures, as described on page~\pageref{def:convergent}, can be characterized in yet another way.
 A parameterized procedure is convergent if, for some~$f$, it is $f$"~alternating and for every instance~$x$ it outputs \bits{?} for only finitely many parameter values.
 The limit set of a convergent parameterized procedure is said to be \emph{limit computable}.
 When the function~$f$ maps its inputs to a constant~$n$, the limit set of an $f$"~alternating parameterized procedure is said to be \emph{weakly $n$"~computably enumerable} \parencite{odifreddi1992classical,epstein1981hierarchies}.
-Such sets are encountered in the study of the difference hierarchy~\parencite{downey2010algorithmic}, which discussed briefly in the introductory Section~\ref{sec:history:computability}.\indexkey{difference hierarchy}
+Such sets are encountered in the study of the difference hierarchy~\parencite{downey2010algorithmic}, which we discussed briefly in the introductory Section~\ref{sec:history:computability}.\indexkey{difference hierarchy}
 In fact, the weakly $n$"~computably enumerable sets constitute the $\Delta^{-1}_n$ level of that hierarchy.
 Recall that the class $\Delta^{-1}_n$ is defined as the intersection of $\Sigma^{-1}_n$ and $\Pi^{-1}_n$.
 As observed before, classes of limits of parameterized procedures are closed under taking complements.
@@ -244,10 +245,10 @@ Therefore, it is no surprise that our parameterized approach favors the $\Delta$
 A complement of a set in a $\Sigma$~level is in the corresponding $\Pi$~level, and likewise the other way around.
 
 Indeed, the difference hierarchy is strict.
-Already in the standard proofs thereof \parencite{arslanov1997degree,ershov1968hierarchyi,putnam1965trial}, we can see a parameterized line of reasoning at work.
+Already in the standard proofs thereof~\parencite{arslanov1997degree,ershov1968hierarchyi,putnam1965trial}, we can see a parameterized line of reasoning at work.
 We shall give a different and more general proof, exposing a fine-grained structure among the limits of $f$"~alternating sets.
 Central to this proof is the ability to bound the running time of an $f$"~alternating parameterized procedure as a function of the parameter value exclusively.
-This bounding of the number of steps taken comes at the cost of an increase in the number of alternations of at most~$1$.
+This bounding of the number of steps taken comes at the cost of an increase in the number of alternations of at most one.
 \begin{theorem}
 \label{thm:slow_convergence}%
   Let $\phi$ be an $f$"~alternating parameterized procedure that converges to a set $A$.
@@ -264,28 +265,25 @@ This bounding of the number of steps taken comes at the cost of an increase in t
   \end{equation}
   After spending $\length{k}$~steps doing so, $\phi'$ yields the output of the last completed simulation, or~\bits{?} if no simulation finished.
 
-  Observe that arbitrarily long initial segments of the sequence \eqref{eq:slow_convergence} are computed by $\phi'$.
-  The length of the initial segment that can be computed in $\length{k}$ steps is unbounded as a function of the length of $k$.
+  Observe that arbitrarily long initial segments of the sequence~\eqref{eq:slow_convergence} are computed by~$\phi'$.
+  The length of the initial segment that can be computed in~$\length{k}$ steps is unbounded as a function of the length of~$k$.
   By Lemma~\ref{lem:convergent_finite}, this means that $\phi'$ converges to the same set as $\phi$.
 
-  The number of changes that occur for a given $x$ in the sequence \eqref{eq:slow_convergence} is related to $f$.
-  After $\phi(x, \asStr(1))$ is included in the sequence, the output of $\phi'$ can change at most $f(x)$ times.
-  The first output reproduced from a completed simulation of $\phi$ need not be \bits{?}.
-  Therefore, it is possible that the number of changes in the output of $\phi'$ is $1$ higher than $f(x)$.
+  The number of changes that occur for a given $x$ in the sequence~\eqref{eq:slow_convergence} is related to~$f$.
+  After $\phi(x, \asStr(1))$ is included in the sequence, the output of~$\phi'$ can change at most $f(x)$ times.
+  The first output reproduced from a completed simulation of~$\phi$ need not be~\bits{?}.
+  Therefore, it is possible that the number of changes in the output of~$\phi'$ is one higher than~$f(x)$.
 \end{proof}
 
 Naturally, Theorem~\ref{thm:slow_convergence} can be adapted for resources other than time.
 Most importantly, the theorem implies that, when $f$ is computable, it is possible to diagonalize against the $f$"~alternating parameterized procedures.
-\begin{theorem}
-\label{thm:computable_hierarchy}%
-  Let $f$ and $g$ be computable functions such that for infinitely many $x$ we have $f(x) < g(x)$.
+\begin{lemma}
+\label{lem:computable_hierarchy}%
+  Let $f$ and $g$ be computable functions such that for all~$x$ we have $f(x) < g(x)$.
   There exists a set that is the limit of a $g$"~alternating parameterized procedure, but not of any $f$"~alternating parameterized procedure.
-\end{theorem}
+\end{lemma}
 \begin{proof}
   We shall diagonalize against the $f$"~alternating parameterized procedures.
-  Because $f$ and $g$ were both assumed to be computable, so is the set $\{x \st f(x) < g(x)\}$.
-  For our diagonalization, we may therefore assume that $f$ is less than $g$ everywhere.
-
   In simulating a parameterized procedure, we can keep track of the number of steps taken.
   Therefore, we can enumerate the parameterized procedures with a running time bounded by the square of the length of the parameter value.
   Moreover, the number of alternations can be counted.
@@ -297,16 +295,43 @@ Most importantly, the theorem implies that, when $f$ is computable, it is possib
       \bits{0}	&\text{otherwise}.
     \end{cases}
   \end{equation*}
-  This procedure is $(1 + f)$"~alternating and hence it is $g$"~alternating.
+  This procedure never produces~\bits{?} and is indifferent to whether $\psi_{\asNat(x)}(x, k)$ outputs \bits{1} or~\bits{?}.
+  Not keeping track of~\bits{?} is permitted in this setting since there is no need to code for unknown values.
+  The procedure~$\psi$ thus defined is $(1 + f)$"~alternating and hence it is $g$"~alternating.
   By Theorem~\ref{thm:slow_convergence}, this construction diagonalizes against all $f$"~alternating parameterized procedures.
   Accordingly, there is no $f$"~alternating parameterized procedure that converges to the same set as $\psi$.
 \end{proof}
 
-Similar theorems have been published \parencite{epstein1981hierarchies,arslanov1997degree}, but our parameterized framework inspired a notably more elegant proof.
+The requirement on the relationship between the functions~$f$ and~$g$ can be weakened.
+\begin{theorem}
+\label{thm:computable_hierarchy}%
+  Let $f$ and $g$ be computable functions such that for infinitely many $x$ we have $f(x) < g(x)$.
+  There exists a set that is the limit of a $g$"~alternating parameterized procedure, but not of any $f$"~alternating parameterized procedure.
+\end{theorem}
+\begin{proof}
+  Because $f$ and~$g$ were both assumed to be computable, so is the infinite set $S \deq \{x \st f(x) < g(x)\}$.
+  Let $x_1, x_2, x_3, \ldots$ be an effective enumeration of the members of~$S$.
+  We can prove the theorem by applying the previous lemma to these elements.
+
+  Consider the functions $f'$ and $g'$ obtained by restricting $f$ and~$g$ to~$S$ as
+  \begin{equation*}
+    f'(\asStr(i)) \deq f(x_i) \qquad\text{and}\qquad g'(\asStr(i)) \deq g(x_i).
+  \end{equation*}
+  These functions are so that for all~$x$ we have $f'(x) < g'(x)$.
+  By Lemma~\ref{lem:computable_hierarchy}, there is hence a set~$A$ that is the limit of a $g'$"~alternating parameterized procedure, but not of any $f'$"~alternating parameterized procedure.
+  Using such a set~$A$, a set that is the limit of a $g$"~alternating parameterized procedure, but not of any $f$"~alternating procedure is defined by
+  \begin{equation*}
+    \{x \st \exists i\colon x = x_i\reland\asStr(i) \in A\}.
+  \end{equation*}
+  In effect, this set is the result of using only the members of~$S$ for the diagonalization in the proof of Lemma~\ref{lem:computable_hierarchy}.
+\end{proof}
+
+Similar theorems have been published \parencite{epstein1981hierarchies,arslanov1997degree}, but our parameterized framework inspired a more elegant proof.
 
 \subsection{Reducibility to the Halting Set}
 \label{sec:computability:halt}%
-The undecidable halting set\indexkey{Halt@\pr{Halt}},
+A classification of which sets are open to a parameterized analysis with parameterizations of varying undecidability is now within reach.
+To begin with, we observe that the undecidable halting set\indexkey{Halt@\pr{Halt}},
 \begin{equation*}
   \pr{Halt} \deq \{x \in \binary^+ \st \text{$x$ encodes a procedure that takes no input and terminates}\},
 \end{equation*}
@@ -333,10 +358,10 @@ The halting set is complete for this class \parencite{epstein1981hierarchies,ars
 \end{theorem}
 \begin{proof}
   $\Longrightarrow$.
-  Let $f$ be a computable function and $\phi$ an $f$"~alternating parameterized procedure converging to a set $A$.
-  The idea is to locate, given an instance $x$, the last change in the output of $\phi$ for varying parameter values, using the halting set.
-  To this end, let $\psi_x$ be a procedure that takes a number $m$ as input and outputs the $m$th change of $\phi$ on $x$, if it exists.
-  Specifically, if $\phi$ changes fewer than $m$ times, $\psi_x$ does not halt on input $m$.
+  Let $f$ be a computable function and $\phi$ an $f$"~alternating parameterized procedure converging to a set~$A$.
+  The idea is to locate, given an instance~$x$, the last change in the output of~$\phi$ for varying parameter values, using the halting set.
+  To this end, let $\psi_x$ be a procedure that takes a number~$m$ as input and searches for the parameter value at which the output of~$\phi$ on input~$x$ changes for the $m$th time.
+  If $\phi$ changes fewer than $m$~times, then $\psi_x$ does not halt on input~$m$.
   Otherwise, the output of $\psi_x$ is the $m$th value of $i$ satisfying $\phi(x, \asStr(i)) \neq \phi(x, \asStr(i + 1))$.
 
   Using at most $f(x)$ queries to \pr{Halt}, we can find the greatest value of $m$ such that $\psi_x(m)$ terminates.
@@ -350,8 +375,10 @@ The halting set is complete for this class \parencite{epstein1981hierarchies,ars
   Let $q_1, q_2, q_3, \ldots, q_m$ be the queries prescribed by this truth-table.
   Next, $\phi$ evaluates the truth-table using $\psi(q_1, k), \psi(q_2, k), \psi(q_3, k), \ldots, \psi(q_m, k)$ as decisions for the queries.
   For sufficiently large values of $\asNat(k)$, the queries will all be answered correctly.
-  Before that, $\phi$ changes its decision for a given $x$ at most $2^m$ times, as the queries cannot be answered in more than that many different ways.
-  As $m$ can be computed from $x$, the function $f(x) \deq 2^m$ is computable.
+  Before that, the decisions for the queries as provided by~$\psi$ can each only change from \bits{0} to~\bits{1}, but never back.
+  Therefore, $\phi$ gets to evaluate the truth-table with at most $m + 1$ different sets of answers to the queries.
+  As a result, $\phi$ changes its decision for a given $x$ at most $m$ times.
+  Because $m$ can be computed from $x$, the function $f(x) \deq m$ is computable.
 \end{proof}
 
 With regard to the halting set, truth-table reducibility coincides with a weaker variant, aptly named \emph{weak truth-table reducibility} \parencite{odifreddi1992classical,downey2010algorithmic}.
@@ -359,29 +386,33 @@ However, it is not as general as Turing reducibility, which, as seen in Definiti
 The reason for this is that the proof of Theorem~\ref{thm:computable_hierarchy} can be changed so that it also diagonalizes against all computable functions.
 As we shall soon see, the resulting set is Turing reducible to the halting set.
 By Theorem~\ref{thm:computable_hierarchy} and Theorem~\ref{thm:truthtable_halt}, it cannot also be truth-table reducible to the halting set.
+This tells us something about the sets that can be analyzed in a parameterized framework with undecidable parameterizations.
+Looking at $f$"~alternating parameterized procedures, fewer sets can be obtained as limits if we require the function~$f$ to be computable.
 
 We want to adapt the proof of Theorem~\ref{thm:computable_hierarchy} so that we also diagonalize against all computable functions bounding the number of alternations.
-Therefore, we interpret the instance part, $x$, of the input $(x, k)$ of our parameterized procedure as a pair $x = \pair{x_1}{x_2}$.
+Therefore, we interpret the instance part,~$x$, of the input~$(x, k)$ of our parameterized procedure as a pair $x = \pair{x_1}{x_2}$.
 We then use $\asNat(x_1)$ as the index of a parameterized procedure to diagonalize against, and $\asNat(x_2)$ as the index of a computable bounding function.
-Crucially, we do not need to know the time required for computing the bounding function, or even whether the computation will terminates at all.
-We shall increasing the time spent computing the bounding function with the length of the parameter value, $\length{k}$.
-By doing so, we eventually compute all terminating functions to completion.
-To be precise, the second procedure, indexed by $\asNat(x_2)$, is simulated on $x$ for $\length{k}$ steps.
+Crucially, we do not need to know the time required for computing the bounding function, or even whether the computation will terminate at all.
+We shall increasing the time spent computing the bounding function with the length of the parameter value,~$\length{k}$.
+By doing so, we eventually compute each terminating function to completion.
+To be precise, the second procedure, indexed by $\asNat(x_2)$, is simulated on~$x$ for~$\length{k}$ steps.
 In case the simulation does not finish, we proceed as if it had produced $0$ as output.
 Otherwise, we use the output of the simulation as the maximum number of alternations allowed to be made by the parameterized procedure indexed by $\asNat(x_1)$.
 After thus computing the bound, we turn to simulating the parameterized procedure indexed by $\asNat(x_1)$.
 This is done like in the proof of Theorem~\ref{thm:computable_hierarchy}, this time using the computed bound on the number of alternations, instead of a fixed one.
-Thus, we can diagonalize against all parameterized procedures that, for some computable function $f$, are $f$"~alternating.
+Thus, we can diagonalize against all parameterized procedures that, for some computable function~$f$, are $f$"~alternating.
 
-This observation shows that the Turing degree of the halting set encompasses more sets than the truth-table degree of the halting set \parencite{epstein1981hierarchies,arslanov1997degree,downey2010algorithmic}.
-The difference hierarchy was extended by \textcite{ershov1968hierarchyii} to include the Turing degree of the halting set.
-In order to do so, levels of the hierarchy were introduced beyond those with finite indices, starting at $\omega$, the first infinite ordinal.
-As a result, the sets that are truth-table reducible to the halting set form the $\Delta^{-1}_\omega$ level of the transfinite difference hierarchy.
-For larger, yet constructible \parencite{rogers1967theory}, ordinals $\alpha$, the $\Delta^{-1}_\alpha$ level matches the sets that are Turing reducible to the halting set \parencite{ershov1968hierarchyii,epstein1981hierarchies}.
+This observation shows that there are sets that are Turing reducible to the halting set, yet not truth-table reducible to the halting set \parencite{epstein1981hierarchies,arslanov1997degree,downey2010algorithmic}.
+Recall that truth-table reducibility was a more demanding form of Turing reducibility.
+Therefore, all sets that are truth-table reducible to the halting set are also Turing reducible to the halting set.
+The difference hierarchy was extended by \textcite{ershov1968hierarchyii} to include the class of sets that are Turing reducible to the halting set.
+In order to do so, levels of the hierarchy were introduced beyond those with finite indices, starting at~$\omega$, the first infinite ordinal.
+The sets that are truth-table reducible to the halting set form the $\Delta^{-1}_\omega$~level of the transfinite difference hierarchy.
+For larger, yet constructible \parencite{rogers1967theory}, ordinals $\alpha$, the $\Delta^{-1}_\alpha$ level matches the class of sets that are Turing reducible to the halting set \parencite{ershov1968hierarchyii,epstein1981hierarchies}.
 By Post's theorem \parencite{post1948degrees,rogers1967theory}, we can fit this class of sets in the arithmetical hierarchy.\indexkey{arithmetical hierarchy}
-A set is Turing reducible to the halting set precisely when it sits at the $\Delta^0_2$ level of the arithmetical hierarchy.
+A set is Turing reducible to the halting set precisely when it sits at the $\Delta^0_2$~level of the arithmetical hierarchy.
 
-In essence, it was recognized by \textcite{shoenfield1959degrees} that a set is Turing reducible to \pr{Halt} precisely when a parameterized procedure converges to it.\indexkey{reduction!Turing}
+In essence, it was recognized by \textcite{shoenfield1959degrees} that a set is Turing reducible to \pr{Halt} precisely when a convergent parameterized procedure converges to it.\indexkey{reduction!Turing}
 This characterization is known as the \defkey{limit lemma} \parencite{odifreddi1992classical,downey2010algorithmic}.
 The original framing of the lemma was around approximations that could change only finitely often for any instance.
 In terms of $f$"~alternating parameterized procedures, the characterization forgoes any computability requirements on $f$ and augments Theorem~\ref{thm:truthtable_halt}.
@@ -396,12 +427,16 @@ In terms of $f$"~alternating parameterized procedures, the characterization forg
   Thus, the reduction we obtain need not be a truth-table reduction.
   Instead, we obtain a Turing reduction.
 
+  Note that we may use the adaptive nature of Turing reductions and employ a binary search strategy to locate the final change of the parameterized procedure.
+  When doing so, the number of queries to \pr{Halt} scales only as the logarithm of the number of alternations.
+  In the end, this does not help us, since there need not be a computable upper bound on this number of alternations.
+
   $\Longleftarrow$.
   The proof of Theorem~\ref{thm:truthtable_halt} does not carry over to the current theorem immediately.
   The reduction from $A$ to \pr{Halt} may be adaptive, so we cannot gather all queries at once.
   In particular, for certain incorrect answers to the queries, the reduction may never stop making new queries.
   Even when the reduction only makes a finite number of queries, its computation after it has gotten the answers to the queries need not terminate.
-  While we have no way of answering all queries correctly, a solution to this conundrum is available along the lines of Theorem~\ref{thm:slow_convergence}.
+  While we have no way of answering all queries correctly, a solution to this is available along the lines of Theorem~\ref{thm:slow_convergence}.
 
   Let $\psi$ be the parameterized procedure that converges to \pr{Halt} as constructed in the proof of Lemma~\ref{lem:one_halting}.
   We shall use $\psi$ to define a parameterized procedure $\phi$ converging to $A$.
@@ -415,8 +450,8 @@ In terms of $f$"~alternating parameterized procedures, the characterization forg
 
 Earlier, we recovered the class of decidable sets in the parameterized context via decidable parameterizations.
 Theorem~\ref{thm:truthtable_halt} and Theorem~\ref{thm:turing_halt} can be used in a similar fashion.
-By the first, we could call a set a \emph{bounded parameterized limit} precisely when it sits at the $\Delta^{-1}_\omega$ level of the difference hierarchy.
-The second suggests to call the sets at the $\Delta^0_2$ level of the arithmetical hierarchy the \emph{parameterized limits}.
+By the first, we could call a set a \emph{bounded parameterized limit} precisely when it sits at the $\Delta^{-1}_\omega$~level of the difference hierarchy.
+The second suggests to call the sets at the $\Delta^0_2$~level of the arithmetical hierarchy the \emph{parameterized limits}.
 Moreover, by Theorem~\ref{thm:slow_convergence}, these two classes are insensitive to resource bounds that are independent of the parameter value.
 For example, suppose the running time of some parameterized procedure~$\phi$ is, say, exponential in the length of the instance part of its input.
 Note that this resource bound does not specify its dependency on the parameter value and we assume this dependence can be anything.
@@ -424,24 +459,43 @@ Furthermore, assume that $\phi$ is convergent and it converges to a set~$A$.
 From Theorem~\ref{thm:slow_convergence}, we know that there is another parameterized procedure converging to~$A$ of which the running time does not depend on the instance at all.
 Hence, the fact that $\phi$ has a running time that is exponential in the length of the instance is irrelevant to the classification of~$A$.
 That is, this running time says nothing about the membership of~$A$ in either $\Delta^{-1}_\omega$ or $\Delta^0_2$.
+By contrast, the specifics of a convergent or direct parameterized procedure do tell us something about its limit set.
+Our results regarding the classification of sets on the basis of the specifics of parameterized procedures is summarized in Table~\ref{tab:procedures_sets}.
 
 Like what we found in Corollary~\ref{cor:decidable}, our results connect to a school of parameterized complexity theory.
 In the style pioneered by \textcite{downey1999parameterized}, parameterized complexity theory is more permissive than it is with \textcite{flum2006parameterized}.
-With \citeauthor{downey1999parameterized}, a parameter is no longer required to be computable as a function of an instance.
-Owing to this lack of a computability requirement, we could call such parameterizations \emph{promises}.
+With \citeauthor{downey1999parameterized}, a parameter value is no longer required to be computable as a function of an instance.
+Owing to this lack of a computability requirement, we could say that in their framework, a parameter value may be \emph{promised}.
+By Theorem~\ref{thm:turing_halt}, the existence of a parameterization with which a set~$A$ is in a given parameterized complexity class tells us very little about~$A$.
 \begin{corollary}
 \label{cor:delta2}%
-  Suppose we are working in a parameterized framework that revolves around promises.
+  Suppose we are working in a parameterized framework where parameter values may be promised.
   Let \cl{\itshape C} be a class of sets that are decidable in some given parameterized time bound.
-  There is a parameterization with respect to which a given set $A$ is in~\cl{\itshape C} if and only if $A$ is in the $\Delta^0_2$ level of the arithmetical hierarchy.\indexkey{arithmetical hierarchy}
+  A set~$A$ is in~\cl{\itshape C} with respect to some parameterization if and only if $A$ is in the $\Delta^0_2$~level of the arithmetical hierarchy.\indexkey{arithmetical hierarchy}
 \end{corollary}
+\begin{table}
+  \centering
+  \begin{tabular}{ll@{ }l}
+    \multicolumn{1}{c}{\emph{parameterized procedures}}	& \multicolumn{2}{c}{\emph{sets}} \\
+    \hline
+    direct	& $\Delta^0_1$, & decidable \\
+    $f$"~alternating	& $\Delta^{-1}_\omega\!$, & truth-table reducible to \pr{Halt} \\
+    convergent	& $\Delta^0_2$, & Turing reducible to \pr{Halt}
+  \end{tabular}
+  \caption{
+    The choice of which parameterized procedures to work with determines which sets occur as limits of our parameterized procedures.
+    We have identified three classes of sets corresponding to three classes of parameterized procedures.
+    Note that, in this table, the function~$f$ is assumed to be computable.
+  }
+  \label{tab:procedures_sets}
+\end{table}
 
 To illustrate this corollary, we turn to fixed-parameter tractability in the \citeauthor{downey1999parameterized} framework.
-
 \begin{example}
+\label{ex:delta2}%
   The \citeauthor{downey1999parameterized} framework deals with parameterized sets, so we first need to settle on a way to deal with classical sets in this framework.
   First, observe that a decision procedure for a parameterized set in the sense of \citeauthor{downey1999parameterized} can be thought of as a parameterized procedure.
-  We shall only consider parameterized sets that can be decided by convergent parameterized procedures.
+  We shall only consider parameterized sets that can be decided by convergent parameterized procedures, as defined in Definition~\ref{def:convergent}.
   The motivation for this is that, conceptually, we model resource bounds as a function of the parameter value.
   For sufficiently large parameter values, we ought to have enough of a computational resource at our disposal to be able to decide membership.
   Increasing the resource bound beyond that point should not change our decision about membership.
@@ -452,18 +506,23 @@ To illustrate this corollary, we turn to fixed-parameter tractability in the \ci
 
   It follows from Theorem~\ref{thm:turing_halt} that the sets in~$\Delta^0_2$ are precisely those to which a parameterized procedure converges.
   In other words, there is a parameterized version of a set~$A$ if and only if $A$ is in $\Delta^0_2$.
-  From Theorem~\ref{thm:slow_convergence} it follows that this remains true if we confine our attention to fixed-parameter tractable parameterized procedures.
+  From Theorem~\ref{thm:slow_convergence} it follows that this remains true if we confine our attention to parameterized procedures with a running time as required by fixed-parameter tractability.
 \end{example}
 
 Comparing Corollary~\ref{cor:delta2} to Corollary~\ref{cor:decidable}, we see that we have gone one step up in the $\Delta$~levels of the arithmetical hierarchy.
-Because $\Delta^0_1$ is the class of decidable sets, properties are related to~$\Delta^0_1$ in the same way that promises are related to~$\Delta^0_2$.
-\slogan{When parameters are promises, a set can be fixed-parameter tractable precisely if it is in $\Delta^0_2$.}
+Because $\Delta^0_1$ is the class of decidable sets, computable parameter values are related to~$\Delta^0_1$ in the same way that promised parameter values are related to~$\Delta^0_2$.
+These classifications correspond to the first and last row in Table~\ref{tab:procedures_sets}.
+Completing our treatment of these two extremes, we can contrast Slogan~\ref{slo:decidable} with the following summary of Corollary~\ref{cor:delta2}.
+\slogan{When parameter values may be promised, a set can be fixed-parameter tractable precisely if it is in $\Delta^0_2$.}
 
 \subsection{Subparameterizations}
 \label{sec:computability:subparameterizations}%
-Let us take a brief excursion from looking at limit sets and examine the structure of parameterizations.
-Recall that what distinguishes a parameterization $\eta$ from a quasiparameterization is the property that each instance occurs in all but finitely many slices.
-More formally, it is the property
+So far, we have focused mainly on sets that appear as limits of parameterized procedures.
+In particular, our focus has been on convergent parameterized procedures.
+There are parameterized procedures that converge on some point-cofinite parameterization.
+We shall now examine in a little more detail the structure of point-cofinite parameterizations.
+Recall that in a point-cofinite parameterization, each instance occurs in all but finitely many slices.
+More formally, a parameterization~$\eta$ is point-cofinite if it satisfies
 \begin{equation*}
   \forall x\colon \forall^\infty k\colon x \in \eta_k.
 \end{equation*}
@@ -473,33 +532,38 @@ Parameterizations most commonly encountered in practice \parencite{niedermeier20
 \label{eq:global_cofinite}
   \forall k\colon \forall^\infty k'\colon \eta_k \subseteq \eta_{k'}.
 \end{equation}
-Indeed, this property is sufficient for a quasiparameterization to be a parameterization, yet it is not necessary.
-A parameterization may contain a slice that is incomparable to infinitely many others, which would prevent the parameterization from adhering to~\eqref{eq:global_cofinite}.
+Indeed, this property is sufficient for a parameterization to be a point-cofinite parameterization, yet it is not necessary.
+A point-cofinite parameterization~$\eta$ may contain a slice that is incomparable to infinitely many others, which would prevent~$\eta$ from adhering to~\eqref{eq:global_cofinite}.
 \begin{example}
-  An example of a parameterization that does not adhere to~\eqref{eq:global_cofinite} is the parameterization given by
-  \begin{align*}
-    \eta \deq (\{x \st &\asNat(x) \le \asNat(k)\text{, or} \\
-    	&\asNat(x)\text{ is divisible by }\asNat(k)\})_{k \in \binary^+}.
-  \end{align*}
-  In this definition, the first criterion for inclusion in a slice makes sure that each instance is included in all but finitely many slices.
-  Thus, $\eta$ is indeed a parameterization.
-  The second criterion for inclusion makes sure that each slice is incomparable to infinitely many others.
-  Therefore, $\eta$ does not satisfy~\eqref{eq:global_cofinite}.
+  An example of a point-cofinite parameterization that does not adhere to~\eqref{eq:global_cofinite} is the parameterization given by
+  \begin{equation*}
+    \eta \deq (\{x \st \text{$k$ is not a substring of $x$}\})_{k \in \binary^+}.
+  \end{equation*}
+  Since no string~$x$ has a substring that is longer than~$\length{x}$, every string~$x$ is in every slice $\eta_k$ for which we have $\length{x} < \length{k}$.
+  Therefore, $\eta$ is point-cofinite.
+
+  Observe that for any two numbers $i$ and~$j$, if we have $i \ne j$, then the slice with parameter value $\bits{1}\bits{0}^i\bits{1}$ is incomparable to that with parameter value $\bits{1}\bits{0}^j\bits{1}$.
+  From this, it follows that $\eta$ does not satisfy~\eqref{eq:global_cofinite}.
+
+  To ascertain that $\eta$ is indeed a parameterization, we also need to verify that it is directed.
+  For this, it suffices to note than two slices $\eta_{k_1}$ and~$\eta_{k_2}$ are both included in the slice $\eta_{k_1 k_2}$.
+  Indeed, if a string~$x$ would contain the concatenation~$k_1 k_2$ as a substring, then it would also contain both $k_1$ and~$k_2$ as substrings.
 \end{example}
-At the same time, a selection of slices from a quasiparameterization such that the selection does obey \eqref{eq:global_cofinite} can always be made.
-In fact, this \emph{subset} of the quasiparameterization, a \defkey{subparameterization}, may be chosen so that it is ordered linearly by inclusion.
+
+At the same time, a selection of slices from a parameterization such that the selection does obey~\eqref{eq:global_cofinite} can always be made.
+In fact, this \emph{subset} of the parameterization, a \defkey{subparameterization}, may be chosen so that it is ordered linearly by inclusion.
 \begin{lemma}
 \label{lem:cofinal_chain}%
-  Every quasiparameterization has a subset of its slices that forms a linearly ordered parameterization.
-  Specifically, for every quasiparameterization~$\eta$, there is a set $I \subseteq \binary^+$ that satisfies
+  Every parameterization has a subset of its slices that forms a linearly ordered point-cofinite parameterization.
+  Specifically, for every parameterization~$\eta$, there is a set $I \subseteq \binary^+$ that satisfies
   \begin{itemize}
-  \item $(\eta_k)_{k \in I}$ is a parameterization, and
+  \item $(\eta_k)_{k \in I}$ is a point-cofinite parameterization, and
   \item for all $k \in I$ and $k' \in I$, we have $\eta_k \subseteq \eta_{k'}$ or $\eta_{k'} \subseteq \eta_k$.
   \end{itemize}
-  If, for all $k$ and $k'$ in $I$, we can effectively decide which of $\eta_k \subseteq \eta_{k'}$ or $\eta_{k'} \subseteq \eta_k$ is the case, then a set $I$ as described above exists that is decidable.
+  If, for all $k$ and~$k'$ in~$\binary^+$, we can effectively decide whether $\eta_k \subseteq \eta_{k'}$ holds, then a set $I$ as described above exists that is decidable.
 \end{lemma}
 \begin{proof}
-  Associated with a quasiparameterization~$\eta$ is a reflexive and transitive order on the set of all parameter values, $\binary^+$.
+  Associated with a parameterization~$\eta$ is a reflexive and transitive order on the set of all parameter values,~$\binary^+$.
   This order stems from the inclusion order on the slices of~$\eta$.
   A parameter value~$k$ is ordered before or at a parameter value~$k'$ if we have $\eta_k \subseteq \eta_{k'}$.
   In the presence of such orders, the linearly ordered subsets are called \emph{chains}.
@@ -508,43 +572,60 @@ In fact, this \emph{subset} of the quasiparameterization, a \defkey{subparameter
   These are the chains that dominate all parameter values.
   A chain~$C$ is a \emph{cofinal chain} \parencite{abramsky1994domain} if for every parameter value $k \in \binary^+$ there is a parameter value $k' \in C$ such that we have $\eta_{k} \subseteq \eta_{k'}$.
   Setting aside the decidability constraint for a moment, we find that any cofinal chain of parameter values can serve as a witness set~$I$ in the current lemma.
-  Because a quasiparameterization is directed, we can be sure that it contains cofinal chains.
+  Because a parameterization is directed, we can be sure that it contains cofinal chains.
 
   When the order on parameter values is decidable, a decidable cofinal chain can be constructed.
   We do so by going through all parameter values and selectively including some of them.
-  Whenever a parameter value is included, we implicitly add the corresponding slice of the quasiparameterization to our subparameterization.
-  To be technically correct, we may want to associate with the $i$th slice thus included the string representation of~$i$ as a parameter value.
-  This turns our subparameterization into a proper parameterization.
-  The criterion for including a parameter value in our aspiring cofinal chain is a greedy one.
-  A parameter value is included if the corresponding slice of the quasiparameterization is a superset of the slice last added to the subparameterization.
-  This procedure is effective and by construction the resulting subset is ordered linearly.
-  It remains to show that it is cofinal.
-  If it was not, then there would be a slice of the original quasiparameterization that is incomparable to or greater than any in the subparameterization.
-  Because the quasiparameterization is directed, we only need to worry about the latter case, where a slice is greater than any in the subparameterization.
-  Therefore, suppose the quasiparameterization contains a slice that is a strict superset of any slice in the subparameterization.
-  In that case, the corresponding parameter value would have been included the moment it was encountered in the iteration through all parameter values.
-  This contradicts the assumption that the quasiparameterization contains a slice that is a strict superset of any slice in the subparameterization.
+  Whenever a parameter value is included, we implicitly add the corresponding slice of the parameterization to our subparameterization.
+  Our criterion for including a parameter value in our aspiring cofinal chain is a greedy one.
+  Let $k_1, k_2, k_3, \ldots$ be an enumeration of all parameter values.
+  We start our subparameterization by including~$k_1$.
+  After that, we build our subparameterization by repeating the following steps.
+  \begin{codelisting}
+  \item
+    \code{Let} $i$ be the last number such that $k_i$ was included in our subparameterization.
+  \item
+    \code{Find} the first number~$j$ such that each of the slices $\eta_{k_1}, \eta_{k_2}, \eta_{k_3}, \ldots, \eta_{k_i}$ is included in $\eta_{k_j}$.
+    Such a number~$j$ exists because $\eta$ is directed.
+  \item
+    \code{Include} $k_j$ in our subparameterization.
+  \end{codelisting}
+  This procedure is effective and by construction the resulting subset is ordered linearly and cofinal.
+  In each round through these steps, we may resume the search for the desired number~$j$ where we finished the previous round.
+  Thus, we may assume that $j$ only increases, which ensures that the subparameterization is decidable.
+  To check whether a parameter value~$k$ is included in the subparameterization, we run the construction until we have $k = k_j$.
+  If $k$ is not included at the corresponding round of our construction, it will never be.
 \end{proof}
 
-Any cofinal subset of a parameterization is itself a parameterization after suitably indexing its elements by binary strings.
+If the parameterization we start with includes $\binary^+$ as a slice, it has a subparameterization consisting only of that slice.
+This is a rather uninteresting scenario, so we shall focus on parameterizations that do not include~$\binary^+$.
+Of such parameterizations, all cofinal subsets contain infinitely many different slices.
+Any cofinal subset of a such a parameterization is itself a parameterization after suitably indexing its elements by binary strings.
 However, the corresponding subset of the original index set need not be decidable.
-This follows from Theorem~\ref{thm:computable_hierarchy}.
-If the subset of parameter values induced by every subparameterization were decidable, we could lower the number of alternations to $\asNat(x)$.
-For this, set the $\asNat(k)$th element of the subparameterization to one of the original after which no decisions about the first $\asNat(k)$ instances changes.
-We can even force the subset of the index set corresponding to a subparameterization to be particularly undecidable.
+If it were, then each convergent parameterized procedure would converge on some decidable point-cofinite parameterization.
+This would mean that we might as well assume that our convergent parameterized procedures are direct parameterized procedures.
+In turn, this would violate the results summarized in Table~\ref{tab:procedures_sets}.
+
+We can even force the subset of the index set corresponding to a subparameterization to be particularly undecidable:
 The subset can be made so that it nor its complement contains an infinite semidecidable set.
 In other words, there is a parameterization such that the set of parameter values corresponding to a particular subparameterization is bi-immune in accordance with Definition~\ref{def:bi-immune}.\indexkey{bi-immune}
+This claim will be proven as Lemma~\ref{lem:subparameterization_bi-immune} shortly.
 
-For this, it is helpful to have a linear order on the subsets of $\binary^+$.
-Most conveniently, this order comes about when we map a set $A \subseteq \binary^+$ to the real number
+In preparation for this, it is helpful to have a linear order on the subsets of~$\binary^+$.
+The set inclusion order,~$\subseteq$, is not a linear order.
+A convenient linear order on the subsets of~$\binary^+$ comes about when we map a set $A \subseteq \binary^+$ to the real number
 \begin{equation*}
   \asReal(A) \deq \sum_{x \in A} 2^{-\asNat(x)}.
 \end{equation*}
-That this mapping is not injective is a technical detail that is of no consequence to our analysis.
-When a set $A$ is the limit of a parameterized procedure, the real number $\asReal(A)$ is said to be \emph{computably approximable} \parencite{ambos-spies2000weakly}.
+We order one subset of~$\binary^+$ before another if its corresponding real number is smaller than that of the other.
+That the mapping to real numbers is not injective is a technical detail that is of no consequence to our analysis.
+To turn our order into a true linear order, we need to decide what to do in case the subsets are different but the corresponding real numbers are the same.
+In that case, one of the subsets is infinite and the other is not, and we may simply order the infinite subset before the finite one.
+
+When a set~$A$ is the limit of a parameterized procedure, the real number $\asReal(A)$ is said to be \emph{computably approximable} \parencite{ambos-spies2000weakly}.
 Historically, computably approximable real numbers have also been called \emph{limit computable} real numbers \parencite{gold1965limiting}.
-Justifying this nomenclature, a parameterized procedure $\phi$ that converges to a set $A$, can be thought of as approximating $\asReal(A)$.
-Considering, for a parameter value $k$, the set
+Justifying this terminology, a parameterized procedure~$\phi$ that converges to a set~$A$ can be thought of as approximating~$\asReal(A)$.
+Considering, for a parameter value~$k$, the set
 \begin{equation*}
   A_{\phi, k} \deq \{x \st \phi(x, k) = \bits{1}\},
 \end{equation*}
@@ -556,8 +637,8 @@ A parameterized procedure $\phi$ is called \emph{normed} \parencite{ambos-spies2
 \begin{equation*}
   \phi(x, k) = \bits{1} \:\implies\: \asNat(x) \le \length{k}.
 \end{equation*}
-This definition is motivated purely by practical considerations and normed procedures will be of use to us later on.
-In particular, the definition holds no information about the limit of the parameterized procedure.
+This definition is motivated purely by practical considerations and it holds no information about the limit of the parameterized procedure.
+Nevertheless, normed procedures will be of use to us in the next two lemmas.
 \begin{lemma}
 \label{lem:slow_convergence_normed}%
   Let $\phi$ be an $f$"~alternating parameterized procedure that converges to a set $A$.
@@ -573,9 +654,13 @@ In particular, the definition holds no information about the limit of the parame
 \end{proof}
 
 Given a normed parameterized procedure $\phi$ and two parameter values $k, k'$, it is decidable whether $\asReal(A_{\phi, k}) \le \asReal(A_{\phi, k'})$ holds.
-In the case where the running time of $\phi$ is bounded linearly in the length of the parameter value, such a decision can be made within a stringent time bound.
-Specifically, a decision can be made in a number of steps that is polynomial in $\length{k} + \length{k'}$, where the polynomial does not depend on $\phi$.
+For this, we run~$\phi$ on the first $\max \{\asNat(k), \asNat(k')\}$ instances~$x$, once with the parameter value~$k$ and once with~$k'$.
+The first instance on which $\phi$ outputs~\bits{1} with only one of the two parameter values determines which of $\asReal(A_{\phi, k})$ and $\asReal(A_{\phi, k'})$ is bigger.
+If no such instance is found, then the two real numbers are equal.
+In the case where the running time of~$\phi$ is bounded linearly in the length of the parameter value, such a decision can be made within a stringent time bound.
+Specifically, a decision can be made in a number of steps that is quadratic in $\length{k} + \length{k'}$.
 
+We can now show that there are parameterizations with subparameterizations of which the corresponding set of parameter values is highly undecidable.
 \begin{lemma}
 \label{lem:subparameterization_bi-immune}%
   There is a parameterization with a subparameterization of which the corresponding subset of parameter values is bi-immune.
@@ -583,22 +668,23 @@ Specifically, a decision can be made in a number of steps that is polynomial in 
 \begin{proof}
   Let $A$ be a set such that $\asReal(A)$ is computably approximable, but not $\omega$"~computably enumerable.
   Because the inclusion of $\Delta^{-1}_\omega$ in $\Delta^0_2$ is strict, such a set $A$ exists.
-  Furthermore, let $\phi$ be a normed parameterized procedure converging to $A$ with a running time bounded linearly in the length of the parameter value.
+  Furthermore, let $\phi$ be a normed parameterized procedure converging to~$A$ with a running time bounded linearly in the length of the parameter value.
   Such a procedure exists by Lemma~\ref{lem:slow_convergence_normed}.
   Lastly, define a set of parameter values
   \begin{equation*}
     C \deq \{k \st \asReal(A_{\phi,k}) < \asReal(A)\},
   \end{equation*}
   reminiscent of a Dedekind cut.
-  Since the set of real numbers
+  Note that the set of real numbers
   \begin{equation*}
     \{\asReal(A_{\phi, k}) \st k \in \binary^+\}
   \end{equation*}
-  has a single limit point, $C$ defines a subparameterization of the parameterization
+  has a single limit point,~$\asReal(A)$.
+  Therefore, the set~$C$ defines a subparameterization of the point-cofinite parameterization
   \begin{equation*}
     (\{x \st \phi(x, k) = A(x) \reland \asNat(x) \le \length{k}\})_{k \in \binary^+}
   \end{equation*}
-  on which $\phi$ converges to $A$.
+  on which $\phi$ converges to~$A$.
   We claim that both $C$ and its complement do not contain any infinite semidecidable subset, and thus that $C$ is bi-immune.
 
   Because $\phi$ is normed, the order on the real numbers associated with the parameter values is decidable.
@@ -609,15 +695,15 @@ Specifically, a decision can be made in a number of steps that is polynomial in 
     \forall i < j\colon \asReal(A_{\phi, k_i}) < \asReal(A_{\phi, k_j}).
   \end{equation*}
   Now, consider a parameterized procedure that maps $(x, \asStr(i))$ to $\phi(x, k_i)$.
-  The approximation of $\asReal(A)$ corresponding to this parameterized procedure is a monotonically increasing one.
-  Accordingly, for the computable function $f$ that maps $x$ to $2^{\asNat(x)}$, this parameterized procedure is $f$"~alternating.
-  However, $A$ was defined so that it was not the limit of an $f$"~alternating parameterized procedure for any computable function $f$.
+  The approximation of~$\asReal(A)$ corresponding to this parameterized procedure is a monotonically increasing one.
+  Accordingly, for the computable function~$f$ that maps $x$ to~$2^{\asNat(x)}$, this parameterized procedure is $f$"~alternating.
+  However, $A$ was defined so that it was not the limit of an $f$"~alternating parameterized procedure for any computable function~$f$.
   Hence $C$ does not contain an infinite semidecidable subset.
   A similar argument, inverting the order, holds for the complement of $C$, completing the proof that $C$ is bi-immune.
 \end{proof}
 
 The details of the above proof are akin to those used by \textcite{jockusch1968semirecursive} in his study of sets with \enquote{selector} functions.
-Of interest to us is a class of sets that arises when such functions are equipped with a polynomial bound on their running time~\parencite{selman1979p-selective}.
+Such functions show that a set has some structure, especially if we impose a polynomial bound on the running time of the functions~\parencite{selman1979p-selective}.
 \begin{definition}
 \label{def:p-selective}%
   A set $A$ is \defkeyat{p-selective@\pdash{}selective}{\pdash{}selective} if there is a function $f\colon \binary^+ \times \binary^+ \to \binary^+$ that is computable in polynomial time and satisfies, for all strings $x, y$,
@@ -628,6 +714,7 @@ Of interest to us is a class of sets that arises when such functions are equippe
 \end{definition}
 
 Exploiting the decidability of the order on the real numbers associated with parameter values further, we find a strengthening of Lemma~\ref{lem:subparameterization_bi-immune}.
+This shows that there are sets that are at the same time both highly undecidable and rich in structure.
 \begin{theorem}
 \label{thm:subparameterization_p-selective}%
   There is a parameterization with a subparameterization of which the corresponding subset of parameter values is bi-immune, yet \pdash{}selective.
@@ -638,9 +725,9 @@ Exploiting the decidability of the order on the real numbers associated with par
   If any of the parameter values is in $C$, the one associated with the smallest real number is.
 \end{proof}
 
-The existence of a \pdash{}selective bi-immune set was claimed before \parencite{goldsmith1993note}.
+The existence of a \pdash{}selective bi-immune set was claimed before by~\textcite{goldsmith1993note}.
 However, the proof that was provided was a convoluted finite injury priority argument \parencite[see also][Section~2.11]{downey2010algorithmic}.
-In our parameterized framework, such arguments can be made more transparent, as is demonstrated by the proofs of Lemma~\ref{lem:subparameterization_bi-immune} and Theorem~\ref{thm:subparameterization_p-selective}.
+In our parameterized framework, such arguments can be made more transparent, as demonstrated by the proofs of Lemma~\ref{lem:subparameterization_bi-immune} and Theorem~\ref{thm:subparameterization_p-selective}.
 The number of alternations of a parameterized procedure is related to the number of injuries in a finite injury construction.
 In that sense, our proof does not differ from the original proof.
 However, we feel that by their framing, our proofs contribute more to an intuitive understanding of why the statements are true.

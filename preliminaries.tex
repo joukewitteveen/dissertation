@@ -39,7 +39,7 @@ A string can serve \enquote{as an integer}, that is \enquote{as a natural number
 These data type conversions are depicted in Table~\ref{tab:cast}.
 In this thesis, we have tried to make all conversions explicit.
 
-\begin{table}
+\begin{table}[htbp]
   \centering
   \vspace*{3ex}
   \begin{tabular}{c@{\hspace{3cm}}c}
@@ -66,6 +66,14 @@ In this thesis, we have tried to make all conversions explicit.
   }
   \label{tab:cast}
 \end{table}
+
+We have chosen to forego any consideration of the empty string and, in this thesis, we do not consider $0$ to be a natural number.
+Of course, these choices are related to each other and make that the set of possible lengths of our strings equal the set of natural numbers.
+Our choices ensure that any statement about a natural number that is true \enquote{up to an additive constant} is also true \enquote{up to a multiplicative constant}.
+Let us give an example.
+If, given two natural numbers $x$ and~$y$, there is a constant $c$ such that we have $x \le y + c$, then there is also a constant $c'$ such that we have $x \le c \cdot y$.
+The fact that this need not be the case if $x$ was equal to $0$ makes that $0$ is often a special case that needs special treatment.
+By leaving out $0$ from the start, we are not bothered by these pathological cases.
 
 The elements of~$\binary$ are known as \emph{bits}.
 The number of bits in a binary string~$x$ is called the \emph{length} of~$x$ and denoted by~$\length{x}$.
@@ -115,7 +123,7 @@ In Elias~gamma coding, a string is prefixed by a unary encoding of its length,
 \begin{equation*}
   \mathrlap{
     \Elias_\gamma(x) \deq \unary(\asStr(\length{x})) x = \bits{0}^{\length{x} - 1} \bits{1} x.
-  }\phantom{
+  }\hphantom{
     \Elias_\delta(x) \deq \Elias_\gamma(\asStr(\length{x})) x = \bits{0}^{\length{\asStr(\length{x})} - 1} \bits{1} \asStr(\length{x}) x.
   }
 \end{equation*}
@@ -133,16 +141,20 @@ For a string~$x$ of length~$n$, this gives us $\length{\Elias_\delta(x)} = 2 \cd
 For our purposes, Elias~delta coding is sufficiently economical.
 We shall use it whenever we need to pair strings.
 \begin{definition}
+\label{def:pairing_function}%
   A \emph{pairing function} that combines two finite, nonempty binary strings $x$ and~$y$ into a single string is given by
   \begin{equation*}
-    \pair{x}{y} \deq \Elias_\delta(x)y.
+    \pair{x}{y} \deq \Elias_\delta(y)x.
   \end{equation*}
 \end{definition}
 
-Our pairing function does not use any prefix-free encoding for its second component.
+Note that this pairing function reverses the order in which the components are presented.
+There is no fundamental reason for this technical detail other than that it will be convenient in Example~\ref{ex:traditional_pc} and in Section~\ref{sec:statistics} in general.
+Returning to our example string one final time, we observe $\bits{010111001} = \Elias_\delta(\bits{1100})\bits{1}$ and hence $\bits{010111001} = \pair{\bits{1}}{\bits{1100}}$.
+
+Our pairing function does not use any prefix-free encoding for its first component.
 This has the effect that our pairing function is not a prefix-free encoding of~$\binary^+ \times \binary^+$.
-At the same time, it results in $\length{\pair{x}{y}}$ being approximately equal to $\length{x} + 2 \cdot \log \length{x} + \length{y}$.
-Returning to our example string one final time, we observe $\bits{010111001} = \pair{\bits{1100}}{\bits{1}}$.
+At the same time, it results in $\length{\pair{x}{y}}$ being approximately equal to $\length{x} + \length{y} + 2 \cdot \log \length{y}$.
 
 Prefix-free encodings have an interesting relation to probability theory.
 The length of the prefix-free encoding of a string can be linked to the probability of that string in some probability mass function~\parencite{cover2006elements,li2008introduction}.
@@ -216,7 +228,7 @@ In fact, a set can be highly dissimilar to all semidecidable sets at once.
 Immune sets where introduced to computability theory by~\textcite{post1944recursively}.
 The application to arbitrary classes of sets goes back to~\textcite{flajolet1974sets}.
 
-If the class \cl{\itshape C} in Definition~\ref{def:bi-immune} is infinite, an immune set~$A$ satisfies infinitely many requirements.
+If the class \cl{\itshape C} in Definition~\ref{def:bi-immune} has infinitely many infinitely large members, an immune set~$A$ satisfies infinitely many requirements.
 Namely, for every infinitely large set $C$ in \cl{\itshape C}, the set~$A$ is so that $C \setminus A$ is nonempty.
 In many cases, constructing a set that meets infinitely many of such requirements is not straightforward.
 It may be complicated by the fact that satisfying one requirement may violate satisfying a requirement that was taken care of earlier.
@@ -268,7 +280,7 @@ For each row in this table, we can compute the decision on membership that the t
 For this reason, reductions of this kind are called truth-table reductions.
 
 The power of a reduction can be restricted further.
-A truth-table reduction that always makes precisely one query and outputs the result of that query is known as a \defkeyat{reduction!many--one}{many--one reduction}.
+A truth-table reduction that always makes precisely one query and outputs the unmodified result of that query is known as a \defkeyat{reduction!many--one}{many--one reduction}.
 If there is a many--one reduction from a set~$B$ to a set~$A$, then $B$ is said to be \emph{many--one reducible} to~$A$.
 
 
@@ -312,7 +324,7 @@ For the purposes of this thesis, we restrict our attention to formal systems whe
 \begin{example}[continued]
   Suppose that, in our system of tree structures, we want to derive the nonempty binary trees.
   This can be done with one axiom and one other rule of inference.
-  The axiom is a procedure that takes no inputs and outputs the minimal nonempty binary tree, \enquote{$(\ast, \ast)$}.
+  The axiom is a procedure that takes no inputs and outputs the minimal binary tree, the tree with a root node and no branches: \enquote{$\ast$}.
   The other rule of inference is a procedure that transforms two tree structures, $x$ and~$y$, into the tree structure~\enquote{$(x, y)$}.
   Using these two rules of inference, all binary trees can be derived, and nothing else.
   For example, it is impossible to generate our earlier example, \enquote{$((\ast, \ast), \ast, \ast)$} using only these two rules, because it does not represent a binary tree.
@@ -355,7 +367,7 @@ Indeed, an analysis of the resource requirements for computing a given function 
 The main computational resource we look at in this thesis is the number of steps taken by an algorithm, referred to as computation \emph{time}.
 To more cleanly express the asymptotic behavior of computation-time usage, computation time is commonly measured as a function of the length of input instances.
 That is, the computation time of a procedure~$\phi$ is a function~$t$ such that, for all~$n$, the maximum number of steps taken by~$\phi$ on any input of length~$n$ is $t(n)$.
-Typically, it is not so much the exact computation time of a procedure we are interested in, but rather an upper bound to the computation time.
+Typically, it is not so much the exact computation time of a procedure we are interested in, but rather an upper bound on the computation time.
 When we say that a procedure~$\phi$ runs in time~$t$, we mean that, for all~$n$, the number of steps taken by~$\phi$ on any input of length~$n$ is at most~$t(n)$.
 A noteworthy class of functions in this regard are the \defkeyat{time-constructible function}{time-constructible functions}.
 These are the functions~$t$ for which there is a procedure~$\phi$ and a constant~$c$ such that, for all strings~$x$,
@@ -412,14 +424,14 @@ We shall state these as lemmas, but refer to the textbooks for proofs \parencite
     \forall x \in \binary^n\colon \Big(x \in A \iff \exists y \in \binary^{p(n)}\colon \phi(x, y) = \bits{1}\Big).
   \end{equation*}
 \end{lemma}
-The variable~$y$ in this characterization is known as the \emph{certificate} for membership of~$x$ in~$A$.
+The variable~$y$ in this characterization is known as a \emph{certificate} for membership of~$x$ in~$A$.
 \begin{lemma}
   A set~$A$ is in \cladv{P}{poly} if there is a polynomial~$p$ and a two-argument procedure~$\phi$ that runs in polynomial time such that, for all~$n$, we have
   \begin{equation*}
     \exists y \in \binary^{p(n)}\colon \forall x \in \binary^n\colon \Big(x \in A \iff \phi(x, y) = \bits{1}\Big).
   \end{equation*}
 \end{lemma}
-In this case, the variable~$y$ is known as the \defkey{advice} for instances of length~$n$.
+In this case, the variable~$y$ is known as \defkey{advice} for instances of length~$n$.
 Observe that the only difference between the characterization of~\cl{NP} and that of~\cladv{P}{poly} is the position of the existential quantification over~$y$.
 
 From the previous two lemmas, it follows that the classes \cl{NP} and~\cladv{P}{poly} are closed under many--one reductions that are computable in polynomial time:
@@ -436,6 +448,7 @@ Keeping with decision problems for a moment, we could consider a function that o
   \begin{equation*}
     \{y \in A \st \asNat(y) \le \asNat(x)\}.
   \end{equation*}
+  When there is a polynomial~$p$ such that, for all~$x$, we have $\rank(x : A) \le p(\length{x})$, then $A$ is said to be \defkeyat{sparse set}{sparse}.
   A set in relation to which the $\rank$"~function is computable in polynomial time is called \defkeyat{p-rankable@\pdash{}rankable}{\pdash{}rankable}.
 \end{definition}
 
@@ -465,7 +478,7 @@ Then, for every set $A \in \cl{P}$, the set $f(A) \deq \{f(x) \st x \in A\}$ is 
 Observe that $f$ maps members of~$A$ to members of~$f(A)$, and likewise for nonmembers.
 In general, when a bijection keeps some kind of structure intact, the bijection is also referred to as an \emph{isomorphism}.
 Furthermore, we say that sets that are related by an isomorphism, such as~$A$ and~$f(A)$ in our example, are \emph{isomorphic}.
-The \emph{Berman--Hartmanis conjecture} \parencite{berman1977isomorphisms} posits that all sets that are complete for \cl{NP} are isomorphic to each other.
+The \defkey{Berman--Hartmanis conjecture} \parencite{berman1977isomorphisms} posits that all sets that are complete for \cl{NP} are isomorphic to each other.
 This conjecture is believed to be untrue.
 It is at odds with the assumed existence of certain polynomial-time computable functions without a polynomial-time computable inverse~\parencite{young1983some,kurtz1989isomorphism}.
 However, the two are not mutually exclusive and some functions that are not invertible may exist even if the conjecture is true~\parencite{hartmanis1991one,agrawal2009one}.
@@ -520,9 +533,15 @@ Sometimes, we do not care for this independence and choose to work directly with
 One such property we may look at is the precise computation time used by an algorithm.
 As mentioned before, this computation time, or \emph{running time}, is commonly measured as a function of the length of input instances.
 For a given function~$f$, we can consider the sets that have a decision procedure of which the running time is bounded from above by~$f$.
-We say that $f$ is an upper bound for the running time of a procedure~$\phi$ if, for all~$n$, the running time of~$\phi$ on any input of length~$n$ is at most~$f(n)$.
-The class of sets that have a decision procedure of which the running time is bounded from above by~$f$ is denoted by~\cltime{$f(n)$}.
-Hence, we have
+We say that $f$ is an upper bound on the running time of a procedure~$\phi$ if, for all~$n$, the running time of~$\phi$ on any input of length~$n$ is at most~$f(n)$.
+
+We shall be interested primarily in the behavior of running time bounds up to a multiplicative constant.
+Thus, for a function~$f$, we look at sets that have a decision procedure with a running time that is upper bounded by~$f$ up to a multiplicative constant.
+The class of such sets we shall denote by~$f$ by~\cltime{$f(n)$}.
+This means the following for a set~$A$ that is in~\cltime{$f(n)$}:
+There is a decision procedure~$\phi$ for~$A$ and a constant~$c$ such that, for all~$n$, the running time of~$\phi$ on any input of length~$n$ is at most $c \cdot f(n)$.
+
+In terms of these classes of sets, we have
 \begin{equation*}
   \cl{P} = \bigcup_{c \in \bbN} \cltime{$n^c$}.
 \end{equation*}
@@ -584,18 +603,20 @@ For this, we make use of a dual to the limit inferior, the \emph{limit superior}
 \begin{equation*}
   \lim_{n \to \infty} \max \left\{\frac{f(m)}{g(m)} \st[\middle] m \ge n\right\} < \infty.
 \end{equation*}
-When $f$ does not grow faster than $g$, we write $f \in \bigO(g)$, where $\bigO(g)$ is the class of all functions that do not grow faster than~$g$.
+When $f$ does not grow faster than $g$, we write $f \in \bigO(g)$, where $\bigO(g)$ is thus the class of all functions that do not grow faster than~$g$.
 As no function~$f$ grows faster than itself, we have $f \in \bigO(f)$.
 
 For a function~$f$ and a constant~$c$, we denote the function that maps a number~$n$ to $c + f(n)$ by $c + f$, and the function that maps $n$ to $c \cdot f(n)$ by $c \cdot f$.
 Let $f$ and $g$ be two functions and $c$ a constant.
-Observe that if we have $f \in \littleo(g)$, then we also have $c + f \in \littleo(g)$ and $c \cdot f \in \littleo(g)$.
-Likewise, if we have $f \in \bigO(g)$, then we also have $c + f \in \bigO(g)$ and $c \cdot f \in \bigO(g)$.
-Note that the argument to $\littleo$ and $\bigO$ is a function and not an expression containing a free variable.
+Observe that if we have $f \in \bigO(g)$, then we also have $c + f \in \bigO(g)$ and $c \cdot f \in \bigO(g)$.
+Likewise, if we have $f \in \littleo(g)$, then we also have $c \cdot f \in \littleo(g)$.
+The additive case, $c + f \in \littleo(g)$, is also true, but only because we have excluded $0$ from~$\bbN$, which makes it impossible for $g$ to converge to~$0$.
+Note that the argument to $\bigO$ and~$\littleo$ is a function and not an expression containing a free variable.
 However, sometimes we feel it is clearer to write an expression instead.
 Whenever we do so, we shall use~$n$ as a free variable.
 Thus, $\bigO(f)$ is the same as $\bigO(f(n))$.
 The latter notation is somewhat unfortunate, as $f(n)$ is suggestive of a particular function value, in which case the latter class would equal~$\bigO(1)$.
+Yet, the notation $\bigO(f(n))$ is more in line with the notation used for the class of sets with a running time bounded by a function in~$\bigO(f)$, namely~\cltime{$f(n)$}.
 
 The does-not-grow-faster-than relation is not antisymmetric.
 For instance, the functions given by $f(n) \deq n$ and $g(n) \deq 2 \cdot n$ are unequal, yet we have both $f \in \bigO(g)$ and $g \in \bigO(f)$.
@@ -608,23 +629,6 @@ The order extends to the level of such equivalence classes, and on these equival
 \end{description}
 An order that is reflexive, antisymmetric and transitive is called a \emph{partial order}.
 
-\begin{figure}
-  \centering
-  \begin{tikzpicture}
-    \graph[layered layout, grow'=up, sibling distance=6em]{
-      a/"$\{1\}$" -> "$\{1, 2\}$" -> c/"$\{1, 2, 3\}$",
-      d/"$\{3\}$" ->[minimum layers=2] e/"$\{1, 3, 4\}$"
-    };
-    \draw[->] (a) -- (e);
-    \draw[->] (a) to[bend left=45,looseness=1.2] (c);
-    \draw[->] (d) -- (c);
-  \end{tikzpicture}
-  \caption{
-    Set inclusion as a partial order on a family of sets.
-    Arrows connecting each set to itself have been omitted.
-  }
-  \label{fig:family}
-\end{figure}
 Another example of a partial order, besides the equivalence classes of functions ordered by growth rate we have seen above, is provided by families of sets.
 The set inclusion order, $\subseteq$, is a partial order on any family of sets.
 Consider the family of sets
@@ -641,6 +645,24 @@ While it does not include all subsets of $\{1, 2, 3, 4\}$, any subset can be \em
     A \subseteq \bigcup_{S \in \eta} S.
   \end{equation*}
 \end{definition}
+
+\begin{figure}[bp]
+  \centering
+  \begin{tikzpicture}
+    \graph[layered layout, grow'=up, sibling distance=6em]{
+      a/"$\{1\}$" -> "$\{1, 2\}$" -> c/"$\{1, 2, 3\}$",
+      d/"$\{3\}$" ->[minimum layers=2] e/"$\{1, 3, 4\}$"
+    };
+    \draw[->] (a) -- (e);
+    \draw[->] (a) to[bend left=45,looseness=1.2] (c);
+    \draw[->] (d) -- (c);
+  \end{tikzpicture}
+  \caption{
+    Set inclusion as a partial order on a family of sets.
+    Arrows connecting each set to itself have been omitted.
+  }
+  \label{fig:family}
+\end{figure}
 
 The family of sets~\eqref{eq:family} has no least element, nor does it have a \emph{greatest element}, which would in this case be a set that contains all others of the family.
 It does, however, contain two \emph{maximal elements}\label{def:maximal}, sets that are not contained in any set of the family except themselves.
@@ -694,6 +716,7 @@ Furthermore, suppose that whatever it is that makes these objects \enquote{good}
 Intuitively, this \enquote{goodness} property must then be present in the greatest lower bound, $a \land b$, as well.
 This leads to the following definition of subsets of a lattice that may represent a notion of being \enquote{big}, \enquote{fast}, or \enquote{good}.
 \begin{definition}
+\label{def:filter}%
   A nonempty subset of objects of a lattice is a \defkey{filter} if it is upward closed and closed under taking greatest lower bounds.
 \end{definition}
 
@@ -701,6 +724,7 @@ It is possible that the essence of what makes an object of a lattice \enquote{go
 In that case, $a$ is a least element in the filter of \enquote{good} objects.
 This filter is then the set of all objects in the lattice that are better than, or equally good as~$a$.
 \begin{definition}
+\label{def:principal}%
   Let $\calL$ be a lattice with an order indicated by~$\quasile$.
   A filter~$\calF$ in~$\calL$ is \defkeyat{filter!principal}{principal} if there is an object $a \in \calL$ such that we have
   \begin{equation*}
@@ -733,6 +757,13 @@ Thus,
 \end{equation}
 means that $\{n \st P(n)\}$ is in the cofinite filter.
 In other words, \eqref{eq:forall_cofinite} states that $P$ is true of all but finitely many natural numbers~$n$.
+
+The dual of this quantifier, $\exists^\infty$, is defined by
+\begin{equation*}
+  \exists^\infty n\colon P(n) \iff \lnot \forall^\infty n\colon \lnot P(n).
+\end{equation*}
+In other words, $\exists^\infty n\colon P(n)$ states that there exist infinitely many numbers~$n$ of which $P$ is true.
+For this quantifier, the relation between its notation and its meaning is somewhat more intuitive than for~$\forall^\infty$.
 
 We remark that we can use the $\forall^\infty$-quantifier in an alternative definition of our grows-much-slower-than and does-not-grow-faster-than relations.
 For functions $f$ and~$g$, we have $f \in \littleo(g)$ precisely when we have

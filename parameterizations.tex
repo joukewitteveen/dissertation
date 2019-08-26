@@ -1,7 +1,9 @@
 \chapter{Parameterizations}
 \label{ch:parameterizations}%
 
+The main results of this thesis are obtained in the current chapter.
 In the following sections, we seek to analyze a selection of notions of complexity in a unified, parameterized, way.
+This analysis is carried out using the framework developed in Section~\ref{sec:framework}.
 We look at complexity as it is used in \emph{computability theory}, in \emph{computational complexity theory}, in \emph{algorithmic complexity theory}, in \emph{algorithmic statistics}, and in the study of \emph{computational redundancy}.
 In the first four of these fields, complexity expresses a distance from some reference notion of \enquote{simplicity}.
 With the last of these fields, computational redundancy, it is the other way around and complexity is the reference with respect to which simplicity is measured.
@@ -13,7 +15,7 @@ The focus, then, is on how undecidable a given set with non-negligible complexit
 Section~\ref{sec:computability} rephrases one possible way to answer this question in terms of parameterizations.
 Our parameterized analysis of computability provides a new insight concerning parameterized computational complexity.
 We find an answer to the question: \emph{what sets are fixed-parameter tractable?}
-More precisely, we characterize the sets for which a parameterization exists with respect to which they have a fixed-parameter tractable decision procedure.
+More precisely, we characterize the sets for which a parameterization exists with respect to which they are fixed-parameter tractable.
 
 Like computability theory, computational complexity theory deals with decision problems modeled as sets.
 Simplicity in computational complexity theory is routinely identified with decidability in polynomial time.
@@ -29,9 +31,9 @@ Besides looking at how much computation time is needed for deciding on membershi
 Some decision procedures can be expressed as an algorithm of only a few lines, while others necessarily use very many lines.
 This take on complexity, where a set is simple if it has a short decision procedure, is at the heart of algorithmic complexity theory.
 A parameterized treatment of this form of complexity is the topic of Section~\ref{sec:algorithmic}.
-This parameterized treatment is shown to be more nuanced than the traditional treatment.
+This parameterized treatment is shown to be more nuanced than the traditional treatment, as it can take considerations regarding uniformity into account.
 Because we use a unifying framework for the analysis of both computational and algorithmic complexity, the interplay between the two notions can be studied.
-This allows us to show that high algorithmic complexity implies high computational complexity.
+This allows us to show that, at the level of individual instances, high algorithmic complexity implies high computational complexity.
 
 An application of reasoning along the lines of algorithmic complexity can be found in statistics.
 One of the central themes in statistics is model selection.
@@ -50,7 +52,7 @@ Observe that the complexity of an object increases as the size of this irrelevan
 Thus, computational redundancy expresses a kind of \enquote{anti-complexity}.
 The reference against which we measure computational redundancy is the information in an object.
 An object is simple when much of its information is computationally redundant.
-For an simple object, the length of a description of the object is not a good measure of its computational complexity.
+For a simple object, the length of a description of the object is not a good measure of its computational complexity.
 As it turns out, there are many ways in which an object with a long description could be reduced to objects with shorter descriptions.
 Multiple possible ways are explored in Section~\ref{sec:redundancy}.
 How much computational redundancy can be extracted from the description of an object depends on the specifics of the reduction under consideration.
@@ -59,11 +61,11 @@ How much computational redundancy can be extracted from the description of an ob
   \centering
   \begin{tabular}{p{4cm}p{3cm}p{6.266cm}}
     \multicolumn{1}{l}{\hfill\emph{Field}\rlap{,}\hfill\llap{\emph{\S}}} & \multicolumn{1}{c}{\emph{Reference}} & \multicolumn{1}{c}{\emph{Question}} \\
-    \hline\noalign{\vspace{2ex}}
-    Computability Theory, \hspace*{\fill}\ref{sec:computability} & Decidability & What sets are fixed-parameter tractable? \\[2ex]
-    Computational Complexity Theory, \hspace*{\fill}\ref{sec:tractability} & Decidability in Polynomial Time & Is there a best parameterization?\newline \\[2ex]
-    Algorithmic Complexity Theory, \hspace*{\fill}\ref{sec:algorithmic} & Short Decision Procedures & How does algorithmic complexity relate to computational complexity? \\[2ex]
-    Algorithmic Statistics, \hspace*{\fill}\ref{sec:statistics} & Simple Models & What part of the information in an object is useful information? \\[2ex]
+    \hline\noalign{\vspace{1.25ex}}
+    Computability Theory, \hspace*{\fill}\ref{sec:computability} & Decidability & What sets are fixed-parameter tractable? \\[1.75ex]
+    Computational Complexity Theory, \hspace*{\fill}\ref{sec:tractability} & Decidability in Polynomial Time & Is there a best parameterization?\newline \\[1.75ex]
+    Algorithmic Complexity Theory, \hspace*{\fill}\ref{sec:algorithmic} & Short Decision Procedures & How does algorithmic complexity relate to computational complexity? \\[1.75ex]
+    Algorithmic Statistics, \hspace*{\fill}\ref{sec:statistics} & Simple Models & What part of the information in an object is useful information? \\[1.75ex]
     Computational Redundancy, \hspace*{\fill}\ref{sec:redundancy} & Object Description Length & How much computational redundancy can be extracted from the description of an object?
   \end{tabular}
   \caption{
@@ -88,7 +90,7 @@ In Section~\ref{sec:computability}, we fix a parameterized complexity class~\cl{
 We conclude that doing so is not very fruitful and we need to keep track of parameterizations explicitly.
 In Section~\ref{sec:tractability}, we fix a parameterized complexity class~\cl{\itshape C} and a set~$A$, and look at those parameterizations with which $A$ is in~\cl{\itshape C}.
 Doing so, we obtain collections of parameterizations that exhibit an algebraic structure.
-In Section~\ref{sec:algorithmic}, we fix a parameterized complexity class~\cl{\itshape C} and a collection of parameterizations~$\calF$, and look at those sets~$A$ for which $\calF$ is is the collection of parameterizations with which $A$ is in~\cl{\itshape C}.
+In Section~\ref{sec:algorithmic}, we fix a parameterized complexity class~\cl{\itshape C} and a collection of parameterizations~$\calF$, and look at those sets~$A$ for which $\calF$ is the collection of parameterizations with which $A$ is in~\cl{\itshape C}.
 We conjecture that the sets thus obtained are precisely the sets that have, in some specific way, the same distribution of computational complexity.
 
 
