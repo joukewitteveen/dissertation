@@ -1,0 +1,299 @@
+\chapter{Conclusion}
+
+The main results of this thesis were presented not only as formal theorems, but also as informal slogans.
+A listing of all the slogans is provided at the front of this thesis.
+However, there is more to this thesis than just those results.
+
+We started this thesis with some questions and observations in Section~\ref{sec:size_of_a_cube} and Section~\ref{sec:history}, respectively.
+In the current chapter, we shall revisit the topics of those sections.
+First, in Section~\ref{sec:conclusion:size_of_a_cube}, we shall use our parameterized framework to finally provide some answer to the question \enquote{what is the size of a cube?}
+Following that, in Section~\ref{sec:conclusion:history}, we assemble a historical timeline of parameterized complexity theory.
+In this timeline, we have included the milestones in the development of parameterized analysis of complexity, as far as we encountered them in this thesis.
+Lastly, in Section~\ref{sec:conclusion:future}, we briefly look ahead and point out some possible future directions for the parameterized analysis of complexity.
+This includes further forms of complexity that may be analyzed using our framework, as well as some ideas for applications.
+Additionally, we have listed in this section a few major questions that have remained unanswered in this thesis.
+
+
+\bigsection{The Size of a Cube}
+\label{sec:conclusion:size_of_a_cube}%
+
+The dimensions of a physical cube-shaped object determine how large a pocket, box, or hangar needs to be in order to contain the object.
+For an abstract cube, we can look at how long a description of it is, in accordance to some description method.
+This length is also a dimension in the sense that it determines how much storage space we need to contain the abstract cube.
+In Section~\ref{sec:statistics:encodings_distributions} and Section~\ref{sec:statistics:data_structures} we have used parameterizations as the basis of description methods.
+These methods start by specifying a property, as represented by a parameter value, of the object that is being described.
+Thus, the length of a specification can serve as a proxy of the metrics we have considered in Section~\ref{sec:size_of_a_cube}.
+\begin{example}
+  Suppose we use the number of vertices in a graph as the basis of our description method for graphs.
+  Because, for any fixed number~$n$, there are only finitely many graphs with $n$~vertices, we use an encoding where all $n$-vertex graphs are equally likely.
+  This is exactly what is achieved by the adjacency-matrix representation of graphs~\parencite{cormen2009introduction}.
+
+  Alternatively, we could use the number of edges as the basis of our description method for graphs.
+  In this case, all graphs that have some fixed number of edges cannot be equally likely since, for each~$n$, there are infinitely many graphs with $n$~edges.
+  However, as demonstrated in Section~\ref{sec:statistics:encodings_distributions}, solutions to this problem exist.
+  An example of an edge-centric representation of graphs is the adjacency-list representation, which basically presents a graph as a list of its edges~\parencite{cormen2009introduction}.
+
+  The second description method is most useful when the graphs we are working with have relatively few edges.
+  With the graph for the dodecahedron, Figure~\ref{fig:dodecahedron}, for instance, it makes sense to use an adjacency-list representation.
+  Recording for each possible combination of vertices whether there is an edge connecting them is wasteful for this graph.
+  By contrast, the graph for the tetrahedron, Figure~\ref{fig:tetrahedron}, has as many edges as are possible, and an adjacency-matrix representation may be preferable.
+\end{example}
+
+What metric most faithfully represents our notion of size of objects depends on the context in which we are dealing with the objects.
+Correspondingly, some ways of describing a graph are more accommodating to answering a given question about a graph than others.
+However, when the size of an object is measured by the length of a description in accordance with some description method, there exists a universal measure.
+Kolmogorov complexity is the length corresponding to the most general description method available.
+In this description method, any property of an object may be used in a description, as long as the property itself is specified as well.
+As a consequence, we can speak of \emph{the} Kolmogorov complexity of a graph, without having to specify a description method.
+Note that this does assume that we restrict our attention to effective description methods.
+Contrary to the metrics we have considered in Section~\ref{sec:size_of_a_cube}, the Kolmogorov complexity of a graph is not computable.
+
+We remark that Kolmogorov complexity tells us something about the efficiency of certain description methods.
+In particular, it tells us something about description methods with which we can effectively get from an object to its description and back.
+For every such description method, there are objects of which that description method is the best way to describe the object.
+With this, we mean that the description method assigns to the object a code that is as short as possible.
+Specifically, the length of the code equals the Kolmogorov complexity of the object.
+These objects for which the description method is optimal are the objects that are described by incompressible strings.
+In that sense, no effective description method is more \enquote{blessed} than any other.
+
+Besides the fact that Kolmogorov complexity is not computable, there are other objections against its use as a measure of the size of objects.
+The most obvious objection is that Kolmogorov complexity does not take computation time into account.
+If decoding the description of an object takes prohibitively long, the description is not very useful.
+We may want to require that decoding the description of an object should somehow run in polynomial time, relying on the thesis by Cobham and Edmond.
+Unfortunately, we cannot do so unless we are willing to specify a specific polynomial.
+This is a consequence of the fact that Kolmogorov complexity is a nonuniform notion in the sense that it treats each object separately.
+As a procedure, a description of an object takes no input and produces only a single output.
+We can evaluate a specific function in, say, the length of the output, but this will only give us a constant.
+Without fixing a specific polynomial, there is no way to classify a procedure that does not take any input as running in polynomial time.
+
+Another source of objections against the use of Kolmogorov complexity is the fact that it is defined up to an additive constant.
+We have seen in Section~\ref{sec:history:algorithmic} that we should include as much cultural context in our model of computation as possible.
+If we fail to do so, then the additive constant that is involved with Kolmogorov complexity may overshadow the actual complexity of the objects we work with.
+At the same time, the cultural context of human perception of complexity is continually evolving.
+As a result, our notion of complexity may change and the additive constant with respect to any fixed model of computation may keep increasing without bounds.
+
+The best notion of size, then, depends on the context it is to be used in.
+In turn, an analysis of any form of complexity in terms of the size of objects should be explicit about how the size of objects is measured.
+Our framework for the parameterized analysis of complexity offers a mathematical model to do just that.
+Central to this framework is the notion of a \emph{parameterization}, a family of sets indexed by parameter values.
+In Chapter~\ref{ch:parameterizations}, we have seen that the framework is able to deal with a multitude of complexities, both algorithmic and computational in nature.
+The framework offers five levels of abstraction for the analysis of complexity.
+\begin{description}
+\item[Instance]
+  At the instance level, a parameterization~$\eta$ links an instance~$x$ to a set of parameter values~$\{k \st x \in \eta_k\}$.
+  When expressing complexity in terms of parameter values, we strike a balance between being too specific and not being specific enough.
+  What we mean by this can be demonstrated by considering the running time of some procedure as a form of complexity.
+  The running time of a procedure can be computed as a function of its input by running the procedure and clocking the time it takes.
+  This is an overly specific way of measuring the running-time complexity of instances, as it does not generalize in any way.
+  On the other hand, a worst-case running time expressed as a function of the length of inputs is blind for more input-specific behavior of complexity.
+\item[Slice]
+  The starting point of a parameterized analysis of complexity is grouping instances that are somehow comparable.
+  By definition, a parameterization is a collection of sets of instances.
+  This way, parameterizations enable the comparison of complexity between instances.
+  Additionally, by not looking at instances in isolation, but collectively, this opens the door for the consideration of uniformity constraints.
+\item[Parameterization]
+  When even more uniformity is required, we turn to collections of slices.
+  This is the level of abstraction at which parameterized complexity has been most successful thus far.
+  It allows us to study how complexity scales as a function of parameter values.
+\item[Filter]
+  At the level of individual filters, we step away from specific parameterizations and thus from any specific context in which the size of objects is measured.
+  This higher level of abstraction is appropriate for the study of what the parameterizations that relate to the complexity of a certain problem are like.
+  At this level, all notions of length that are relevant to a certain problem are bundled and studied as a whole.
+\item[Filters]
+  The level of filters, plural, is where we find out how the form of complexity we are analyzing ties in with specific computational problems.
+  Each parameterization, or, for that matter, each notion of length, represents a distribution of complexity.
+  In turn, a filter of parameterizations represents all applicable distributions of complexity.
+  The relation between such filters then tells us how specific these distributions are to the computational problems we are analyzing.
+\end{description}
+
+In this thesis, we have looked at various forms of complexity and analyzed them at various levels of abstraction.
+At the same time, these analyses provided insight into the details of the framework, and in particular into the class of fixed-parameter tractable sets.
+Section~\ref{sec:computability}, where we studied computability as a notion of complexity, revealed to what sets a notion of fixed-parameter tractability may apply.
+In particular, fixed-parameter tractability is concerned with decidable sets, or, if we stretch our definitions, with sets at the $\Delta^0_2$ level of the arithmetical hierarchy.
+Next, in Section~\ref{sec:tractability}, we found that most sets that interest us have no optimal parameterizations in relation to fixed-parameter tractability.
+In Section~\ref{sec:algorithmic}, we obtained results on two levels of abstraction.
+On the level of filters, plural, we  looked at sets with the same complexity profile from a fixed-parameter tractability point of view.
+We found that such sets might alternatively be characterized as sets of which the symmetric difference is in~\cl{P}.
+On the level of instances, we looked at the similarity of parameterized complexity with measures of algorithmic complexity.
+We found that the measure of complexity embodied by a parameterization is more similar to instance complexity than to Kolmogorov complexity.
+More so than these two measures of algorithmic complexity, parameterizations offer opportunities for the consideration of uniformity constraints.
+Another comparison with an existing framework was made in Section~\ref{sec:statistics}.
+Here, parameterizations were related to statistical model classes.
+As it turns out, parameter estimation can be interpreted either in the context of computational complexity, of in the context of statistics.
+These two different interpretation allow insights from both contexts to be shared.
+Lastly, in Section~\ref{sec:redundancy}, we returned to a complexity-theoretic study of the complexity class of fixed-parameter tractability,~\cl{FPT}.
+This class is closed under several related notions of reducibility known collectively as kernelization.
+By looking at refined version of these reducibilities, polynomial kernelization, we uncovered a proper hierarchy inside~\cl{FPT}.
+
+\medbreak
+What, then, is the size of a cube?
+If the size of a cube relates to how convenient it is to work with compared to other shapes, the size necessarily depends on what we try to do with the cube.
+However, even if we have a specific application in mind, there may be multiple ways to measure the cube.
+Our goal may be to decide membership in a given set and convenience may be determined purely by the time needed to do so.
+In that case, the ways to measure the cube are the parameterizations with which our decision problem is in~\cl{FPT}.
+Perhaps the best we can do, mathematically, is to consider the filter of all these parameterizations.
+At the very least, this filter holds information on all the ways the complexity of the cube can relate to the complexity of other shapes.
+
+
+\bigsection{Historical Encounters}
+\label{sec:conclusion:history}%
+
+In computer science, there is a long, but not extremely visible, tradition of bringing together different notions of complexity.
+Our framework for the analysis of complexity is a continuation of that tradition and aims for an explicit unification of complexity theories.
+We feel that using parameters as the basis of a model of complexity provides us with sufficient generality to do so.
+The parameterized approach to complexity theory is not new and has a history even before the first parameterized complexity classes were defined by \textcite{downey1992fixed}.
+In this thesis, we have come across many incarnations of parameterized complexity theory before it was \enquote{parameterized complexity theory}.
+\newcommand{\yeartextcite}[2][]{\citeyear{#2}\textmd{\textit{,~\textcite{#1,#2}.}}}
+\begin{description}
+\item[\yeartextcite{post1944recursively}]
+  In the context of decidability, \citeauthor{post1944recursively} noted that even sets that are not decidable may have infinite subsets that are.
+  This is a form of parameterized analysis of complexity at the level of slices.
+  While a set as a whole may be complex, in this case meaning undecidable, there may be subsets, slices, that are not complex.
+\item[{\yeartextcite[putnam1965trial]{gold1965limiting}}]
+  Staying with undecidability as a notion of complexity, we mention the work of \citeauthor{putnam1965trial} and \citeauthor{gold1965limiting}.
+  They noted that some undecidable sets can be approximated by decision procedures that are allowed to change their mind.
+  The more often a decision procedure changes its mind on an instance, the more complex we say the instance is.
+  In that sense, this form of parameterized analysis of complexity happens on the level of instances.
+  However, given the focus on decision procedures that are allowed to change their mind, the analysis can also be placed at the level of parameterizations.
+\item[\yeartextcite{jockusch1968semirecursive}]
+  Next to looking at how complex, in this case undecidable, instances are in isolation, it is possible to compare the undecidability of instances.
+  The set of instances that can be reduced to a given instance~$x$ form a slice of instances that are no more complex than~$x$.
+  This way, it is possible to reveal redundancy, even in undecidable sets.
+  The work of \citeauthor{jockusch1968semirecursive} in this area can be thought of as a very early study of kernelization.
+\item[\yeartextcite{flajolet1974sets}]
+  Parameterized reasoning in computational complexity theory, as opposed to computability theory, can be traced back at least to the work of~\citeauthor{flajolet1974sets}.
+  They asked the questions that \citeauthor{post1944recursively} asked in \citeyear{post1944recursively} again, but this time in the context of computational complexity.
+  To our knowledge, this marks the first time that the polynomial-time decidable subsets of computationally complex sets were studied.
+\item[\yeartextcite{lynch1975reducibility}]
+  The next step after considering polynomial-time decidable subsets of computationally complex sets was to look at all such subsets at once.
+  By doing so, \citeauthor{lynch1975reducibility} pushed the parameterized analysis of computational complexity from the level of slices to the level of parameterizations.
+\item[{\yeartextcite[selman1979p-selective]{meyer1979with}}]
+  The strengths of various notions of reducibility in the presence of a polynomial running-time bound were studied by \citeauthor{selman1979p-selective} and by \citeauthor{meyer1979with}.
+  Results in this setting build on the work of \citeauthor{jockusch1968semirecursive} from \citeyear{jockusch1968semirecursive}.
+  By the addition of the polynomial running-time bound, similarities with the study of kernelization are reinforced.
+\item[\yeartextcite{garey1979computers}]
+  The first to investigate running times of decision procedures as a function of not only the length of instances, but also of natural parameters were \citeauthor{garey1979computers}.
+  Their work lacks proper definitions and, in general, a formal framework.
+  Nevertheless, the beginnings of a parameterized theory of computational complexity at the level of parameterizations are recognizable.
+\item[\yeartextcite{hartmanis1983generalized}]
+  One of the earliest attempts at bringing together algorithmic complexity and computational complexity comes from \citeauthor{hartmanis1983generalized}.
+  The study of the effect of algorithmic complexity on computational complexity takes place at the level of parameterizations.
+  Nevertheless, algorithmic complexity remains a nonuniform notion and therefore this analysis of complexity can also be placed at the level of instances.
+\item[\yeartextcite{orponen1985polynomial}]
+  Looking at the polynomial-time decidable subsets of a computationally complex set~$A$ may provide new insights into the complexity of~$A$.
+  Some sets can be approximated reasonably well by their polynomial-time decidable subsets.
+  For others, such approximations necessarily proceed in small steps, adding only finitely many instances at a time.
+  The research in this area by \citeauthor{orponen1985polynomial} has taken the parameterized analysis of complexity to the level of individual filters.
+\item[\yeartextcite{orponen1986classification}]
+  The collections of polynomial-time decidable subsets of computationally complex sets showcase some algebraic structure with regard to set-theoretic operations.
+  It was noted by \citeauthor{orponen1986classification} that there are only very few possibilities for what the structure that emerges from a set looks like.
+  The investigations of what structures are possible can be thought of as a first analysis at the level of filters, plural, and the relations between them.
+\item[\yeartextcite{downey1992fixed}]
+  The first formal framework for the parameterized analysis of computational complexity, including definitions of complexity classes, was given by \citeauthor{downey1992fixed}.
+  This framework marks the start of modern parameterized complexity theory.
+  We observe that the ideas by \citeauthor{flajolet1974sets} predate this framework some eighteen years.
+\end{description}
+Subsequent developments regarding the framework were discussed in Section~\ref{sec:framework}.
+
+
+\bigsection{Future Encounters}
+\label{sec:conclusion:future}%
+
+There is still much unexplored territory in the parameterized analysis of complexity.
+Directions in which research can be taken range from purely theoretical to highly applied.
+We shall list a few directions in which the work in this thesis can be continued.
+
+\subsubsection{Other Forms of Complexity}
+In this thesis, the primary computational resource we have looked at is running time.
+In light of the sequential computation thesis, this is a good resource to look at because it is fairly independent of the model of computation.
+Similarly, we could have looked at the space usage of computations and indeed, many of our techniques can be applied to space usage with minimal change~\parencite{witteveen2015structural}.
+In practice, however, we sometimes experience forms of complexity that are more strongly dependent on a model of computation.
+
+One such form of complexity came up in a private communication with Tom van~der~Zanden about his work on computing treewidth on the GPU~\parencite{vanderzanden2018computing}.
+When programming for the GPU, the best results are obtained if the same code can be executed on multiple parts of the data in parallel.
+We experience instances on which computation can be parallelized efficiently as not very complex.
+This suggests trying to bound the extent to which computation on an instance can be parallelized as a function of parameter values.
+As stated, this is not at all precise, yet it may serve as inspiration for future work on something akin to fixed-parameter parallel computation.
+We note that \textcite{weller2013aspects} already performed a parameterized analysis of parallel computation, using kernelization.
+
+Another form of complexity that is encountered in practice is energy consumption.
+Perhaps surprisingly, not all operations on data require energy to be performed.
+As it turns out, no energy expenditure is necessary if the operations are logically reversible~\parencite[Section~8.2]{li2008introduction}.
+This suggests that we try to bound the number of irreversible steps taken in some computation as a function of parameter values.
+Both for this notion of complexity and the previous one, the most interesting part of a future study may be finding relevant parameterizations.
+
+Irreversible computation can be simulated in a reversible way.
+A way to do so that incurs only a linear overhead in either running time or space usage was presented by \textcite{buhrman2001time}.
+Because of these two extremes, a linear overhead has become the benchmark in the reversible simulation of irreversible computation.
+Thus, a simulation with a linear overhead in terms of running time is time-efficient, and a simulation with a linear overhead in space usage is space-efficient.
+Currently, no reversible simulation of irreversible computation that is efficient both in terms of running time and in terms of space usage is known.
+Of interest, then, is what the precise trade-off between overhead in running time and overhead in space usage is.
+Our parameterized framework may provide a decent means of analyzing such trade-offs.
+Parameter values may be interpreted as pairs $\pair{t}{s}$, where $t$ serves as a bound on the running time of a procedure while the space usage is bounded in~$s$.
+In turn, a parameterization records, for each instance~$x$, the pairs $\pair{t}{s}$ for which the procedure completes its computation on input~$x$.
+In other words, for each instance, the parameterization represents the frontier corresponding to the trade-off between the two resource bounds.
+
+Again, the analysis of frontiers of multiple resource bounds need not be limited to running time and space usage.
+For example, in a probabilistic model of computation, we could look at the trade-off between running time and the use of randomness.
+This provides another interface between computational complexity and algorithmic complexity.
+
+\subsubsection{Design Patterns}
+The results in this thesis are of a theoretical nature.
+Their implications, however, may be practical and can sometimes be framed as templates for solving recurring problems.
+Such templates are known as \emph{design patterns}.
+Some design patterns were mentioned in Section~\ref{sec:redundancy}, where the spread of a computational workload over a computing system was discussed.
+A more straightforward application of kernelization, not involving system architectures made up of multiple units capable of computing, is available too.
+This application concerns the use of kernelizations in the design of algorithms.
+A kernelization is in essence a recursive algorithm.
+Queries to the oracle can be treated as recursive invocations.
+This is true not only of many--one kernelization, where the recursion can be limited to tail-recursion, but of Turing kernelization in general.
+Of course, some provision has to be put in place for the case where on some input~$x$ the kernelization queries $x$ itself, perhaps indirectly.
+This may happen when $x$ meets the size bound of the kernelization.
+
+A common technique to amortize the cost of multiple invocations of a recursive algorithm is \emph{memoization}, which is a form of dynamic programming~\parencite[see][Chapter~16]{cormen2009introduction}.
+With memoization, the output of an algorithm is stored with the input in a lookup table so that, for any input, the algorithm needs to be run at most once.
+The size of a lookup table can get rather large and care must be taken that its benefits outweigh this additional storage requirement.
+With kernelizations, we can get a grip on the size of a lookup table.
+To do so, we no longer blindly store all input and output values that we encounter in a lookup table.
+Instead, we only store those values when the input meets the size bound of the kernelization.
+This way, the size of the table is kept in check without sacrificing the polynomial running time of the kernelization.
+
+We remark that dynamic programming is also used in parameterized complexity theory for the design of parameterized decision procedures~\parencite[see][Chapter~9]{niedermeier2006invitation}.
+For this case, the technique is used to realize a bound on the running time that is as required to show that a set is fixed-parameter tractable.
+
+In Section~\ref{sec:statistics:data_structures}, we mentioned another way in which our parameterized analysis leads to a design pattern.
+Here, the observation was that a two-part encoding of data may be compressing while some operations on the data can be performed without decompressing first.
+Moreover, these two-part data structures may be useful for benchmarking purposes.
+In benchmarking, we want to sample random instances from realistic distributions.
+The relationship between parameterizations and realistic distributions is discussed in Section~\ref{sec:statistics:encodings_distributions} and in particular in Example~\ref{ex:good_model}.
+As a result, with our two-part data structures, random sampling from realistic distributions simply means initializing data structures uniformly at random.
+
+\subsubsection{Open Problems}
+Several open problems have been identified in this thesis.
+We repeat them here.
+\begin{itemize}
+\item
+  Regarding the use of parameterizations for lossy compression, an oddity is observed in Section~\ref{sec:statistics:data_structures} on page~\pageref{p:compression_ratio}.
+  The performance of lossy compression formats is often measured as a compression ratio.
+  This implies that, on average, a constant percentage of bits is saved by compression, regardless of the length of the input.
+  By contrast, parameterizations typically promise a compression performance that increases with the length of the input.
+\item
+  We have shown in Theorem~\ref{thm:randomhard} that algorithmic complexity is a source of computational complexity.
+  Whether or not the converse is true as well we do not know.
+  The best result available in this direction is Theorem~\ref{thm:simpleeasy}, which goes back to \textcite[Theorem~14]{hartmanis1983generalized}.
+\item
+  Sets in~\cl{P} are fixed-parameter tractable with any parameterization.
+  In fact, as mentioned in Section~\ref{sec:algorithmic:equivalent_filters}, a set~$A$ is in~\cl{P} precisely when $\calF_\cl{FPT}(A)$ equals $\calL_\cl{FPT}$.
+  Also in that section, we noted that \cl{P} is a subgroup of the commutative group of decidable sets with the symmetric-difference operator,~$\symdiff$.
+  In Conjecture~\ref{con:fptsymdiff}, we postulate that $\calF_\cl{FPT}$ preserves this group structure and is a group homomorphism.
+  Regarding the nonuniform case, we know by Theorem~\ref{thm:nufptsymdiff} that $\calF_\clnu{FPT}$ is \emph{not} a group homomorphism.
+\item
+  Many sets do not have optimal parameterizations as far as \cl{FPT} is concerned.
+  This was the result of Theorem~\ref{thm:fptnonprincipal}.
+  Recall that the difference between \cl{FPT} and \clX{P} is that in \cl{FPT} the degree of the polynomial in the running time bound is held fixed.
+  At the same time, no specific value for the degree is prescribed and in the proof of Theorem~\ref{thm:fptnonprincipal}, this degree is increased.
+  Possibly, the theorem would be false if we require the degree to stay the same.
+  Stated formally, there may be a constant~$c$ and a set~$A$ without a maximal $\bigO(n^c)$-segment such that $\calF_{\clX{\cltime{$n^c$}}}(A)$ is principal.
+  We shall leave this as an open problem, but note that $\calF_\clX{\cltime{$n^c$}}$ is indeed a filter.
+  This can be shown completely analogously to Theorem~\ref{thm:filter}.
+\end{itemize}
