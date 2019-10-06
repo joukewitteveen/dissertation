@@ -1,2 +1,88 @@
 \abstract
-??
+Complexity can have many forms.
+An object, for instance, can be complex because a lot of words are needed to describe it.
+Such an object is said to have high \emph{algorithmic complexity}.
+This form of complexity is also referred to as \enquote{descriptive complexity}, but that term is used for entirely different concepts as well.
+Another example is a computational problem that is complex because it can only be solved via computations that use a lot of time or memory.
+Such a problem is said to have high \emph{computational complexity}.
+Of comparable, but more extreme flavor would be a computational problem that is complex because no amount of time or memory is enough for solving it.
+Such a problem is said to be \emph{uncomputable}.
+While all three of these examples are forms of complexity, there is no single mathematical definition of complexity that they all adhere to.
+
+In this thesis, we introduce a mathematical framework for the analysis of complexity.
+The framework is versatile enough to deal with the three aforementioned forms of complexity and more.
+Because of this versatility, we are able to compare different forms of complexity to each other.
+Doing so, we find, for instance, that algorithmic complexity implies computational complexity.
+
+Our framework is a continuation of the parameterized approach to computational complexity pioneered by \citeauthor{downey1999parameterized}.
+In the parameterized approach, computational complexity is not measured simply as a function of the length of the specification of a computational problem.
+Instead, other information about the computational problem is taken into account as well.
+This makes the analysis of complexity harder, but it can also paint a more accurate picture of computational complexity as encountered in practice.
+For example, the problem of finding the shortest route between two points on a map may be relatively difficult if the map is very large.
+However, even on a large map, the problem is easy if the two points are in close proximity to each other.
+Thus, we have two factors that influence the computational complexity of the general problem of finding shortest routes.
+On the one hand, instances of the problem potentially become more difficult as the size of the map increases.
+On the other, the problem remains easy as long as the points are close together.
+Aspects of a problem instance, including, but not limited to, the length of its specification, are called \emph{parameters}.
+A mapping of problem instance to a parameter value is called a \emph{parameterization}.
+
+The phenomenon of multiple factors influencing the complexity can be observed in problems far more difficult than finding shortest routes.
+This leads to the central notion of the parameterized approach to computational complexity, that of \emph{fixed-parameter tractability}.
+As is common in computational complexity theory, tractability is equated to computation in polynomial time.
+Thus, a problem is fixed-parameter tractable if it can be solved in polynomial time on those instances that have some fixed parameter value.
+In other words, the computational complexity beyond polynomial-time computability is restricted by the parameter.
+
+Parameterizations also form the backbone of our framework for the analysis of various notions of complexity.
+As a result, this thesis is not only concerned with the analysis of complexity, but also with the theory of parameterized computational complexity.
+Specifically, we investigate the class of fixed-parameter tractable problems.
+Consequently, there are two types of results in this thesis: results on the application of a unified analysis of complexity using our framework, and results on fixed-parameter tractability.
+
+One domain to which we apply our analysis of complexity is statistical inference.
+Specifically, we look at model selection.
+In model selection, our task is to select, from a set of candidate models, a statistical model that best describes some given data.
+When selecting a model, we must balance \emph{underfitting} and \emph{overfitting}.
+Whether or not a model is a good fit depends on the complexity of the model as well as on the complexity of the given data.
+A good model captures all the structure that is present in the data, but is not suggestive of any structure that cannot reasonably be said to be present.
+Because of this role of the complexity of models, we are able to use our framework as a guide in model selection.
+Our framework enables us to quantify not only the complexity of statistical models, but also to what degree they are underfitting or overfitting the given data.
+
+The complexity of a statistical model can be taken as a variant of algorithmic complexity.
+A version of complexity more related to computational complexity is found in the domain of algorithm design.
+Specifically, we also apply our analysis of complexity to preprocessing.
+For preprocessing, we must determine how much computation to perform at what moment, in order to minimize the total usage of computational resources.
+In many cases, we even get to determine on what part of a system computation is to be performed.
+In short, we must decide how much computation to perform when and where.
+If there is easily recognizable redundancy in the specification of an instance of a computational problem, then we might as well remove it immediately.
+Without the redundant parts, the instance consumes less memory and can more efficiently be communicated to other parts of the system.
+Thus, with instances of a computational problem that have redundancy in their specification, computation can be pulled apart.
+Conversely, we find that with instances that have little or no redundancy in their specification, we do best to perform all computation at once.
+The computational complexity of such problem instances is high and preprocessing offers no benefits for these instances.
+However, we further show that what counts as computational redundancy depends on the computational system we are working with.
+More abstractly, we find that our model of computation and preprocessing is relevant to our notion of computational redundancy.
+In other words, the details of the model influence the notion of complexity.
+
+In parameterized complexity theory, preprocessing is modeled by \emph{kernelization} with respect to a parameterization.
+In its most basic form, a kernelization reduces an instance of a problem to an equivalent instance of which the size is restricted by the parameter.
+Different types of preprocessing correspond to different types of kernelization.
+With kernelizations, the parameter functions as a bound on the amount of information in the specification of a problem that is not redundant.
+The redundancy must be easily recognizable, as kernelizations are required to run in polynomial time.
+We put the different types of kernelization in a hierarchy and show that the power of kernelization increases strictly throughout the hierarchy.
+Conversely, with respect to a given parameterization, the lower we go in the hierarchy, the fewer problems have a kernelization with the corresponding power.
+It is a standard result in parameterized complexity theory that if a computational problem has any kernelization at all, then it is fixed-parameter tractable.
+Thus, our hierarchy of kernelizations is also a proper hierarchy of computational problems inside the class of fixed-parameter tractable problems.
+
+Whether or not a computational problem is fixed-parameter tractable depends on the parameterization that is used.
+However, every problem that is fixed-parameter tractable with respect to \emph{some} parameterization is decidable.
+In this thesis, we find that, moreover, every decidable problem can be made fixed-parameter tractable.
+Additionally, in a more nonuniform theory, the same is true when we replace decidability with the $\Delta^0_2$~level of the arithmetical hierarchy.
+
+The previous characterization of the fixed-parameter tractable problems is rather indifferent to parameterizations.
+Therefore, we consider the collection of parameterizations with respect to which a given set is fixed-parameter tractable.
+We conjecture that two sets for which this collection is the same have a symmetric difference that lies in~\cl{P}.
+For a more nonuniform parameterized complexity theory this is not true, but we are able to provide some evidence for the conjecture in the uniform setting.
+
+Intuitively, the more parameterizations make a problem fixed-parameter tractable, the easier the problem is.
+We take this intuition further and use it to define an order on parameterizations.
+Easier problems are fixed-parameter tractable with respect to parameterizations that are lower in this order.
+Potentially, there is a parameterization among those that make a given problem fixed-parameter tractable that is below all others.
+However, we show that most interesting sets, specifically those that are not \cl{P}"~bi"~immune, do not have such an optimal parameterization.

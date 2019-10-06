@@ -2,7 +2,8 @@
 \documentclass{illcdiss}
 
 \usepackage{microtype}
-\usepackage[english]{babel}
+\usepackage[dutch,english]{babel}
+\babelprovide[import,hyphenrules=+]{westernfrisian}
 \usepackage{csquotes}
 \usepackage[backend=biber,style=numeric]{biblatex}
 \usepackage{makeidx}
@@ -51,8 +52,9 @@
 \newcommand{\listofslogans}{%
   \newcommand{\listsloganname}{List of Slogans}%
   \renewcommand{\@tocrmarg}{3.8em}%
-  \chapter*{\phantomsection\pdfbookmark{\listsloganname}{@listofslogans}%
-    \listsloganname%
+  \cleardoublepage%
+  \phantomsection\pdfbookmark{\listsloganname}{@listofslogans}%
+  \chapter*{\listsloganname%
     \@mkboth{\listsloganname}{\listsloganname}}% Headings not uppercased
   \@starttoc{los}%
 }
@@ -111,9 +113,9 @@
 
 \printindex
 
-%\include{samenvatting}
-%\include{gearfetting}
-%\include{abstract}
+\include{gearfetting}
+\include{samenvatting}
+\include{abstract}
 
 \cleardoublepage
 \include{illcdissertations}

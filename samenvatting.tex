@@ -1,0 +1,79 @@
+{\begin{otherlanguage}{dutch}
+\samenvatting
+Complexiteit kent vele vormen.
+Iets kan b"yvoorbeeld complex z"yn omdat het niet eenvoudig te beschr"yven is.
+In dat geval spreken we van \emph{algoritmische complexiteit}, soms ook wel descriptieve complexiteit genoemd.
+Een andere vorm van complexiteit vinden we b"y computationele vraagstukken waarvoor beantwoording veel rekent"yd of geheugen vereist.
+Deze vorm van complexiteit is bekend als \emph{computationele complexiteit}.
+Wanneer voor een computationeel vraagstuk geen antwoord te berekenen valt, ongeacht de beschikbare hoeveelheid rekent"yd en geheugen, zeggen we dat het vraagstuk \emph{onberekenbaar} is.
+Onberekenbaarheid kan gezien worden als een extreme vorm van computationele complexiteit.
+Hoewel algoritmische complexiteit, computationele complexiteit, en onberekenbaarheid allen vormen van complexiteit z"yn, is er geen overkoepelende wiskundige definitie waaraan ze allen voldoen.
+
+In dit proefschrift introduceren we een wiskundig kader waarbinnen complexiteit geanalyseerd kan worden.
+Dit kader is dermate algemeen dat de analyse van elk van de drie eerdergenoemde vormen van complexiteit erin mogel"yk is.
+Hierdoor is het ook mogel"yk om verschillende vormen van complexiteit met elkaar te vergel"yken.
+Zodoende vinden we onder andere dat computationele complexiteit ge{\"i}mpliceerd wordt door algoritmische complexiteit.
+
+Ons kader behelst een voortzetting van de geparametriseerde benadering van computationele complexiteitstheorie door Downey en Fellows.
+Traditioneel wordt in complexiteitstheorie gekeken naar hoe de benodigde hoeveelheid rekent"yd van een collectie verwante vraagstukken afhangt van de lengte van de specificaties van de vraagstukken.
+Deze collectie wordt een computationeel \emph{probleem} genoemd, en de afzonderl"yke vraagstukken \emph{instanties} van het probleem.
+In geparametriseerde complexiteitstheorie worden naast de lengte van de specificatie van een instantie ook andere aspecten ervan in ogenschouw genomen.
+Hierdoor wordt de complexiteitsanalyse ingewikkelder, maar kan z"y ook beter aansluiten b"y hoe we complexiteit in de prakt"yk ervaren.
+Neem b"yvoorbeeld het bepalen van de kortste route tussen twee punten op een kaart.
+De instanties van dit computationele probleem z"yn de vraagstukken die ontstaan waarb"y een specifieke kaart en twee specifieke punten gegeven z"yn.
+Wanneer de kaart een erg groot gebied bestr"ykt, kan de instantie tamel"yk moeil"yk z"yn.
+Echter, zelfs wanneer de kaart erg groot is, is het bepalen van de kortste route tussen nab"ygelegen punten doorgaans makkel"yk.
+Voor het bepalen van kortste routes hebben we aldus twee factoren ge{\"i}dentificeerd die van invloed z"yn op de complexiteit.
+Enerz"yds kunnen we stellen dat instanties van het probleem moeil"yker worden naarmate de kaart groter wordt.
+Anderz"yds bl"yft het probleem makkel"yk zolang de punten waartussen de kortste route moet worden gevonden dichtb"y elkaar liggen.
+In geparametriseerde complexiteitstheorie worden aspecten van een instantie, waaronder de grootte, de \emph{parameters} van het probleem genoemd.
+Een functie die gegeven een probleeminstantie de b"ybehorende parameterwaarde bepaald heet een \emph{parametrisatie}.
+
+Ook b"y computationele problemen die aanzienl"yk ingewikkelder z"yn dan het vinden van kortste routes kunnen we dikw"yls verschillende factoren aanw"yzen die van invloed z"yn op de complexiteit.
+Deze observatie ligt aan de basis van de klasse der \emph{fixed-parameter tractable} problemen: computationele problemen waarvan de complexiteit te overzien is zolang we ons beperken tot instanties met een vaste parameterwaarde.
+Meer exact z"yn de fixed-parameter tractable problemen die problemen waarb"y, voor instanties met een vaste parameterwaarde, de toename in rekent"yd als functie van de lengte van de instantie begrensd kan worden door een polynoom.
+De graad van dit polynoom mag niet afhangen van de parameterwaarde, maar de co{\"e}ffici{\"e}nten van het polynoom mogen dat wel.
+
+Het wiskundig kader voor de analyse van complexiteit dat in dit proefschrift ge{\"i}ntroduceerd wordt is opgebouwd rondom parametrisaties.
+Derhalve z"yn er twee soorten resultaten in dit proefschrift: resultaten ten aanzien van een overkoepelende analyse van complexiteit, en resultaten ten aanzien van fixed-parameter tractability.
+
+We analyseren complexiteit in verschillende domeinen, waaronder dat van inferentie en model selectie in de statistiek.
+In dit domein gaat het erom uit een verzameling modellen een model aan te w"yzen dat het meest waarsch"ynl"yk is gegeven enige waargenomen data.
+Enerz"yds mag dit model niet te specifiek z"yn, aangezien het dan meer structuur in de data suggereert dan geoorloofd is.
+Anderz"yds verschaft een te algemeen model weinig inzicht in de structuur die daadwerkel"yk in de data aanwezig is.
+De specificiteit van een model is een vorm van algoritmische complexiteit en ons wiskundige kader biedt richtl"ynen voor de keuze van de juiste mate van specificiteit gegeven de waargenomen data.
+
+Een vorm van complexiteit die dichter b"y computationele complexiteit ligt treffen we aan in de algoritmiek.
+Een goed algoritme is in staat een computationeel probleem, zoals het vinden van kortste routes, effici{\"e}nt op te lossen.
+Hiertoe moet, gegeven een probleeminstantie, worden bepaald hoeveel rekenwerk er op welk moment en op welk systeem gedaan moet worden teneinde de totale rekenkosten te minimaliseren.
+Wanneer een instantie eenvoudig te herkennen redundantie bevat, doen we er goed aan de instantie zo vroeg mogel"yk van deze redundantie te ontdoen.
+Zonder de redundante delen neemt de specificatie van de instantie minder geheugen in beslag en kan de instantie effici{\"e}nter gecommuniceerd worden naar andere rekeneenheden.
+Wanneer redundantie te verwachten is, is een gefaseerd algoritme dat de instantie eerst van eventuele redundantie ontdoet dus aan te bevelen.
+Voor instanties zonder eenvoudig te herkennen redundantie biedt een gefaseerde aanpak geen voordelen.
+Echter, wat er wel en niet als redundantie gezien mag worden hangt af van de details van het systeem waarop het algoritme draait.
+In meer abstracte zin kunnen we stellen dat het computationeel model van invloed is op de notie van complexiteit in het kader van het ontwerp van algoritmen.
+
+De analyse van complexiteit in verband met gefaseerde algoritmen verschaft ons tevens inzicht in fixed-parameter tractability.
+Een standaardresultaat uit de geparametriseerde complexiteitstheorie luidt dat fixed-parameter tractability overeenkomt met de mogel"ykheid een probleeminstantie op een bepaalde manier voor te bewerken.
+Deze voorbewerking komt erop neer dat de grootte van een instantie in polynomiale t"yd zoveel kan worden teruggebracht, dat z"y kan worden begrensd door een functie van de parameterwaarde behorende b"y de instantie.
+In het licht van onze complexiteitsanalyse correspondeert dit met een erg algemene vorm van redundantie.
+We defini{\"e}ren in dit proefschrift een hi{\"e}rarchie  van meer specifieke vormen van redundantie en leggen zodoende een hi{\"e}rarchie van klassen van computationele problemen bloot binnen de fixed-parameter tractable problemen.
+
+Of een probleem fixed-parameter tractable is hangt af van de parametrisatie die we in gedachten hebben.
+Echter, ieder probleem dat met \emph{enige} parametrisatie fixed-parameter tractable is, is berekenbaar.
+We tonen aan dat, omgekeerd, ieder berekenbaar probleem fixed-parameter tractable gemaakt kan worden.
+Dit resultaat laat zich generaliseren naar een meer non-uniforme situatie, waarb"y beslisbaarheid vervangen wordt het $\Delta^0_2$-niveau van de arithmetische hi{\"e}archie.
+
+We werpen ook een meer parametrisatie-gerichte blik op fixed-parameter tractability, en bek"yken de collectie parametrisaties waarmee een gegeven probleem fixed-parameter tractable is.
+In het b"yzonder k"yken we naar het verband tussen verschillende problemen waarvoor deze collectie hetzelfde bl"yft.
+We vinden aanw"yzingen dat het verband tussen zulke problemen ook gekarakteriseerd kan worden op een manier die los staat van geparametriseerde overwegingen.
+Een vergel"ykbare karakterisering gaat niet op in de non-uniforme situatie.
+
+Onze intu{\"i}tie zegt ons dat naarmate een probleem met meer parametrisaties fixed-parameter tractable is, het minder moeil"yk is.
+Aan de hand hiervan construeren we een ordening van parametrisaties.
+Makkel"ykere problemen z"yn fixed-parameter tractable met parametrisaties die eerder komen in deze ordening.
+Het kan voorkomen dat er onder de parametrisaties die een probleem fixed-parameter tractable maken een parametrisatie is die in deze ordening voor alle anderen geordend wordt.
+Echter, we tonen aan dat dit niet het geval is voor de meest interessante problemen: dergel"yke optimale parametrisaties bestaan niet voor problemen die niet \cl{P}"~bi"~immuun z"yn.
+
+\end{otherlanguage}}
+% vim: spelllang=nl
