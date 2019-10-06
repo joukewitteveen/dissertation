@@ -1,4 +1,4 @@
-\usepackage{amssymb,bbm}
+\usepackage{amssymb}
 \usepackage{unicode-math}
 
 \defineshorthand{"~}{\babelhyphen{nobreak}}
@@ -41,12 +41,13 @@
 \DeclareMathOperator{\unary}{unary}
 
 \AtBeginDocument{
+  \DeclareMathAlphabet{\mathbb}{U}{msb}{m}{n}
   \renewcommand{\epsilon}{\varepsilon}
   \renewcommand{\mu}{{\symup{\mupmu}}}	% Do not use \mu as a variable
   \renewcommand{\setminus}{\smallsetminus}
 }
-\newcommand{\binary}{\mathbbm{2}}
-\newcommand{\bbN}{\mathbbm{N}}
+\newcommand{\binary}{\symbb{2}}
+\newcommand{\bbN}{\mathbb{N}}
 \newcommand{\calF}{{\symcal{F}\kern-.2em}}
 \newcommand{\calL}{\symcal{L}}
 \DeclareMathOperator{\updelta}{\symup{\mupdelta}}

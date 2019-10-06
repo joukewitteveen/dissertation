@@ -63,7 +63,7 @@ The other way around, we can start out with a known collection of approximations
 Our parameterized framework provides a way to analyze the computational hardness of instances in relation to such a collection of approximations.
 Of course, in our analysis these collections will be parameterizations.
 
-\subsubsection{Synopsis}
+\subsubsection*{Synopsis}
 In some ways, the study of parameterized computational complexity is a continuation of the study of instance complexity.
 Precisely how the two fields are related is examined in Section~\ref{sec:algorithmic:ic}.
 We find that in the context of uniform fixed-parameter tractability, instance complexity can be used to lower-bound parameter values.
@@ -267,7 +267,7 @@ Instead, we look at the behavior of the minimization function \enquote{in the li
 For this, we use an auxiliary function with an unbounded limit inferior, as defined on page~\pageref{def:liminf}.
 \begin{theorem}
 \label{thm:parameterizedicc}%
-  Let $\eta$ be a decidable parameterization that does not include $\binary^+$, and let $f$ be any computable function with an unbounded limit inferior.
+  Let $\eta$ be a decidable parameterization that does not include~$\binary^+\!$, and let $f$ be any computable function with an unbounded limit inferior.
   There are infinitely many instances~$x$ for which we have
   \begin{equation*}
     \KC(x) \le f(\mu_\eta(x)).
@@ -283,7 +283,7 @@ For this, we use an auxiliary function with an unbounded limit inferior, as defi
     \end{codelisting}
   \end{codelisting}
 
-  Because $\eta$ does not include $\binary^+$, the minimization function $\mu_\eta$ takes on arbitrarily large values.
+  Because $\eta$ does not include~$\binary^+\!$, the minimization function $\mu_\eta$ takes on arbitrarily large values.
   Additionally, as $f$ has an unbounded limit inferior, so does the composite function of~$f$ after $\mu_\eta$.
   This means that our procedure $\phi_m$ terminates, regardless of the value of~$m$.
   Moreover, since $\eta$ is decidable, $\mu_\eta$ is computable, so $\phi_m$ as a whole is, indeed, computable.
@@ -418,7 +418,7 @@ This is because it is widely believed that \emph{one"~way functions}, polytime-c
 Using particularly strong functions of this kind, it is possible to construct \cl{NP}"~complete sets between which no polytime-computable isomorphism exists \parencite{young1983some,kurtz1989isomorphism,hartmanis1991one,agrawal2009one}.
 
 Nonetheless, we note that isomorphic sets have isomorphic filters with respect to \clnu{FPT}.
-To see why, first note that a permutation~$f$ of~$\binary^+$, a bijection from $\binary^+$ to itself, can be lifted to a function on parameterizations via
+To see why, first note that a permutation~$f$ of~$\binary^+\!$, a bijection from $\binary^+$ to itself, can be lifted to a function on parameterizations via
 \begin{equation*}
   f(\eta) = (\{f(x) \st x \in \eta_k\})_{k \in \binary^+}.
 \end{equation*}
@@ -432,7 +432,7 @@ Given a set~$A$, a permutation~$f$ that is polytime-computable in both direction
 In fact, this~$f$ is a polytime-computable isomorphism between $A$ and~$B$.
 The filter that is isomorphic to $\calF_\clnu{FPT}(A)$ via~$f$ is $\calF_\clnu{FPT}(B)$.
 
-Something interesting happens when, given a parameterization~$\eta$ and a permutation~$f$ of~$\binary^+$, the parameterization~$f(\eta)$ is in the same equivalence class as~$\eta$.
+Something interesting happens when, given a parameterization~$\eta$ and a permutation~$f$ of~$\binary^+\!$, the parameterization~$f(\eta)$ is in the same equivalence class as~$\eta$.
 When this is the case, $f$ is an automorphism of the equivalence class of parameterizations to which~$\eta$ belongs.
 We could say that this equivalence class is closed under applications of~$f$.
 Lifting~$f$ to the level of an isomorphism of filters, the equivalence class to which~$\eta$ belongs is a fixed~point of~$f$.
@@ -441,13 +441,13 @@ Any permutation of $\binary^+$ is an automorphism on both these equivalence clas
 Parameterizations in the least element include $\binary^+$ as one of their slices.
 Since the minimization with respect to such a parameterization is bounded, these parameterizations are equivalent to those they are mapped to.
 Parameterizations in the greatest element of $\calL_\clnu{FPT}$ have only finite slices.
-This property too is preserved by the mappings of parameterizations that stem from permutations of $\binary^+$.
+This property too is preserved by the mappings of parameterizations that stem from permutations of $\binary^+\!$.
 \begin{example}
   A different example of an automorphism of an equivalence class of parameterizations is available with respect to the uniform order on parameterizations.
   Let $\eta$ be the parameterization defined by \eqref{eq:kcparameterization}.
   This parameterization is not decidable because Kolmogorov complexity is uncomputable.
   This makes that the equivalence class of the parameterization is not a greatest element in, say, $\calL_\clX{P}$ or $\calL_\cl{FPT}$.
-  Yet, we can show that, for any computable permutation~$f$ of~$\binary^+$, the parameterization $f(\eta)$ is in the same equivalence class as~$\eta$.
+  Yet, we can show that, for any computable permutation~$f$ of~$\binary^+\!$, the parameterization $f(\eta)$ is in the same equivalence class as~$\eta$.
   To wit, for every such~$f$ and all~$x$, we have that $\KC(f(x))$ is within an additive constant of~$\KC(x)$.
   This additive constant depends only on~$f$.
   Therefore, $\mu_{f(\eta)}(x)$ and $\mu_\eta(x)$ are within an additive constant of each other and both $\gap_{f(\eta), \eta}$ and $\gap_{\eta, f(\eta)}$ are bounded.

@@ -83,7 +83,7 @@ Applied to images, techniques are developed to restrict the action of steganogra
 These techniques evade detection by simple compression tests.
 An overview of steganography methods for images is given by \textcite{cheddad2010digital}.
 
-\subsubsection{Synopsis}
+\subsubsection*{Synopsis}
 Quantifying the useful information in an object is the domain of \emph{algorithmic statistics}.
 This is a formulation of statistics centered on model selection for individual data samples.
 Algorithmic statistics will be introduced in more detail in Section~\ref{sec:statistics:algorithmic}.
@@ -353,7 +353,7 @@ In general, a nice starting point for measuring the algorithmic complexity of a 
 Note that, strictly speaking, the above definition should look at pairs of a parameter value and a \emph{string representation} of the rank.
 To improve readability, we shall not explicitly state the conversion of the rank, which is a number, to a string when dealing with such pairs.
 
-As parameterizations are covers of $\binary^+$, the parameterized complexity with respect to a parameterization is defined for every string.
+As parameterizations are covers of~$\binary^+\!$, the parameterized complexity with respect to a parameterization is defined for every string.
 The choice of a pairing function may have an effect on the parameterized complexity.
 It may affect not only its value, but also the parameter value with which this value, as a minimum of multiple candidates, is realized.
 
@@ -411,7 +411,7 @@ One benefit of parameterized complexity over Kolmogorov complexity is that it ca
     \item
       \code{Return} $\length{\pair{k}{\rank(x : \eta_k)}}$.
   \end{codelisting}
-  The unbounded loop at the first step of this algorithm is guaranteed to be exited from, because $\eta$ is a cover of $\binary^+$.
+  The unbounded loop at the first step of this algorithm is guaranteed to be exited from, because $\eta$ is a cover of $\binary^+\!$.
   The bounded loop at the second step makes sure that the returned value is indeed the minimum length of all candidate lengths.
   Thus, the returned length is the parameterized complexity of~$x$ with respect to~$\eta$.
   Note that the algorithm is allowed to test whether a slice of~$\eta$ includes~$x$ because $\eta$ is assumed to be decidable.
@@ -469,7 +469,7 @@ Notice that, for every parameterization~$\eta$ and string~$x$, the sophisticatio
   \mu_\eta(x) \le \soph_\eta(x).
 \end{equation*}
 Indeed, the parameterized sophistication~$\soph_\eta$ need not equal the minimization function~$\mu_\eta$.
-For example, the minimization with respect to the parameterization given by~\eqref{eq:decision_parameterization} is bounded from above by the length of a decision procedure for~$\binary^+$.
+For example, the minimization with respect to the parameterization given by~\eqref{eq:decision_parameterization} is bounded from above by the length of a decision procedure for~$\binary^+\!$.
 However, the sophistication with respect to that parameterization can get arbitrarily large.
 Still, when $\eta$ satisfies
 \begin{equation}
@@ -497,7 +497,7 @@ This result is similar to the computability of $\pc_\eta$ and can also be seen i
 
 \phantomsection\label{p:inference}%
 Whatever parameterization~$\eta$ we are working with, each string~$x$ is assigned a finite sophistication $\soph_\eta(x)$.
-This is a consequence of the fact that parameterizations are covers of~$\binary^+$.
+This is a consequence of the fact that parameterizations are covers of~$\binary^+\!$.
 In particular, for every parameterized model class~$\eta$ and every string~$x$, there is an $\eta$"~model for~$x$ that is a sufficient parameterized statistic for~$x$.
 Thus, in a probability theory derived from~$\eta$, we are able to carry out statistical inference on samples of only a single object, the string~$x$.
 In this probability theory, we can assign a prior probability to each slice of~$\eta$ as a function of the length of the corresponding parameter value.
@@ -511,7 +511,7 @@ The prior probability of a slice corresponding to a parameter value~$k$ becomes~
 Likewise, given an $\eta$"~model~$k$ for a string~$x$, the probability of~$x$ in this model becomes $2^{-\ell(\asStr(\rank(x : \eta_k)))}$.
 These two probability distributions enable statistical inference.
 
-Apart from being a cover of~$\binary^+$, parameterizations, as families of sets, are also directed.
+Apart from being a cover of~$\binary^+\!$, parameterizations, as families of sets, are also directed.
 Consequently, not only singleton samples are events, but all finite samples are events.
 For every parameterized model class~$\eta$ and every finite set of strings~$X$, there is an $\eta$"~model~$k$ such that~$X$ is included in~$\eta_k$.
 An investigation of algorithmic statistics in light of finite events of more than one string was carried out by \textcite{milovanov2016algorithmic}.
@@ -533,7 +533,7 @@ Then, we find, up to an additive constant,
 This holds because every $\eta$"~model~$k$ for~$x$ has a Kolmogorov complexity bounded, up to an additive constant, by $\length{k} + \KC(\eta)$.
 Even when~$\eta$ captures the complexity of~$x$, the above comparison of sophistications may be a strict inequality.
 For example, the traditional sophistication of a string~$x$ of which the Kolmogorov complexity is roughly $\length{x} + 2 \cdot \log \length{x}$ is bounded from above by a constant.
-This is because the set of all strings, $\binary^+$, is a sufficient model for such a string.
+This is because the set of all strings,~$\binary^+\!$, is a sufficient model for such a string.
 However, $\binary^+$ need not occur as a slice of~$\eta$, even when $\eta$ captures the complexity of~$x$.
 Therefore, the parameterized sophistication of such strings need not be bounded by a constant and the two notions of sophistication can differ.
 
@@ -770,7 +770,7 @@ We can minimize several quantities related to this two-part specification and ea
 
 The simplest model for~$x$ is one that minimizes the length of the first part of the specification, $\length{k}$.\indexkey{Occam's razor}
 The corresponding~$k$ can be called the \defkeyat{estimator!Occam's razor}{Occam's razor} estimate, and its length equals~$\mu_\eta(x)$.
-In traditional algorithmic statistics, this estimator is of no interest because the complexity of the simplest model for a string cannot exceed that of~$\binary^+$.
+In traditional algorithmic statistics, this estimator is of no interest because the complexity of the simplest model for a string cannot exceed that of~$\binary^+\!$.
 However, in parameterized algorithmic statistics, $\binary^+$ need not occur as a slice in any specific parameterization.
 
 Rather than minimizing the length of the first part of the specification, we could also minimize the length of the second part, $\length{\rank(x : \eta_k)}$.
@@ -811,7 +811,7 @@ The tight correspondence between the two in traditional algorithmic statistics i
 There are many more estimators than the three we have looked at so far, OR, ML, and MDL.
 For a parameterization~$\eta$, we may look at those estimators that are in some sense consistent with~$\eta$.
 \begin{definition}
-  A function $\kappa\colon \binary^+ \to \binary^+$ is a \defkeyat{estimator!parameter estimator}{parameter estimator} for a parameterization~$\eta$ if it is consistent with~$\eta$ in the sense that, for all strings~$x$, we have $x \in \eta_{\kappa(x)}$
+  A function $\kappa\colon \binary^+\! \to \binary^+$ is a \defkeyat{estimator!parameter estimator}{parameter estimator} for a parameterization~$\eta$ if it is consistent with~$\eta$ in the sense that, for all strings~$x$, we have $x \in \eta_{\kappa(x)}$
 \end{definition}
 \begin{example}
   Suppose $\kappa$ is a parameterization in the \citeauthor{flum2006parameterized} framework for parameterized complexity theory.
@@ -824,12 +824,12 @@ For a parameterization~$\eta$, we may look at those estimators that are in some 
 
 We have seen that when~$\eta$ is decidable, the parameter estimators OR and MDL are computable.
 Yet, even when $\eta$ is not decidable, a parameter estimator for~$\eta$ may be computable.
-For instance, if $\kappa$ maps all strings to an encoding of a decision procedure for $\binary^+$, it is a computable parameter estimator for~\eqref{eq:decision_parameterization}.
+For instance, if $\kappa$ maps all strings to an encoding of a decision procedure for~$\binary^+\!$, it is a computable parameter estimator for~\eqref{eq:decision_parameterization}.
 
 \begin{example}[continued from Example~\ref{ex:p-cylinder}]
 \label{ex:p-cylinder:estimator}%
   \indexkey{example!p-cylinder@\pdash{}cylinder}%
-  Let $A$ be a \pdash{}cylinder and $g\colon \binary^+ \to \binary^+ \times \binary^+$ a corresponding isomorphism.
+  Let $A$ be a \pdash{}cylinder and $g\colon \binary^+\! \to \binary^+\! \times \binary^+$ a corresponding isomorphism.
   Recall that we denote by~$g_1$ the first component of the image of~$g$ and that the parameterization based on~$g$ was defined as
   \begin{equation*}
     \eta \deq (\{x \st \asNat(g_1(x)) \le \asNat(k)\})_{k \in \binary^+}.
@@ -962,8 +962,8 @@ Likewise, if the slices of~$\eta$ are sparse, then most of these strings are hig
   Instead, it revolved around isolating not descriptive redundancy, but computational redundancy associated with a string in light of a decision problem.
   It is worthwhile to note that a parameterization can achieve both these feats simultaneously.
 
-  Let $A$ be a \pdash{}cylinder, $g\colon \binary^+ \to \binary^+ \times \binary^+$ a corresponding isomorphism and $\eta$ the parameterization based on~$g$.
-  All slices of~$\eta$ are infinite and the range of $g_1$ is the entire set $\binary^+$.
+  Let $A$ be a \pdash{}cylinder, $g\colon \binary^+\! \to \binary^+\! \times \binary^+$ a corresponding isomorphism and $\eta$ the parameterization based on~$g$.
+  All slices of~$\eta$ are infinite and the range of $g_1$ is the entire set $\binary^+\!$.
   Because of this, it follows from Corollary~\ref{cor:stochastic} that infinitely many slices of~$\eta$ contain infinitely many strings of which $\eta$ captures the complexity.
   For those strings, $\eta$ acts as a measure of both algorithmic and computational complexity.
 \end{example}
@@ -1365,7 +1365,7 @@ Hence, there is a neat characterization of the parameterizations of interest.
 \label{ex:fp-rankable}%
   \indexkey{example!p-cylinder@\pdash{}cylinder}%
   The parameterizations related to certain \pdash{}cylinders are examples of fixed-parameter \pdash{}rankable parameterizations.
-  Let $g\colon \binary^+ \to \binary^+ \times \binary^+$ be a polytime-isomorphism that is increasing in its second component.
+  Let $g\colon \binary^+\! \to \binary^+\! \times \binary^+$ be a polytime-isomorphism that is increasing in its second component.
   This means that, for all strings~$z_1$,~$z_2$, and~$y$, if we have $\asNat(z_1) < \asNat(z_2)$, then we also have $\asNat(g^{-1}(y, z_1)) < \asNat(g^{-1}(y, z_2))$.
   Further, let~$\eta$ be the parameterization related to~$g$ as described in Example~\ref{ex:p-cylinder}.
   We shall show that the second component of the image of~$g$, can be used to compute the rank of a string in a slice of~$\eta$.

@@ -292,8 +292,11 @@
    \else
       \@restonecolfalse
    \fi
-   \chapter*{\contentsname
+   \@openrightfalse%                                We force a start on the left
+   \chapter*{\contentsname\hskip 0pt plus 1filll
         \@mkboth{\contentsname}{\contentsname}}%    Headings not uppercased
+   \@openrighttrue%
+   \vspace{6.7ex}%                                  Push Section 3.2 to the right
    \@starttoc{toc}%
    \if@restonecol\twocolumn\fi
 }
@@ -346,7 +349,7 @@
 \newcommand{\MakeMarkcase}[1]{#1}%    No uppercased headings with biblatex
 
 \renewenvironment{theindex}{%
-   \cleardoublepage%                               Start on a right-hand page
+   \clearpage%\cleardoublepage%                               Start on a right-hand page
    \if@twocolumn
       \@restonecolfalse
    \else
@@ -355,7 +358,7 @@
    \columnseprule \z@
    \columnsep 35\p@
    \twocolumn[\phantomsection\phantom{\Large\bf\chaptername}%
-              \@makeschapterhead{\indexname}]%
+              \@makeschapterhead{\indexname\hskip 0pt plus 1filll}]%
    \@mkboth{\indexname}{\indexname}%           Headings not uppercased
    \addcontentsline{toc}{chapter}{Index}%      Add to table-of-contents
    \thispagestyle{plain}\parindent\z@

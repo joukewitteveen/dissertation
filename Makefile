@@ -5,7 +5,7 @@ getsource = $(shell sed -n 's/^[^%]*\\$(1){\([[:graph:]]\+\)}.*/\1$(3)/p' $(2))
 INCLUDES := main.tex $(call getsource,include,main.tex,.tex)
 main.pdf: $(INCLUDES) $(call getsource,input,$(INCLUDES),.tex) \
           $(addprefix $(BUILDDIR)/,main.bbl main.ind $(INCLUDES:.tex=.aux.sum))
-	@ ! lualatex --file-line-error --halt-on-error --output-directory=$(BUILDDIR) $< | grep ":[[:digit:]][[:digit:]]*:"
+	@ ! lualatex --file-line-error --halt-on-error --output-directory=$(BUILDDIR) $< $(if $(VERBOSE),,| grep ":[[:digit:]][[:digit:]]*:")
 	@ mv build/$(<:.tex=.pdf) $@
 	@ echo $@ was rebuilt
 

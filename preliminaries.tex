@@ -32,8 +32,8 @@ In this thesis, as in much of the computer science literature, all sets are coun
 That means that for every set~$A$, there exists a surjective function mapping the natural numbers, $\bbN \deq \{1, 2, 3, \ldots\}$ onto~$A$.
 The elements of a countable set can be represented by finite \emph{strings} of characters from a finite \emph{alphabet}.
 We shall work solely with the binary alphabet~$\binary \deq \{\bits{0}, \bits{1}\}$, but all results can be generalized to more elaborate alphabets.
-The finite, nonempty binary strings, $\binary^+$, can be enumerated in order of increasing length as $\bits{0}, \bits{1}, \bits{00}, \bits{01}, \bits{10}, \ldots$.
-Thus, there is a bijective correspondence between $\bbN$ and~$\binary^+$.
+The finite, nonempty binary strings,~$\binary^+\!$, can be enumerated in order of increasing length as $\bits{0}, \bits{1}, \bits{00}, \bits{01}, \bits{10}, \ldots$.
+Thus, there is a bijective correspondence between $\bbN$ and~$\binary^+\!$.
 Taking a cue from common practice in programming languages, we treat the two directions of this bijective correspondence as data type conversions.
 A string can serve \enquote{as an integer}, that is \enquote{as a natural number}, and a natural number can serve \enquote{as a string}.
 These data type conversions are depicted in Table~\ref{tab:cast}.
@@ -111,7 +111,7 @@ The unary encoding of a binary string~$x$ is
   \unary(x) \deq \bits{0}^{\asNat(x) - 1} \bits{1}.
 \end{equation*}
 Note that the unary encodings of any two distinct strings are different and that the unary encoding of a string always ends at the first occurrence of~`\bits{1}'.
-Therefore, unary encoding is indeed a prefix-free encoding of~$\binary^+$.
+Therefore, unary encoding is indeed a prefix-free encoding of~$\binary^+\!$.
 Contrary to the situation we were in with direct concatenation, the equation $\bits{010111001} = \unary(x)y$ \emph{does} have a unique solution.
 Namely, it has the solution $x = \asStr(2) = \bits{1}$ and $y = \bits{0111001}$.
 
@@ -153,7 +153,7 @@ There is no fundamental reason for this technical detail other than that it will
 Returning to our example string one final time, we observe $\bits{010111001} = \Elias_\delta(\bits{1100})\bits{1}$ and hence $\bits{010111001} = \pair{\bits{1}}{\bits{1100}}$.
 
 Our pairing function does not use any prefix-free encoding for its first component.
-This has the effect that our pairing function is not a prefix-free encoding of~$\binary^+ \times \binary^+$.
+This has the effect that our pairing function is not a prefix-free encoding of~$\binary^+\! \times \binary^+\!$.
 At the same time, it results in $\length{\pair{x}{y}}$ being approximately equal to $\length{x} + \length{y} + 2 \cdot \log \length{y}$.
 
 Prefix-free encodings have an interesting relation to probability theory.
@@ -338,7 +338,7 @@ In this thesis, we are only ever interested in the well-formed formulas of a for
 This is most notable in how we approach decision problems.
 For example, when we model a graph-theoretic decision problem as a set of graphs, we expect the input to a decision procedure for the set to be a graph.
 We pay no attention to what would happen if the input does not represent a graph.
-In fact, we shall routinely assume that there is some computable bijection between the well-formed formulas and the binary strings,~$\binary^+$.
+In fact, we shall routinely assume that there is some computable bijection between the well-formed formulas and the binary strings,~$\binary^+\!$.
 A decision procedure for a graph problem can then be provided with a binary string as input, and we can act as if it was given a graph.
 To hide this conceptual difference between well-formed formulas and binary strings, we shall refer to the input of a decision procedure as a problem \emph{instance}.
 Put differently, in the context of a decision problem modeled as a set, an instance is a syntactically correct specification of a potential member of the set.
@@ -483,13 +483,13 @@ This conjecture is believed to be untrue.
 It is at odds with the assumed existence of certain polynomial-time computable functions without a polynomial-time computable inverse~\parencite{young1983some,kurtz1989isomorphism}.
 However, the two are not mutually exclusive and some functions that are not invertible may exist even if the conjecture is true~\parencite{hartmanis1991one,agrawal2009one}.
 
-A class of sets that will appear in examples throughout this thesis is the class of sets~$A$ that are isomorphic to $A \times \binary^+$.
+A class of sets that will appear in examples throughout this thesis is the class of sets~$A$ that are isomorphic to $A \times \binary^+\!$.
 \begin{definition}
 \label{def:p-cylinder}%
-  A set $A$ is a \defkeyat{p-cylinder@\pdash{}cylinder}{\pdash{}cylinder} if there exists an isomorphism $g\colon \binary^+ \to \binary^+ \times \binary^+$ such that
+  A set $A$ is a \defkeyat{p-cylinder@\pdash{}cylinder}{\pdash{}cylinder} if there exists an isomorphism $g\colon \binary^+\! \to \binary^+\! \times \binary^+$ such that
   \begin{itemize}
     \item $g$ and its inverse $g^{-1}$ are computable in polynomial time, and
-    \item for all $x$ we have $x \in A \iff g(x) \in A \times \binary^+$.
+    \item for all $x$ we have $x \in A \iff g(x) \in A \times \binary^+\!$.
   \end{itemize}
 \end{definition}
 
@@ -511,7 +511,7 @@ A class of sets that will appear in examples throughout this thesis is the class
     \frac{n}{2^{f(n) - 1}}
   \end{equation*}
   is odd.
-  This inspires an isomorphism $g\colon \binary^+ \to \binary^+ \times \binary^+$ for which the inverse is given by
+  This inspires an isomorphism $g\colon \binary^+\! \to \binary^+\! \times \binary^+$ for which the inverse is given by
   \begin{equation*}
     g^{-1}(\asStr(m), \asStr(n)) \deq \asStr\left(2^{m - 1} \cdot (2 n - 1)\right).
   \end{equation*}

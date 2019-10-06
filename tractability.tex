@@ -15,7 +15,7 @@ Much of our theory revolves around collections of parameterizations that put a g
 Such collections function as an interface to the complexity of the sets that gave rise to them.
 Moreover, they reveal that no practically fixed-parameter tractable sets have optimal parameterizations.
 
-\subsubsection{Synopsis}
+\subsubsection*{Synopsis}
 Our investigation of parameterized computational complexity theory starts off in Section~\ref{sec:tractability:stratified} with rediscovering standard parameterized complexity classes.
 We shall arrive at these classes in a way that showcases their relation to classical computational complexity theory.
 The guiding insight, here, is that intractable decision problems may still have sets of instances on which membership can be decided easily.
@@ -173,7 +173,7 @@ This alternative characterization was already observed by \textcite{balcazar1985
   We shall prove the contrapositive formulation of the claim, namely that if $A$ is not \cl{P}"~bi-immune, then $\binary^+$ is not a polytime-core of~$A$.
   In case $A$ is not \cl{P}"~bi-immune, there is an infinite set $S \in \cl{P}$ that is either entirely inside of~$A$, or entirely outside of~$A$.
   Either way, we can define a polytime-approximation for~$A$ of which $S$ is the domain.
-  As $S$ is an infinite subset of $\binary^+$, it cannot be the case that $\binary^+$ is a polytime-core of~$A$.
+  As $S$ is an infinite subset of~$\binary^+\!$, it cannot be the case that $\binary^+$ is a polytime-core of~$A$.
 
   $\Longrightarrow$.
   In a similar vein, if $\binary^+$ is not a polytime-core of~$A$, then there is a polytime-approximation for~$A$ with an infinite domain~$S$.
@@ -309,7 +309,7 @@ In that way, fixed-parameter tractability is a successful notion of efficient co
 \label{ex:p-cylinder}%
   \indexkey{example!p-cylinder@\pdash{}cylinder}%
   A less practically motivated way to obtain sets and parameterizations that are in \cl{FPT} is available for \pdash{cylinders} as defined in Definition~\ref{def:p-cylinder}.
-  Given a decidable \pdash{}cylinder~$A$ and a corresponding isomorphism~$g\colon \binary^+ \to \binary^+ \times \binary^+$, denote by~$g_1$ the first component of the image of~$g$.
+  Given a decidable \pdash{}cylinder~$A$ and a corresponding isomorphism~$g\colon \binary^+\! \to \binary^+\! \times \binary^+\!$, denote by~$g_1$ the first component of the image of~$g$.
   Thus, if $g$ maps $x$ to~$(y, z)$, then $g_1$ maps $x$ to~$y$.
   Now, consider the point-cofinite parameterization based on~$g_1$ that is given by
   \begin{equation*}
@@ -720,7 +720,7 @@ In the definition of~\clnu{FPT} there are no restrictions on the parameter-depen
 \phantomsection\label{p:powerful_nuparameterizations}%
 The above theorem allows us to think of~$\quasilenu$ as a nonuniform ranking of how powerful parameterizations are.
 Two parameterizations that are related by~$\quasilenu$ can be compared with regard to the way in which their slices cover the set of all strings.
-Informally, as seen in Lemma~\ref{lem:order_slices}, a parameterization that is below another according to~$\quasilenu$ takes bigger steps in covering~$\binary^+$.
+Informally, as seen in Lemma~\ref{lem:order_slices}, a parameterization that is below another according to~$\quasilenu$ takes bigger steps in covering~$\binary^+\!$.
 In that sense, a parameterization that is below another according to~$\quasilenu$ is representative of a faster convergence.
 Note that, here, \enquote{faster} is not measured in terms of time.
 Instead, it relates to how big the steps are with which the slices of a parameterization grow.
@@ -1158,7 +1158,7 @@ The existence of \levelable{\cl{FPT}} sets now follows from the existence of set
   is a linearly-length-increasing reduction from $A$ to itself.
 \end{proof}
 
-We remark that the cylindrification of a set is always a \pdash{}cylinder, because there exists a polytime-computable bijection between~$\binary^+$ and~$\binary^+ \times \binary^+$.
+We remark that the cylindrification of a set is always a \pdash{}cylinder, because there exists a polytime-computable bijection between~$\binary^+$ and~$\binary^+\! \times \binary^+\!$.
 \indexkey{semi-levelable!for FPT@for \cl{FPT}|)}
 
 \subsection{Optimal Uniform Parameterizations}

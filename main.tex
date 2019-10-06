@@ -14,6 +14,11 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage[section]{placeins}
 
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{resize to}[physical paper height=240mm,
+%                              physical paper width=170mm,
+%                              border shrink=-.35mm]        % force 81% scaling
+
 \usetikzlibrary{babel,decorations.pathreplacing,graphs,graphdrawing,patterns,quotes}
 \usegdlibrary{layered}
 
@@ -68,7 +73,7 @@
 \makeindex
 
 
-\title{Parameterized Analysis of Complexity} %and Information
+\title{Parameterized Analysis of Complexity}
 \author{Jouke Witteveen}
 
 \makeatletter
@@ -84,12 +89,14 @@
 
 \include{front}
 
-%\acknowledgements
-
-%\cleardoublepage
+\cleardoublepage
+\vspace*{\stretch{1}}
+\begin{center}
+  \bits{01001} \bits{01110} \bits{00110} \bits{01111} \bits{10010} \bits{01101} \bits{00001} \bits{10100} \bits{01001} \bits{01111} \bits{01110}
+\end{center}
+\vspace*{\stretch{2}}
 
 \microtypesetup{protrusion=false}
-%\setcounter{tocdepth}{1}
 \tableofcontents
 \listofslogans
 \microtypesetup{protrusion=true}

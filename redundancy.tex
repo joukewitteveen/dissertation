@@ -29,7 +29,7 @@ In many cases, the computational complexity of a set can be pinpointed to far sh
 \begin{example}[continued from Example~\ref{ex:p-cylinder}]
 \label{ex:cylinder-kernel}%
   \indexkey{example!p-cylinder@\pdash{}cylinder}%
-  Let $A$ be a \pdash{}cylinder and $g\colon \binary^+ \to \binary^+ \times \binary^+$ a corresponding isomorphism.
+  Let $A$ be a \pdash{}cylinder and $g\colon \binary^+\! \to \binary^+\! \times \binary^+$ a corresponding isomorphism.
   Recall that the parameterization based on $g$ was defined as
   \begin{equation*}
     \eta \deq (\{x \st \asNat(g_1(x)) \le \asNat(k)\})_{k \in \binary^+}.
@@ -66,7 +66,7 @@ Generally, preprocessing may not be so powerful and the image of the reduction m
 In other words, the length of the result of preprocessing a string~$x$ is not guaranteed to be at most that of~$x$.
 However, as long as the length of the result can be bounded by a function of a parameter value for~$x$, the preprocessing has some guarantee on its effectiveness.
 
-\subsubsection{Synopsis}
+\subsubsection*{Synopsis}
 Preprocessing procedures such as the one introduced in Example~\ref{ex:cylinder-kernel} are formally known as \emph{kernelizations}.
 Just like with other forms of reducibility, the definition of a kernelization allows for some variation.
 Varying the constraints we place on a kernelization, we can obtain anything from a many--one kernelization to a Turing kernelization.
@@ -110,9 +110,9 @@ We shall see that it generalizes to the kind of polynomial kernelization that we
 \label{sec:redundancy:types}%
 In the \citeauthor{flum2006parameterized} framework, a \defkey{kernelization} can be defined as follows.
 Let $A$ be a set and $\kappa$ a parameterization in the sense of \citeauthor{flum2006parameterized} as we have seen in Section~\ref{sec:parameterized_complexity_theory}.
-A kernelization for~$A$ with respect to~$\kappa$ is a polytime-computable function $\phi\colon \binary^+ \to \binary^+$ that satisfies two properties.
+A kernelization for~$A$ with respect to~$\kappa$ is a polytime-computable function $\phi\colon \binary^+\! \to \binary^+$ that satisfies two properties.
 The first is that for all strings~$x$, we have $x \in A \iff \phi(x) \in A$.
-The other property required is that there is some computable function $h\colon \binary^+ \to \bbN$ such that, for all strings~$x$, we have $\length{\phi(x)} \le h(\kappa(x))$.
+The other property required is that there is some computable function $h\colon \binary^+\! \to \bbN$ such that, for all strings~$x$, we have $\length{\phi(x)} \le h(\kappa(x))$.
 In other words, a kernelization is a polytime many--one reduction with a length bound on the image in terms of the parameter value of the input.\indexkey{reduction!many--one}
 
 As we shall soon see, kernelizations are closely related to fixed-parameter tractability.
@@ -126,7 +126,7 @@ In our framework, this very general form of kernelization can be defined as foll
   \begin{itemize}
   \item there is a polynomial~$p$ such that $\phi$ terminates on any input string~$x$ within $p(\length{x})$ steps, regardless of the parameter value provided as the second argument to~$\phi$,
   \item $\phi$ converges to~$A$ on~$\eta$, and
-  \item there is a computable function~$h\colon \binary^+ \to \bbN$ such that any query made by~$\phi$ on an input $(x, k)$ has a length of at most $h(k)$.
+  \item there is a computable function~$h\colon \binary^+\! \to \bbN$ such that any query made by~$\phi$ on an input $(x, k)$ has a length of at most $h(k)$.
   \end{itemize}
 \end{definition}
 While the definition may seem daunting, the three items really codify the same properties that were required of traditional kernelizations.
@@ -457,7 +457,7 @@ First, we shall show that the adaptive powers of polynomial Turing kernelization
 
   \paragraph{Ensuring the existence of a polynomial Turing kernelization.}
   Our polynomial Turing kernelization must be adaptive, for we do not want it to be a polynomial truth-table kernelization.
-  In order to achieve this, we define a function $s\colon \binary^+ \to \binary^+$ by
+  In order to achieve this, we define a function $s\colon \binary^+\! \to \binary^+$ by
   \begin{equation*}
     s(q) \deq \begin{cases}
       \bits{0}q	& \text{if $q \notin W$}, \\

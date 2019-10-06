@@ -12,7 +12,7 @@ Not all instances of an undecidable set are equally responsible for the severity
 Unsurprisingly, the use of parameters for the analysis of undecidability leads to questions surrounding the computability of the parameters themselves.
 Some of our insights on this front will be relevant to forms of complexity other than decidability.
 
-\subsubsection{Synopsis}
+\subsubsection*{Synopsis}
 A set is of negligible complexity in computability theory if it is decidable.
 In Section~\ref{sec:computability:decidable}, we look at the use of parameterizations for expressing undecidability as a form of complexity.
 Ideally, a parameterized analysis of computability would allow us to distinguish between different degrees of undecidability.
@@ -47,7 +47,7 @@ The entire classification would depend solely on the undecidability allowed of p
 \subsection{Decidable and Semidecidable Parameterizations}
 \label{sec:computability:decidable}%
 Arguably the most elementary parameterizations are decidable parameterizations.
-With \defkeyat{parameterization!decidable}{decidable}, we mean that there is a procedure that, when given some input $(x, k) \in \binary^+ \times \binary^+$, decides whether slice~$k$ of the parameterization includes $x$.
+With \defkeyat{parameterization!decidable}{decidable}, we mean that there is a procedure that, when given some input $(x, k) \in \binary^+\! \times \binary^+\!$, decides whether slice~$k$ of the parameterization includes $x$.
 From a computability perspective, such parameterizations are fairly uninteresting.
 \begin{theorem}
 \label{thm:decidable}%
@@ -66,7 +66,7 @@ $\ref{enum:decidable:decidable} \implies \ref{enum:decidable:converging}$.
   We can adapt a decision procedure for $A$ so that it is a direct parameterized procedure converging to $A$.
   This is done by simply ignoring the second input, the parameter value.
   The resulting parameterized procedure correctly decides membership in $A$ regardless of the parameter value.
-  Corresponding to this parameterized procedure is the parameterization that consists only of copies of the full set $\binary^+$.
+  Corresponding to this parameterized procedure is the parameterization that consists only of copies of the full set $\binary^+\!$.
 
 $\ref{enum:decidable:converging} \implies \ref{enum:decidable:converging_on}$.
   More generally, the parameterization corresponding to any direct parameterized procedure that converges to $A$ is decidable.
@@ -215,7 +215,7 @@ While a family like
 \begin{equation*}
   (\{x \st x \neq k\})_{k \in \binary^+}
 \end{equation*}
-is a point-cofinite cover of $\binary^+$, it is not directed and therefore not a point-cofinite parameterization.
+is a point-cofinite cover of~$\binary^+\!$, it is not directed and therefore not a point-cofinite parameterization.
 Making the sets in the family finite the way we did, is a fittingly technical solution to this troublesome technicality.
 
 A direct parameterized procedure is one where the only changes on some instance~$x$ are from \bits{?} to a `correct' decision or vice versa.
@@ -560,10 +560,10 @@ In fact, this \emph{subset} of the parameterization, a \defkey{subparameterizati
   \item $(\eta_k)_{k \in I}$ is a point-cofinite parameterization, and
   \item for all $k \in I$ and $k' \in I$, we have $\eta_k \subseteq \eta_{k'}$ or $\eta_{k'} \subseteq \eta_k$.
   \end{itemize}
-  If, for all $k$ and~$k'$ in~$\binary^+$, we can effectively decide whether $\eta_k \subseteq \eta_{k'}$ holds, then a set $I$ as described above exists that is decidable.
+  If, for all $k$ and~$k'$ in~$\binary^+\!$, we can effectively decide whether $\eta_k \subseteq \eta_{k'}$ holds, then a set $I$ as described above exists that is decidable.
 \end{lemma}
 \begin{proof}
-  Associated with a parameterization~$\eta$ is a reflexive and transitive order on the set of all parameter values,~$\binary^+$.
+  Associated with a parameterization~$\eta$ is a reflexive and transitive order on the set of all parameter values,~$\binary^+\!$.
   This order stems from the inclusion order on the slices of~$\eta$.
   A parameter value~$k$ is ordered before or at a parameter value~$k'$ if we have $\eta_k \subseteq \eta_{k'}$.
   In the presence of such orders, the linearly ordered subsets are called \emph{chains}.
@@ -598,7 +598,7 @@ In fact, this \emph{subset} of the parameterization, a \defkey{subparameterizati
 \end{proof}
 
 If the parameterization we start with includes $\binary^+$ as a slice, it has a subparameterization consisting only of that slice.
-This is a rather uninteresting scenario, so we shall focus on parameterizations that do not include~$\binary^+$.
+This is a rather uninteresting scenario, so we shall focus on parameterizations that do not include~$\binary^+\!$.
 Of such parameterizations, all cofinal subsets contain infinitely many different slices.
 Any cofinal subset of a such a parameterization is itself a parameterization after suitably indexing its elements by binary strings.
 However, the corresponding subset of the original index set need not be decidable.
@@ -611,7 +611,7 @@ The subset can be made so that it nor its complement contains an infinite semide
 In other words, there is a parameterization such that the set of parameter values corresponding to a particular subparameterization is bi-immune in accordance with Definition~\ref{def:bi-immune}.\indexkey{bi-immune}
 This claim will be proven as Lemma~\ref{lem:subparameterization_bi-immune} shortly.
 
-In preparation for this, it is helpful to have a linear order on the subsets of~$\binary^+$.
+In preparation for this, it is helpful to have a linear order on the subsets of~$\binary^+\!$.
 The set inclusion order,~$\subseteq$, is not a linear order.
 A convenient linear order on the subsets of~$\binary^+$ comes about when we map a set $A \subseteq \binary^+$ to the real number
 \begin{equation*}
@@ -706,7 +706,7 @@ The details of the above proof are akin to those used by \textcite{jockusch1968s
 Such functions show that a set has some structure, especially if we impose a polynomial bound on the running time of the functions~\parencite{selman1979p-selective}.
 \begin{definition}
 \label{def:p-selective}%
-  A set $A$ is \defkeyat{p-selective@\pdash{}selective}{\pdash{}selective} if there is a function $f\colon \binary^+ \times \binary^+ \to \binary^+$ that is computable in polynomial time and satisfies, for all strings $x, y$,
+  A set $A$ is \defkeyat{p-selective@\pdash{}selective}{\pdash{}selective} if there is a function $f\colon \binary^+\! \times \binary^+\! \to \binary^+$ that is computable in polynomial time and satisfies, for all strings $x, y$,
   \begin{itemize}
   \item $f(x, y) \in \{x, y\}$, and
   \item $x \in A \lor y \in A \implies f(x, y) \in A$.
