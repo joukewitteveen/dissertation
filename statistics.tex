@@ -998,7 +998,7 @@ For a start, if we assume all strings of length~$n$ are equally likely, the effe
 The random strings alone push the expected minimum length of a parameter value to within a multiplicative constant of its maximum value.
 Note that there is a slight abuse of notation in the following theorem.
 To turn the uniform distribution on strings of a given length into a distribution on all strings, we need a prior distribution on the lengths of strings.
-However, this prior distribution is canceled out again when we take an expected value conditional to the length of a string.
+However, this prior distribution is canceled out again when we take an expected value conditional on the length of a string.
 For this reason, we can leave the prior distribution implicit and still speak of a `uniform' distribution.
 In actuality, we are dealing with a distribution on strings that is only uniform conditional on the length of a string.
 \begin{theorem}
@@ -1141,30 +1141,38 @@ We are interested in the expected value of this running time as we know from exp
 The general form of this expected value with respect to the parameterized complexity distribution, before specifying a specific pairing function, is
 \begin{align*}
   \Ex_\mathrm{pc}(f(k) \given \length{x} = n)
-    &= \sum_{k \in \binary^+}\;\sum_{x \in \binary^n \cap \eta_k} f(k) \cdot 2^{-\length{\pair{k}{\rank(x : \eta_k)}}} \\
-    &= \sum_{k \in \binary^+} f(k) \cdot 2^{-\ell_1(k)} \sum_{x \in \binary^n \cap \eta_k} 2^{-\ell_2(\rank(x : \eta_k))}.
+    &= \sum_{k \in \binary^+}\;\sum_{x \in \binary^n \cap \eta_k} f(k) \cdot 2^{-\length{\pair{k}{\rank(x : \eta_k)}}} / \sum_{x \in \binary^n} \Pr_\mathrm{pc}(x) \\
+    &= \sum_{k \in \binary^+} f(k) \cdot 2^{-\ell_1(k)} \sum_{x \in \binary^n \cap \eta_k} 2^{-\ell_2(\rank(x : \eta_k))} / \sum_{x \in \binary^n} \Pr_\mathrm{pc}(x).
   \intertext{
-    The final sum is a sum of the probabilities of the individual strings of length~$n$ in~$\eta_k$, as obtained via the Kraft~inequality using~$\ell_2$.
-    As such, the sum is at most~$1$, thus we find
+    Here, the division takes care of the normalization needed because we compute the expected value conditional on the length~$n$.
+    We shall assume that $\ell_1$, $\ell_2$, and~$\eta$ are such that the distribution of~$n$ follows a power law.
+    Under this assumption, $\Ex_\mathrm{pc}(f(k) \given \length{x} = n)$ can be bounded by a polynomial in~$n$ if and only if
   }
-  \Ex_\mathrm{pc}(f(k) \given \length{x} = n)
-    &\le \sum_{k \in \binary^+} f(k) \cdot 2^{-\ell_1(k)}.
+    &\mathrel{\phantom{=}}
+    \sum_{k \in \binary^+} f(k) \cdot 2^{-\ell_1(k)} \sum_{x \in \binary^n \cap \eta_k} 2^{-\ell_2(\rank(x : \eta_k))}
 \end{align*}
+can be bounded by a polynomial in~$n$.
+In this expression, the final sum is a sum of the probabilities of the individual strings of length~$n$ in~$\eta_k$, as obtained via the Kraft~inequality using~$\ell_2$.
+As such, that sum is at most~$1$, and, up to factors polynomial in~$n$, we find
+\begin{equation*}
+  \Ex_\mathrm{pc}(f(k) \given \length{x} = n)
+    \le \sum_{k \in \binary^+} f(k) \cdot 2^{-\ell_1(k)}.
+\end{equation*}
 Observe that the bounding value on the right is not sensitive to the length~$n$.
 Therefore, only two things can happen as a result of our choice of a pairing function.
 Either the above sum diverges, or it reduces to a constant independent of~$n$.
-In the latter case, the expected running time of a decision procedure for~$A$ is a tractable one, as the expected value of~$f(k)$ becomes a constant.
+In the latter case, the expected running time of a decision procedure for~$A$ is a tractable one, as the expected value of~$f(k)$ is bounded by a polynomial in~$n$.
 One possibility for our pairing function is to use
 \begin{equation}
 \label{eq:fk-constant}
   \ell_1(k) = \asNat(k) + \log f(k) - \bigO(1)
 \end{equation}
 bits, with the $\bigO(1)$-term used for normalization, for encoding a parameter value~$k$.
-We would then find
+Depending on~$\eta$, the distribution of $n$ may still follow a power law, and we would then find, up to factors polynomial in~$n$,
 \begin{equation*}
-  \Ex_\mathrm{pc}(f(k) \given \length{x} = n) \le \bigO(1) \cdot \sum_{k \in \binary^+} 2^{-\asNat(k)} \in \bigO(1).
+  \Ex_\mathrm{pc}(f(k) \given \length{x} = n) \le \sum_{k \in \binary^+} 2^{-\asNat(k)} \in \bigO(1).
 \end{equation*}
-If, for some $\epsilon < 1$ and all but finitely many strings~$k$, we have $\log f(k) \le \epsilon \asNat(k)$, then even a simple unary encoding of~$k$,
+If, for some $\epsilon < 1$ and all but finitely many strings~$k$, we have $\log f(k) \le \epsilon \asNat(k)$, then even a simple unary encoding of~$k$, satisfying
 \begin{equation*}
   \ell_1(k) = \asNat(k),
 \end{equation*}
