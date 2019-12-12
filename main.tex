@@ -77,8 +77,10 @@
 \author{Jouke Witteveen}
 
 \makeatletter
-\hypersetup{pdftitle=\@title,pdfauthor=\@author}
+\newcommand{\thetitle}{\@title}
+\newcommand{\theauthor}{\@author}
 \makeatother
+\hypersetup{pdftitle=\thetitle,pdfauthor=\theauthor}
 \pdfvariable suppressoptionalinfo \numexpr32+64+512\relax  % Reproducible builds
 
 
@@ -100,6 +102,8 @@
 \tableofcontents
 \listofslogans
 \microtypesetup{protrusion=true}
+
+\include{acknowledgments}
 
 
 \cleardoublepage

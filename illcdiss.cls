@@ -296,7 +296,7 @@
    \chapter*{\contentsname\hskip 0pt plus 1filll
         \@mkboth{\contentsname}{\contentsname}}%    Headings not uppercased
    \@openrighttrue%
-   \vspace{6.7ex}%                                  Push Section 3.2 to the right
+   \vspace{3ex}%                                    Push Section 3.2 to the right
    \@starttoc{toc}%
    \if@restonecol\twocolumn\fi
 }
